@@ -1,0 +1,23 @@
+;; Add MELPA
+(require 'package) ;; You might already have this line
+(add-to-list 'package-archives
+             '("melpa" . "https://melpa.org/packages/"))
+(when (< emacs-major-version 24)
+  ;; For important compatibility libraries like cl-lib
+  (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/")))
+(package-initialize)
+
+;; Pallet for package management
+(pallet-mode t)
+
+;; Default tabs
+(setq-default indent-tabs-mode nil)
+(setq-default tab-width 2) ; or any other preferred value
+(defvaralias 'c-basic-offset 'tab-width)
+(defvaralias 'cperl-indent-level 'tab-width)
+
+;; Theme
+(custom-set-variables
+ '(custom-enabled-themes (quote (manoj-dark)))
+ )
+
