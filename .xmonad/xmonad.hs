@@ -8,31 +8,36 @@ import XMonad.Config.Xfce
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ICCCMFocus
-import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.ManageDocks
+import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
 import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig
 
-main = xmonad =<< statusBar myPP toggleStrutsKey myConfig
-
--- -- Command to launch the bar.
--- myBar = "xmobar"
-
--- Custom PP, configure it as you like. It determines what is being written to the bar.
-myPP = xmobarPP { ppCurrent = xmobarColor "#429942" "" . wrap "<" ">" }
-
--- Key binding to toggle the gap for the bar.
-toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
+main = xmonad $ myConfig
 
 -- Main configuration, override the defaults to your liking.
-myConfig = ewmh defaultConfig {
-  workspaces = myWorkspaces
-  , manageHook = myManageHook
+myConfig = ewmh xfceConfig {
+  manageHook = pbManageHook <+> myManageHook
+                            <+> manageDocks
+                            <+> manageHook xfceConfig
+  , terminal = "xfce4-terminal"
+  , workspaces = myWorkspaces
   , layoutHook = avoidStruts $ layoutHook defaultConfig
+  , handleEventHook = ewmhDesktopsEventHook
   , modMask = mod4Mask
   , startupHook = setWMName "LG3D"
   } `additionalKeysP` myKeys
+
+-- ManageHook --
+pbManageHook :: ManageHook
+pbManageHook = composeAll $ concat
+    [ [ manageDocks ]
+    , [ manageHook defaultConfig ]
+    , [ isDialog --> doCenterFloat ]
+    , [ isFullscreen --> doFullFloat ]
+    , [ fmap not isDialog --> doF avoidMaster ]
+    ]
 
 myManageHook = composeAll
                [
@@ -41,12 +46,20 @@ myManageHook = composeAll
                ]
   where role = stringProperty "WM_WINDOW_ROLE"
 
+-- Helpers --
+-- avoidMaster:  Avoid the master window, but otherwise manage new windows normally
+avoidMaster :: W.StackSet i l a s sd -> W.StackSet i l a s sd
+avoidMaster = W.modify' $ \c -> case c of
+    W.Stack t [] (r:rs) -> W.Stack t [r] rs
+    otherwise -> c
+
 myWorkspaces = map show [ 1 .. 9 :: Int ]
 
 myKeys = [
     ( "M-S-q"   , spawn "xfce4-session-logout")
   , ( "M-S-s"   , spawn "xfce4-session-logout --suspend")
   , ( "M-S-l"   , spawn "xscreensaver-command --lock")
+  , ( "M-p"     , spawn "dmenu_run -b")
     -- other additional keys
   ] ++ -- (++) is needed here because the following list comprehension
          -- is a list, not a single key binding. Simply adding it to the
