@@ -14,10 +14,10 @@ import XMonad.Hooks.SetWMName
 import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig
 
-main = xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig
+main = xmonad =<< statusBar myPP toggleStrutsKey myConfig
 
--- Command to launch the bar.
-myBar = "xmobar"
+-- -- Command to launch the bar.
+-- myBar = "xmobar"
 
 -- Custom PP, configure it as you like. It determines what is being written to the bar.
 myPP = xmobarPP { ppCurrent = xmobarColor "#429942" "" . wrap "<" ">" }
@@ -26,7 +26,7 @@ myPP = xmobarPP { ppCurrent = xmobarColor "#429942" "" . wrap "<" ">" }
 toggleStrutsKey XConfig {XMonad.modMask = modMask} = (modMask, xK_b)
 
 -- Main configuration, override the defaults to your liking.
-myConfig = ewmh xfceConfig {
+myConfig = ewmh defaultConfig {
   workspaces = myWorkspaces
   , manageHook = myManageHook
   , layoutHook = avoidStruts $ layoutHook defaultConfig
