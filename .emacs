@@ -1,3 +1,7 @@
+;; Add cask
+(require 'cask "~/.cask/cask.el")
+(cask-initialize)
+
 ;; Add MELPA
 (require 'package) ;; You might already have this line
 (add-to-list 'package-archives
