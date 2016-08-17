@@ -25,5 +25,5 @@ fi
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 # Set emacs as default editor
-export VISUAL=emacs
-export EDITOR=emacs -nw
+export VISUAL="emacs"
+export EDITOR="emacs -nw"
