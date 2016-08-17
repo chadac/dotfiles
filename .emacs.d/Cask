@@ -1,5 +1,6 @@
 (source "gnu" "http://elpa.gnu.org/packages/")
 (source "melpa" "http://melpa.org/packages/")
+(source melpa)
 
 (depends-on "auctex")
 (depends-on "cask")
@@ -30,4 +31,5 @@
 (depends-on "scala-mode")
 (depends-on "shut-up")
 (depends-on "web-mode")
+(depends-on "yaml-mode")
 (depends-on "yasnippet")

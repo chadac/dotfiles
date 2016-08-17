@@ -25,3 +25,14 @@
  '(custom-enabled-themes (quote (manoj-dark)))
  )
 
+;; Based on http://stackoverflow.com/a/24373916
+(defun adds-to-list (list elements)
+  (interactive)
+  (dolist (item elements) (add-to-list list item)))
+
+;; File associations not added automatically
+(adds-to-list 'auto-mode-alist
+              '(("\\.php\\'"      . web-mode)
+                ("\\.html\\'"     . web-mode)
+                ("\\.js\\'"       . web-mode)
+                ("\\.yml\\'"      . yaml-mode)))
