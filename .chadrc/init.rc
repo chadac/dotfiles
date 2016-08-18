@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Add Cask binary
+export PATH="$HOME/.cask/bin:$PATH"
+
+# Alias for config file
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+
+# Set emacs as default editor
+export VISUAL="emacs"
+export EDITOR="emacs -nw"
