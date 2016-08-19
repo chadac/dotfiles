@@ -113,7 +113,7 @@ if ! shopt -oq posix; then
   fi
 fi
 
-for file in .chadrc/*.rc
+for file in "$HOME"/.chadrc/*.rc
 do
     source "$file"
 done
