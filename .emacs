@@ -20,6 +20,11 @@
 (defvaralias 'c-basic-offset 'tab-width)
 (defvaralias 'cperl-indent-level 'tab-width)
 
+;; Whitespaces
+(require 'whitespace)
+(setq whitespace-style '(face empty tabs lines-tail trailing))
+(global-whitespace-mode t)
+
 ;; Theme
 (custom-set-variables
  '(custom-enabled-themes (quote (manoj-dark)))
