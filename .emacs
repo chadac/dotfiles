@@ -23,6 +23,11 @@
 (setq-default web-mode-css-indent-offset 2)
 (setq-default web-mode-code-indent-offset 2)
 
+;; Whitespaces
+(require 'whitespace)
+(setq whitespace-style '(face empty tabs lines-tail trailing))
+(global-whitespace-mode t)
+
 ;; Theme
 (custom-set-variables
  '(custom-enabled-themes (quote (manoj-dark)))
