@@ -19,6 +19,9 @@
 (setq-default tab-width 2) ; or any other preferred value
 (defvaralias 'c-basic-offset 'tab-width)
 (defvaralias 'cperl-indent-level 'tab-width)
+(setq-default web-mode-markup-indent-offset 2)
+(setq-default web-mode-css-indent-offset 2)
+(setq-default web-mode-code-indent-offset 2)
 
 ;; Theme
 (custom-set-variables
