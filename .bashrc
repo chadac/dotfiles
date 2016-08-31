@@ -117,3 +117,5 @@ for file in "$HOME"/.chadrc/*.rc
 do
     source "$file"
 done
+
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
