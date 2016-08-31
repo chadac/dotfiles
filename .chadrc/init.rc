@@ -7,5 +7,5 @@ export PATH="$HOME/.cask/bin:$HOME/.rvm/bin:$PATH"
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 
 # Set emacs as default editor
-export VISUAL="emacs"
+export VISUAL="emacs -nw"
 export EDITOR="emacs -nw"
