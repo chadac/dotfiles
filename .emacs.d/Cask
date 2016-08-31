@@ -4,6 +4,7 @@
 
 (depends-on "auctex")
 (depends-on "cask")
+(depends-on "coffee-mode")
 (depends-on "company")
 (depends-on "ctable")
 (depends-on "dash")
@@ -28,6 +29,7 @@
 (depends-on "projectile")
 (depends-on "python-mode")
 (depends-on "s")
+(depends-on "sass-mode")
 (depends-on "sbt-mode")
 (depends-on "scala-mode")
 (depends-on "shut-up")
