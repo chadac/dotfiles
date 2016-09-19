@@ -32,7 +32,8 @@
 
 ;; File associations not added automatically
 (adds-to-list 'auto-mode-alist
-              '(("\\.php\\'"      . web-mode)
+              '(("\\.tex\\'"      . latex-mode)
+                ("\\.php\\'"      . web-mode)
                 ("\\.html\\'"     . web-mode)
                 ("\\.js\\'"       . web-mode)
                 ("\\.yml\\'"      . yaml-mode)))
