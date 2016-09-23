@@ -15,6 +15,10 @@ import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig
 
 main = xmonad $ myConfig
+  {
+    startupHook = startupHook myConfig >> setWMName "LG3D"
+    , logHook = ewmhDesktopsLogHook
+  }
 
 -- Main configuration, override the defaults to your liking.
 myConfig = ewmh xfceConfig {
@@ -26,7 +30,6 @@ myConfig = ewmh xfceConfig {
   , layoutHook = avoidStruts $ layoutHook defaultConfig
   , handleEventHook = ewmhDesktopsEventHook
   , modMask = mod4Mask
-  , startupHook = setWMName "LG3D"
   } `additionalKeysP` myKeys
 
 -- ManageHook --

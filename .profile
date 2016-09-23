@@ -18,12 +18,9 @@ fi
 
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/.cask/bin:$HOME/bin:$PATH"
+    PATH="$HOME/bin:$PATH"
 fi
 
-# Alias for config file
-alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
 
-# Set emacs as default editor
-export VISUAL=emacs
-export EDITOR=emacs -nw
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
