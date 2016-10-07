@@ -45,6 +45,7 @@
                 ("\\.php\\'"      . web-mode)
                 ("\\.html\\'"     . web-mode)
                 ("\\.js\\'"       . web-mode)
+                ("\\.m$"          . octave-mode)
                 ("\\.yml\\'"      . yaml-mode)))
 
 ;; Theme
