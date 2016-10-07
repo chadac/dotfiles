@@ -21,6 +21,7 @@
 (depends-on "haskell-mode")
 (depends-on "jdee")
 (depends-on "julia-mode")
+(depends-on "markdown-mode")
 (depends-on "package-build")
 (depends-on "pallet")
 (depends-on "php-mode")
