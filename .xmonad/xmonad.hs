@@ -4,7 +4,6 @@ import Data.Map    (fromList)
 import Data.Monoid (mappend)
 
 import XMonad.Actions.WindowGo (runOrRaise)
-import XMonad.Config.Xfce
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ICCCMFocus
@@ -14,21 +13,24 @@ import XMonad.Hooks.SetWMName
 import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig
 
-main = xmonad $ myConfig
+main = xmonad =<< xmobar myConfig
   {
     startupHook = startupHook myConfig >> setWMName "LG3D"
     , logHook = ewmhDesktopsLogHook
   }
 
 -- Main configuration, override the defaults to your liking.
-myConfig = ewmh xfceConfig {
+myConfig = ewmh defaultConfig {
   manageHook = pbManageHook <+> myManageHook
                             <+> manageDocks
-                            <+> manageHook xfceConfig
+                            <+> manageHook defaultConfig
   , terminal = "xfce4-terminal"
   , workspaces = myWorkspaces
   , layoutHook = avoidStruts $ layoutHook defaultConfig
-  , handleEventHook = ewmhDesktopsEventHook
+  , handleEventHook = mconcat [
+      ewmhDesktopsEventHook
+      , docksEventHook
+      ]
   , modMask = mod4Mask
   } `additionalKeysP` myKeys
 
@@ -45,7 +47,9 @@ pbManageHook = composeAll $ concat
 myManageHook = composeAll
                [
                  isFullscreen --> doFullFloat
+               , (className =? "Xfce4-notifyd") --> doIgnore
                , (role =? "gimp-toolbox" <||> role =? "gimp-image-window") --> (ask >>= doF . W.sink)
+               , (role =? "xpanel") --> (ask >>= doF . W.sink)
                ]
   where role = stringProperty "WM_WINDOW_ROLE"
 
@@ -59,10 +63,8 @@ avoidMaster = W.modify' $ \c -> case c of
 myWorkspaces = map show [ 1 .. 9 :: Int ]
 
 myKeys = [
-    ( "M-S-q"   , spawn "xfce4-session-logout")
-  , ( "M-S-s"   , spawn "xfce4-session-logout --suspend")
-  , ( "M-S-l"   , spawn "xscreensaver-command --lock")
-  , ( "M-p"     , spawn "dmenu_run -b")
+  ( "M-S-l"   , spawn "xscreensaver-command -lock")
+  , ( "M-S-s" , spawn "xscreensaver-command -lock && sleep 2 && sudo /usr/sbin/pm-suspend")
     -- other additional keys
   ] ++ -- (++) is needed here because the following list comprehension
          -- is a list, not a single key binding. Simply adding it to the
@@ -73,4 +75,4 @@ myKeys = [
       | (tag, key)  <- zip myWorkspaces "123456789"
       , (otherModMasks, action) <- [ ("", windows . W.view) -- was W.greedyView
                                       , ("S-", windows . W.shift)]
-				      ]
+                                      ]

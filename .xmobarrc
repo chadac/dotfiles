@@ -1,0 +1,26 @@
+Config {
+  font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
+  , bgColor = "black"
+  , fgColor = "grey"
+  , position = TopW L 90
+  , lowerOnStart = True
+  , persistent = True
+  , commands = [
+      Run Weather "KTUL" ["-t","Weather: <tempF>F <skyCondition>","-L","64","-H","85","--normal","green","--high","red","--low","lightblue"] 36000
+      , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
+      , Run Memory ["-t","Mem: <usedratio>%"] 10
+      , Run Wireless "wlan0" ["-t","Wireless: <essid> <quality>"] 10
+      , Run BatteryP ["BAT0"] ["-t", "Batt: <left>% "
+                              ,"-L", "10", "-H", "80"
+                              ,"-h", "green", "-l", "red"
+                              ,"--"
+                              ,"-o", "(<timeleft>)", "-O", "<fc=blue>Charging</fc>", "-i", "<fc=yellow>Charged</fc>"
+                              ] 30
+      , Run Swap [] 10
+      , Run Date "%a %b %_d %l:%M" "date" 10
+      , Run StdinReader
+      ]
+  , sepChar = "%"
+  , alignSep = "}{"
+  , template = "%StdinReader% }{ %wlan0wi% | %battery% | %cpu% * %memory% * %swap%    <fc=#ee9a00>%date%</fc> | %KTUL%"
+}
