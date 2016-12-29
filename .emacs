@@ -21,13 +21,17 @@
 
 ;; Default tabs
 (setq-default indent-tabs-mode nil)
-(setq-default tab-width 2) ; or any other preferred value
+(setq-default tab-width 2)
 (defvaralias 'c-basic-offset 'tab-width)
 (defvaralias 'cperl-indent-level 'tab-width)
 (setq-default js-indent-level 2)
 (setq-default web-mode-markup-indent-offset 2)
 (setq-default web-mode-css-indent-offset 2)
 (setq-default web-mode-code-indent-offset 2)
+
+(smart-tabs-add-language-support c++ c++-mode-hook
+  ((c-indent-line . c-basic-offset)
+   (c-indent-region . c-basic-offset)))
 
 ;; Whitespaces
 (require 'whitespace)
