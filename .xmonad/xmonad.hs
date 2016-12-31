@@ -55,6 +55,7 @@ myManageHook = composeAll
                [
                  isFullscreen --> doFullFloat
                , (role =? "gimp-toolbox" <||> role =? "gimp-image-window") --> (ask >>= doF . W.sink)
+               , resource =? "stalonetray" --> doIgnore
                ]
   where role = stringProperty "WM_WINDOW_ROLE"
 

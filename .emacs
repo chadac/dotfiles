@@ -11,6 +11,8 @@
   (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/")))
 (package-initialize)
 
+(require 'cl)
+
 ;; Pallet for package management
 (pallet-mode t)
 
