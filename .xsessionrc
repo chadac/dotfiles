@@ -6,7 +6,7 @@
 ## from https://wiki.haskell.org/Xmonad/Config_archive/John_Goerzen%27s_Configuration
 trayer --edge top --align right --SetDockType true --SetPartialStrut true \
        --expand true --width 10 --transparent true --alpha 0 --tint 0x00000000 \
-       --height 17 &
+       --height 17 --monitor 1 &
 
 xscreensaver -no-splash &
 xfce4-volumed &
@@ -15,4 +15,4 @@ if [ -x /usr/bin/nm-applet ] ; then
    nm-applet --sm-disable &
 fi
 
-dropbox start
+dropbox start &
