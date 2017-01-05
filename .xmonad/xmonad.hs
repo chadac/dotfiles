@@ -27,7 +27,10 @@ myConfig = ewmh defaultConfig {
   , terminal = "xfce4-terminal"
   , workspaces = myWorkspaces
   , layoutHook = avoidStruts $ layoutHook defaultConfig
-  , handleEventHook = ewmhDesktopsEventHook
+  , handleEventHook = mconcat [
+      ewmhDesktopsEventHook
+      , docksEventHook
+      ]
   , modMask = mod4Mask
   } `additionalKeysP` myKeys
 
@@ -44,7 +47,9 @@ pbManageHook = composeAll $ concat
 myManageHook = composeAll
                [
                  isFullscreen --> doFullFloat
+               , (className =? "Xfce4-notifyd") --> doIgnore
                , (role =? "gimp-toolbox" <||> role =? "gimp-image-window") --> (ask >>= doF . W.sink)
+               , (role =? "xpanel") --> (ask >>= doF . W.sink)
                ]
   where role = stringProperty "WM_WINDOW_ROLE"
 
@@ -58,8 +63,8 @@ avoidMaster = W.modify' $ \c -> case c of
 myWorkspaces = map show [ 1 .. 9 :: Int ]
 
 myKeys = [
-  ( "M-S-l"   , spawn "xscreensaver-command --lock")
-  , ( "M-p"     , spawn "dmenu_run -b")
+  ( "M-S-l"   , spawn "xscreensaver-command -lock")
+  , ( "M-S-s" , spawn "xscreensaver-command -lock && sleep 2 && sudo /usr/sbin/pm-suspend")
     -- other additional keys
   ] ++ -- (++) is needed here because the following list comprehension
          -- is a list, not a single key binding. Simply adding it to the
