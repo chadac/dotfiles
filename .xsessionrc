@@ -1,5 +1,7 @@
 #!/bin/bash
 
+.screenlayout/desktop.sh
+
 ## stalonetray &
 ## from https://wiki.haskell.org/Xmonad/Config_archive/John_Goerzen%27s_Configuration
 trayer --edge top --align right --SetDockType true --SetPartialStrut true \
