@@ -4,7 +4,6 @@ import Data.Map    (fromList)
 import Data.Monoid (mappend)
 
 import XMonad.Actions.WindowGo (runOrRaise)
-import XMonad.Config.Xfce
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ICCCMFocus
@@ -14,17 +13,17 @@ import XMonad.Hooks.SetWMName
 import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig
 
-main = xmonad $ myConfig
+main = xmonad =<< xmobar myConfig
   {
     startupHook = startupHook myConfig >> setWMName "LG3D"
     , logHook = ewmhDesktopsLogHook
   }
 
 -- Main configuration, override the defaults to your liking.
-myConfig = ewmh xfceConfig {
+myConfig = ewmh defaultConfig {
   manageHook = pbManageHook <+> myManageHook
                             <+> manageDocks
-                            <+> manageHook xfceConfig
+                            <+> manageHook defaultConfig
   , terminal = "xfce4-terminal"
   , workspaces = myWorkspaces
   , layoutHook = avoidStruts $ layoutHook defaultConfig
@@ -59,9 +58,7 @@ avoidMaster = W.modify' $ \c -> case c of
 myWorkspaces = map show [ 1 .. 9 :: Int ]
 
 myKeys = [
-    ( "M-S-q"   , spawn "xfce4-session-logout")
-  , ( "M-S-s"   , spawn "xfce4-session-logout --suspend")
-  , ( "M-S-l"   , spawn "xscreensaver-command --lock")
+  ( "M-S-l"   , spawn "xscreensaver-command --lock")
   , ( "M-p"     , spawn "dmenu_run -b")
     -- other additional keys
   ] ++ -- (++) is needed here because the following list comprehension
@@ -73,4 +70,4 @@ myKeys = [
       | (tag, key)  <- zip myWorkspaces "123456789"
       , (otherModMasks, action) <- [ ("", windows . W.view) -- was W.greedyView
                                       , ("S-", windows . W.shift)]
-				      ]
+                                      ]
