@@ -1,7 +1,19 @@
 #!/bin/bash
 
-# Add Cask binary
-export PATH="$HOME/.cask/bin:$HOME/.rvm/bin:$PATH"
+# Cask
+export PATH="$HOME/.cask/bin:$PATH"
+
+# RVM
+export PATH="$HOME/.rvm/bin:$PATH"
+
+# GO Path
+export GOPATH="$HOME/programming/go"
+# Update PATH to use go binaries
+export PATH="$GOPATH/bin:$PATH"
+
+# NVM
+export NVM_DIR="/home/chad/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
 # Alias for config file
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
