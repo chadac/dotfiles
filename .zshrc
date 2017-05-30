@@ -85,7 +85,6 @@ source $ZSH/oh-my-zsh.sh
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
 ## Additional configurations
-for file in "$HOME/.dotfiles/init/*.rc"
-do
+for file in $HOME/.dotfiles/init/*.rc; do
     source "$file"
 done
