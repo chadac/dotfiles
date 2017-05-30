@@ -1,0 +1,92 @@
+#!/usr/bin/env python3
+
+import sys, os, linecache, subprocess
+import re
+from argparse import ArgumentParser
+
+
+def _title(name):
+    print("#" * 76)
+    print("#")
+    print("#    " + name.upper())
+    print("#")
+    print("#" * 76)
+    print()
+
+
+def parse_args(argv):
+    parser = ArgumentParser(
+        description='Commands that help run things with dotfiles.',
+        usage="""dotfiles [command] [additional_arguments...]
+
+Commands:
+   install       Installs system utilities
+""")
+    parser.add_argument('command', type=str, default=None)
+
+    args = parser.parse_args(argv[1:2])
+    args.additional_args = argv[2:]
+
+    return args
+
+
+def install(args):
+    class Utility:
+        def __init__(self, filename, name, description):
+            self.filename = filename
+            self.name = name
+            self.description = description
+
+        def install(self):
+            subprocess.call(["/bin/sh", self.filename])
+
+    def load_utility(filename):
+        name = os.path.splitext(os.path.basename(filename))[0]
+        description = linecache.getline(filename, 2)[3:]
+        return Utility(filename, name, description)
+
+    def load_utilities():
+        import glob
+        utilities = {}
+        for filename in glob.glob(os.path.expanduser('~') + '/.dotfiles/install/*.sh'):
+            u = load_utility(filename)
+            utilities[u.name] = u
+        return utilities
+
+    usage = """dotfiles install [--all] [utilities...]
+
+Commands:
+   --all        Install all utilities that have not been installed previously
+
+Utilities:
+"""
+    utilities = load_utilities()
+    for u in utilities.values():
+        usage += '   {0:<12} {1}'.format(u.name, u.description)
+    parser = ArgumentParser(description='Installs system utilities.', usage=usage)
+    parser.add_argument('--all', action='store_true', default=False)
+    parser.add_argument('utilities', nargs='*')
+
+    install_args = parser.parse_args(args.additional_args)
+
+    to_install = []
+    if not install_args.all and not install_args.utilities:
+        parser.print_help()
+        sys.exit()
+    elif install_args.all:
+        to_install = utilities.values()
+    else:
+        to_install = [utilities[name] for name in install_args.utilities]
+
+    for utility in to_install:
+        _title(utility.name)
+        utility.install()
+
+    print("Finished! Some utilities might require starting a new terminal session or logging out before changes take effect.")
+
+
+if __name__ == '__main__':
+    args = parse_args(sys.argv)
+
+    if args.command == 'install':
+        install(args)

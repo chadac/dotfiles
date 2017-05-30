@@ -1,10 +1,6 @@
 #!/bin/bash
 
-# Add Cask binary
-export PATH="$PATH:$HOME/.cask/bin"
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-
+## NVM setup
 export NVM_DIR="/home/chad/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 

@@ -1,6 +1,11 @@
 #!/bin/bash
 
-## stalonetray &
+## Anything that shouldn't be shared on the Git repo, but need to be
+## run initially.
+if [ -f ~/.xsessionrc.local ] ; then
+    source .xsessionrc.local
+fi
+
 ## from https://wiki.haskell.org/Xmonad/Config_archive/John_Goerzen%27s_Configuration
 trayer --edge top --align right --SetDockType true --SetPartialStrut true \
        --expand true --width 10 --transparent true --alpha 0 --tint 0x00000000 \
@@ -13,4 +18,4 @@ if [ -x /usr/bin/nm-applet ] ; then
    nm-applet --sm-disable &
 fi
 
-dropbox start
+dropbox start &
