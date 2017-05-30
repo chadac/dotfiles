@@ -1,0 +1,8 @@
+#!/bin/bash
+## Anything that adds to the PATH variable
+
+export PATH="$PATH:$HOME/.dotfiles/bin"
+export PATH="$PATH:$HOME/.cask/bin"
+export PATH="$PATH:$HOME/.rvm/bin"
+export GOPATH="$HOME/code/go"
+export PATH="$PATH:/opt/gradle/gradle-3.5/bin"

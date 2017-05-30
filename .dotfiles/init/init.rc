@@ -1,17 +1,6 @@
 #!/bin/bash
 
-## Cask
-export PATH="$HOME/.cask/bin:$PATH"
-
-## RVM
-export PATH="$HOME/.rvm/bin:$PATH"
-
-## GO
-export GOPATH="$HOME/programming/go"
-# Update PATH to use go binaries
-export PATH="$GOPATH/bin:$PATH"
-
-## NVM
+## NVM setup
 export NVM_DIR="/home/chad/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 

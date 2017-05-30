@@ -10,6 +10,8 @@ import XMonad.Hooks.ICCCMFocus
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.SetWMName
+import XMonad.Prompt
+import XMonad.Prompt.Input
 import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig
 
@@ -62,9 +64,20 @@ avoidMaster = W.modify' $ \c -> case c of
 
 myWorkspaces = map show [ 1 .. 9 :: Int ]
 
+
+
+-- from http://langnostic.blogspot.com/2013/10/xmonad-tweaks.html
+xpConf = defaultXPConfig { position = Top }
+
+withPrompt prompt fn = inputPrompt xpConf prompt ?+ fn
+
+sudoSpawn command = withPrompt "Password" $ run command
+  where run command password = spawn $ concat ["echo ", password, " | sudo -S ", command]
+
+-- Keys
 myKeys = [
   ( "M-S-l"   , spawn "xscreensaver-command -lock")
-  , ( "M-S-s" , spawn "xscreensaver-command -lock && sleep 2 && sudo /usr/sbin/pm-suspend")
+  , ( "M-S-s" , sudoSpawn "xscreensaver-command -lock && sleep 2 && sudo /usr/sbin/pm-suspend")
     -- other additional keys
   ] ++ -- (++) is needed here because the following list comprehension
          -- is a list, not a single key binding. Simply adding it to the
