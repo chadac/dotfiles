@@ -1,6 +1,7 @@
 #!/bin/bash
 ## Anything that adds to the PATH variable
 
+export PATH="$PATH:/opt/gradle/gradle-3.5/bin"
 export PATH="$PATH:$HOME/.dotfiles/bin"
 export PATH="$PATH:$HOME/.cask/bin"
 export PATH="$PATH:$HOME/.rvm/bin"
