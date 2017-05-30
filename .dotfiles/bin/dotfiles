@@ -2,6 +2,7 @@
 
 import sys, os, linecache, subprocess
 import re
+from collections import OrderedDict
 from argparse import ArgumentParser
 
 
@@ -47,8 +48,8 @@ def install(args):
 
     def load_utilities():
         import glob
-        utilities = {}
-        for filename in glob.glob(os.path.expanduser('~') + '/.dotfiles/install/*.sh'):
+        utilities = OrderedDict()
+        for filename in sorted(glob.glob(os.path.expanduser('~') + '/.dotfiles/install/*.sh')):
             u = load_utility(filename)
             utilities[u.name] = u
         return utilities
