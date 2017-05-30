@@ -48,7 +48,7 @@
               '(("\\.tex\\'"      . latex-mode)
                 ("\\.php\\'"      . web-mode)
                 ("\\.html\\'"     . web-mode)
-                ("\\.js\\'"       . web-mode)
+                ("\\.js[x]?\\'"   . web-mode)
                 ("\\.m$"          . octave-mode)
                 ("\\.yml\\'"      . yaml-mode)))
 

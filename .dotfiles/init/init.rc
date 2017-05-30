@@ -4,9 +4,10 @@
 export NVM_DIR="/home/chad/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
 
-# Alias for config file
-alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-
-# Set emacs as default editor
+## Set emacs as default editor
 export VISUAL="emacs -nw"
 export EDITOR="emacs -nw"
+
+## Dotfiles
+# Alias for config file
+alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
