@@ -4,6 +4,7 @@ import Data.Map    (fromList)
 import Data.Monoid (mappend)
 
 import XMonad.Actions.WindowGo (runOrRaise)
+import XMonad.Actions.CopyWindow
 import XMonad.Config.Xfce
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.EwmhDesktops
@@ -50,7 +51,7 @@ pbManageHook = composeAll $ concat
 myManageHook = composeAll
                [
                  isFullscreen --> doFullFloat
-               , (className =? "Xfce4-notifyd") --> doIgnore
+               , (className =? "Xfce4-notifyd") --> doF W.focusDown <+> doF copyToAll
                , (role =? "gimp-toolbox" <||> role =? "gimp-image-window") --> (ask >>= doF . W.sink)
                , (role =? "xpanel") --> (ask >>= doF . W.sink)
                ]
@@ -67,7 +68,7 @@ myWorkspaces = map show [ 1 .. 9 :: Int ]
 
 -- Keys
 myKeys = [
-  ( "M-S-l"   , spawn "xscreensaver-command -lock")
+  ( "M-S-l"   , spawn "xflock4")
   , ( "M-S-s" , spawn "xfce4-session-logout --suspend")
   , ( "M-S-q"   , spawn "xfce4-session-logout --logout --fast")
     -- other additional keys
