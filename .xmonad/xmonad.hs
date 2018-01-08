@@ -51,7 +51,7 @@ pbManageHook = composeAll $ concat
 myManageHook = composeAll
                [
                  isFullscreen --> doFullFloat
-               , (className =? "Xfce4-notifyd") --> doF W.focusDown <+> doF copyToAll
+               , (className =? "Xfce4-notifyd") --> doF W.focusDown -- <+> doF copyToAll
                , (role =? "gimp-toolbox" <||> role =? "gimp-image-window") --> (ask >>= doF . W.sink)
                , (role =? "xpanel") --> (ask >>= doF . W.sink)
                ]
