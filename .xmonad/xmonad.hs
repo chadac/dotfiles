@@ -17,7 +17,16 @@ import XMonad.Prompt.Input
 import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig
 
-main = xmonad =<< xmobar myConfig
+myBar = "/home/chad/.cabal/bin/xmobar"
+myPP = xmobarPP {
+    ppCurrent = xmobarColor "#b58900" "" . wrap "<" ">"
+  , ppVisible = xmobarColor "#93a1a1" "" . wrap "(" ")"
+  , ppUrgent = xmobarColor "#dc322f" "#b58900"
+  , ppTitle = xmobarColor "#859900" "" . shorten 40
+}
+toggleStrutsKey XConfig { XMonad.modMask = modMask } = (modMask, xK_b)
+
+main = xmonad =<< statusBar myBar myPP toggleStrutsKey myConfig
   {
     startupHook = startupHook myConfig >> setWMName "LG3D"
     , logHook = ewmhDesktopsLogHook
@@ -26,7 +35,6 @@ main = xmonad =<< xmobar myConfig
 -- Main configuration, override the defaults to your liking.
 myConfig = ewmh defaultConfig {
   manageHook = pbManageHook <+> myManageHook
-                            <+> manageDocks
                             <+> manageHook defaultConfig
   , terminal = "xfce4-terminal"
   , workspaces = myWorkspaces
@@ -54,6 +62,7 @@ myManageHook = composeAll
                , (className =? "Xfce4-notifyd") --> doF W.focusDown -- <+> doF copyToAll
                , (role =? "gimp-toolbox" <||> role =? "gimp-image-window") --> (ask >>= doF . W.sink)
                , (role =? "xpanel") --> (ask >>= doF . W.sink)
+               , manageDocks
                ]
   where role = stringProperty "WM_WINDOW_ROLE"
 

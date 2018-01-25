@@ -1,19 +1,40 @@
 Config {
   font = "-*-Fixed-Bold-R-Normal-*-13-*-*-*-*-*-*-*"
-  , bgColor = "black"
-  , fgColor = "grey"
+  , bgColor = "#002b36" --base03
+  , fgColor = "#839496" --base0
   , position = TopW L 90
   , lowerOnStart = True
   , persistent = True
   , commands = [
-      Run Weather "KTUL" ["-t","Weather: <tempF>F <skyCondition>","-L","64","-H","85","--normal","green","--high","red","--low","lightblue"] 36000
-      , Run Cpu ["-L","3","-H","50","--normal","green","--high","red"] 10
-      , Run Memory ["-t","Mem: <usedratio>%"] 10
-      , Run Swap [] 10
-      , Run Date "%a %b %_d %l:%M" "date" 10
+      Run Weather "KTUL" [
+          "-t","Weather: <tempF>F <skyCondition>"
+          ,"-L","64","-H","85"
+          ,"--normal","#859900"
+          ,"--high","#dc322f"
+          ,"--low","#6c71c4"
+          ] 36000
+      , Run Cpu [
+          "-L","3","-H","50"
+          ,"--low","#6c71c4"
+          ,"--normal","#859900"
+          ,"--high","#dc322f"
+          ] 10
+      , Run Memory [
+          "-t","Mem: <usedratio>%"
+          ,"-L","10","-H","80"
+          ,"--low","#6c71c4"
+          ,"--normal","#859900"
+          ,"--high","#dc322f"
+          ] 10
+      , Run Swap [
+          "-L","1","-H","2"
+          ,"--normal","#859900"
+          ,"--high","#dc322f"
+          ] 10
+      , Run Date "<fc=#cb4b16>%a %b %_d %l:%M</fc>" "date" 10
       , Run StdinReader
       ]
   , sepChar = "%"
   , alignSep = "}{"
-  , template = "%StdinReader% }{ %cpu% * %memory% * %swap%    <fc=#ee9a00>%date%</fc> | %KTUL%"
+  , template = "%StdinReader% }{ %cpu% * %memory% * %swap%    %date% | %KTUL%"
 }

@@ -8,7 +8,7 @@ fi
 
 ## from https://wiki.haskell.org/Xmonad/Config_archive/John_Goerzen%27s_Configuration
 trayer --edge top --align right --SetDockType true --SetPartialStrut true \
-       --expand true --width 10 --transparent true --alpha 0 --tint 0x00000000 \
+       --expand true --width 10 --transparent true --alpha 0 --tint 0x002b36 \
        --height 17 &
 
 # xscreensaver -no-splash &
