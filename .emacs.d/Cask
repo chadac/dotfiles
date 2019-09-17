@@ -41,6 +41,7 @@
 (depends-on "scss-mode")
 (depends-on "shut-up")
 (depends-on "smart-tabs-mode")
+(depends-on "solarized-theme")
 (depends-on "use-package")
 (depends-on "web-mode")
 (depends-on "yaml-mode")

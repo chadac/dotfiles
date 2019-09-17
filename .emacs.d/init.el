@@ -90,6 +90,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-enabled-themes (quote (solarized-dark)))
+ '(custom-safe-themes
+   (quote
+    ("0598c6a29e13e7112cfbc2f523e31927ab7dce56ebb2016b567e1eff6dc1fd4f" default)))
  '(package-selected-packages
    (quote
-    (use-package elpy yaml-mode web-mode smart-tabs-mode scss-mode sass-mode python-mode projectile php-mode pallet neotree markdown-mode lua-mode jdee helm haskell-mode groovy-mode gradle-mode go-mode gitignore-mode flappymacs ess-R-data-view ensime dockerfile-mode coffee-mode auctex))))
+    (solarized-theme use-package elpy yaml-mode web-mode smart-tabs-mode scss-mode sass-mode python-mode projectile php-mode pallet neotree markdown-mode lua-mode jdee helm haskell-mode groovy-mode gradle-mode go-mode gitignore-mode flappymacs ess-R-data-view ensime dockerfile-mode coffee-mode auctex))))
