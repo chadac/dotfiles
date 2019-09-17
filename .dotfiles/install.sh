@@ -1,9 +1,10 @@
+#!/bin/bash
+
 git clone --single-branch --branch arch --bare https://github.com/chadac/dotfiles.git $HOME/.cfg
 function config {
    /usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME $@
 }
 mkdir -p .config-backup
-config checkout
 if [ $? = 0 ]; then
   echo "Checked out config.";
   else
