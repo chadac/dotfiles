@@ -2,4 +2,4 @@
 
 Swapped to chezmoi recently. For my own use:
 
-    sh -c "$(curl -fsLS git.io/chezmoi)" -- init --apply chadcr
+    sh -c "$(curl -fsLS git.io/chezmoi)" -- init --ssh --apply chadac
