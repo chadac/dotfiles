@@ -25,7 +25,6 @@
   kept-old-versions 2
   version-control t)
 
-
 ;; PROJECTILE
 (use-package projectile
   :ensure t
@@ -34,6 +33,11 @@
   (setq projectile-project-search-path '(("~/code/" . 3)))
   :bind (:map projectile-mode-map
               ("C-c p" . projectile-command-map)))
+
+;; MAGIT
+(use-package magit
+  :ensure t
+  :bind (("C-x g" . magit-status)))
 
 ;; EVIL
 ;; evil-mode for vim editing
@@ -201,10 +205,6 @@
 
 (use-package treemacs-icons-dired
   :hook (dired-mode . treemacs-icons-dired-enable-once)
-  :ensure t)
-
-(use-package treemacs-magit
-  :after (treemacs magit)
   :ensure t)
 
 ;; LANGUAGES

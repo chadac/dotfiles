@@ -1,0 +1,38 @@
+[user]
+	email = {{ .email }}
+	name = Chad Crawford
+[color]
+	ui = auto
+[core]
+	pager = less -FMRiX
+	excludesfile = {{ .chezmoi.homeDir }}/.config/git/gitignore
+[push]
+	default = simple
+[alias]
+	dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
+[sequence]
+	editor = emacs -nw
+[init]
+	defaultBranch = main
+{{ if (eq .machine "work/amazon/ubuntu" )}}
+[pm "default"]
+	target = mainline
+	description = https://code.amazon.com/packages/GitPM/blobs/heads/mainline/--/template/description/feature.md?raw=1
+[pm "hotfix"]
+	description = https://code.amazon.com/packages/GitPM/blobs/heads/mainline/--/template/description/hotfix.md?raw=1
+	target = mainline
+[pm "config"]
+	url = https://code.amazon.com/packages/GitPM/blobs/heads/mainline/--/template/config/github-flow.gitconfig?raw=1\n
+[pm]
+	categories = feature,hotfix,release
+[pm "feature"]
+	target = mainline
+	description = https://code.amazon.com/packages/GitPM/blobs/heads/mainline/--/template/description/feature.md?raw=1
+[pm "release"]
+	target = mainline
+	global = true
+	persist = true
+	description = https://code.amazon.com/packages/GitPM/blobs/heads/mainline/--/template/description/release.md?raw=1
+{{ end }}
+[credential]
+	helper = store --file ~/.my-credentials

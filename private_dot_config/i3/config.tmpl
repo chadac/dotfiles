@@ -197,9 +197,11 @@ bar {
 # CUSTOM CONFIGURATION BEGINS HERE
 #######################################################################
 
+{{ if (eq .machine "work/amazon/ubuntu" ) }}
 workspace 1 output DisplayPort-0
 workspace 2 output HDMI-A-0
 workspace 3 output DVI-D-0
+{{ end }}
 
 #######################################################################
 # automatically start i3-config-wizard to offer the user to create a
@@ -211,9 +213,11 @@ workspace 3 output DVI-D-0
 # Please remove the following exec line:
 #######################################################################
 exec --no-startup-id xrdb -merge ~/.Xresources
-exec --no-startup-id ~/.screenlayout/main.sh
 exec --no-startup-id nm-applet
 exec --no-startup-id pasystray
 exec --no-startup-id feh --randomize --bg-fill ~/.wallpapers/
 exec --no-startup-id dunst
+{{ if (eq .machine "work/amazon/ubuntu") }}
+exec --no-startup-id ~/.screenlayout/main.sh
 exec --no-startup-id /usr/local/amazon/var/acme/session_agents/connections_disco_agent/webapp/AmazonConnections
+{{ end }}
