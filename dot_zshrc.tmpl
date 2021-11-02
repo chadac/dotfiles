@@ -99,32 +99,8 @@ export EDITOR='emacs -nw'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-
-export PATH="$HOME/bin:$PATH"
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-export PATH="$HOME/.cask/bin:$PATH"
-
-export PATH=$HOME/.toolbox/bin:$PATH
-export PATH=$HOME/.poetry/bin:$PATH
-export PATH=/var/lib/flatpak/exports/bin:$HOME/.local/share/flatpak/exports/bin:$PATH
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-[ -s "/home/ANT.AMAZON.COM/chadcr/.jabba/jabba.sh" ] && source "/home/ANT.AMAZON.COM/chadcr/.jabba/jabba.sh"
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/ANT.AMAZON.COM/chadcr/.sdkman"
-[[ -s "/home/ANT.AMAZON.COM/chadcr/.sdkman/bin/sdkman-init.sh" ]] && source "/home/ANT.AMAZON.COM/chadcr/.sdkman/bin/sdkman-init.sh"
 export PATH=$HOME/.local/bin:$PATH
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
 
-source $HOME/.asdf/asdf.sh
-source $HOME/.asdf/completions/asdf.bash
-
+# direnv for directory-local configurations
 eval "$(direnv hook zsh)"

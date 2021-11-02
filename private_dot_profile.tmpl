@@ -28,17 +28,21 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
+# Default editor is emacs
 export VISUAL='emacs'
 export EDITOR='emacs -nw'
 
-# Poetry for Python packag management
-export PATH="$HOME/.poetry/bin:$PATH"
+# Brazil
+{{ if (eq .context "work/amazon") }}
+export PATH=$HOME/.toolbox/bin:$PATH
+{{ end }}
 
 # Flatpak
 export PATH=/var/lib/flatpak/exports/bin:$HOME/.local/share/flatpak/exports/bin:$PATH
 
-# asdf for Python version management
+# asdf for tool version management
 source $HOME/.asdf/asdf.sh
 source $HOME/.asdf/completions/asdf.bash
 
+# direnv for local directory configs
 eval "$(direnv hook zsh)"
