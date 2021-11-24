@@ -27,6 +27,16 @@
   kept-old-versions 2
   version-control t)
 
+;; COMPANY-MODE
+(use-package company
+  :ensure t
+  :bind (:map company-active-map
+              ("C-n" . company-select-next)
+              ("C-p" . company-select-previous))
+  :config
+  (setq company-idle-delay 0.3)
+  (global-company-mode t))
+
 ;; PROJECTILE
 (use-package projectile
   :ensure t
@@ -264,6 +274,10 @@
   :ensure t
   :config
   (editorconfig-mode 1))
+
+(use-package auctex
+  :ensure t
+  :defer t)
 
 ;; FORMATTING
 ;; Default tabs
