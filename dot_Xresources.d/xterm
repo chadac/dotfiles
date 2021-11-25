@@ -1,0 +1,43 @@
+XTerm*background:            #1c1c1c
+XTerm*foreground:            #626262
+XTerm*fading:                40
+XTerm*fadeColor:             #1c1c1c
+XTerm*cursorColor:           #8a8a8a
+XTerm*pointerColorBackground:#585858
+XTerm*pointerColorForeground:#8a8a8a
+
+!! black dark/light
+XTerm*color0:                #262626
+XTerm*color8:                #1c1c1c
+
+!! red dark/light
+XTerm*color1:                #d70000
+XTerm*color9:                #d75f00
+
+!! green dark/light
+XTerm*color2:                #5f8700
+XTerm*color10:               #585858
+
+!! yellow dark/light
+XTerm*color3:                #af8700
+XTerm*color11:               #626262
+
+!! blue dark/light
+XTerm*color4:                #0087ff
+XTerm*color12:               #808080
+
+!! magenta dark/light
+XTerm*color5:                #af005f
+XTerm*color13:               #5f5faf
+
+!! cyan dark/light
+XTerm*color6:                #00afaf
+XTerm*color14:               #8a8a8a
+
+!! white dark/light
+XTerm*color7:                #e4e4e4
+XTerm*color15:               #ffffd7
+
+!! set font size
+XTerm*faceName:              Monospace
+XTerm*faceSize:              12

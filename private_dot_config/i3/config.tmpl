@@ -36,7 +36,7 @@ set $mod Mod4
 floating_modifier $mod
 
 # start a terminal
-bindsym $mod+Return exec xfce4-terminal
+bindsym $mod+Return exec xterm
 
 # kill focused window
 bindsym $mod+Shift+q kill
@@ -201,6 +201,10 @@ bar {
 workspace 1 output DisplayPort-0
 workspace 2 output HDMI-A-0
 workspace 3 output DVI-D-0
+{{ else if (eq .machine "home/arch" ) }}
+workspace 1 output HDMI-0
+workspace 2 output DP-2
+workspace 3 output DP-0
 {{ end }}
 
 #######################################################################
