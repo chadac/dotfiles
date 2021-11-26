@@ -28,12 +28,18 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
+PATH="$HOME/bin:$PATH"
+
 # Default editor is emacs
 export VISUAL='emacs'
 export EDITOR='emacs -nw'
 
-# Brazil
 {{ if (eq .context "work/amazon") }}
+if [ -e "/apollo/env/SDETools/bin" ]; then
+    export PATH="/apollo/env/SDETools/bin:$PATH"
+fi
+
+# Brazil
 export PATH=$HOME/.toolbox/bin:$PATH
 {{ end }}
 

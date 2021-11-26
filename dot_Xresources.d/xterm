@@ -1,42 +1,65 @@
-XTerm*background:            #1c1c1c
-XTerm*foreground:            #626262
+XTerm*background:            S_base03
+XTerm*foreground:            S_base0
 XTerm*fading:                40
-XTerm*fadeColor:             #1c1c1c
-XTerm*cursorColor:           #8a8a8a
-XTerm*pointerColorBackground:#585858
-XTerm*pointerColorForeground:#8a8a8a
+XTerm*fadeColor:             S_base03
+XTerm*cursorColor:           S_base1
+XTerm*pointerColorBackground:S_base01
+XTerm*pointerColorForeground:S_base1
+! XTerm*background:            #1c1c1c
+! XTerm*foreground:            #626262
+! XTerm*fading:                40
+! XTerm*fadeColor:             #1c1c1c
+! XTerm*cursorColor:           #8a8a8a
+! XTerm*pointerColorBackground:#585858
+! XTerm*pointerColorForeground:#8a8a8a
 
 !! black dark/light
-XTerm*color0:                #262626
-XTerm*color8:                #1c1c1c
+XTerm*color0:                S_base02
+XTerm*color8:                S_base03
+! XTerm*color0:                #262626
+! XTerm*color8:                #1c1c1c
 
 !! red dark/light
-XTerm*color1:                #d70000
-XTerm*color9:                #d75f00
+XTerm*color1:                S_red
+XTerm*color9:                S_orange
+! XTerm*color1:                #d70000
+! XTerm*color9:                #d75f00
 
 !! green dark/light
-XTerm*color2:                #5f8700
-XTerm*color10:               #585858
+XTerm*color2:                S_green
+XTerm*color10:               S_base01
+! XTerm*color2:                #5f8700
+! XTerm*color10:               #585858
 
 !! yellow dark/light
-XTerm*color3:                #af8700
-XTerm*color11:               #626262
+XTerm*color3:                S_yellow
+XTerm*color11:               S_base00
+! XTerm*color3:                #af8700
+! XTerm*color11:               #626262
 
 !! blue dark/light
-XTerm*color4:                #0087ff
-XTerm*color12:               #808080
+XTerm*color4:                S_blue
+XTerm*color12:               S_base0
+! XTerm*color4:                #0087ff
+! XTerm*color12:               #808080
 
 !! magenta dark/light
-XTerm*color5:                #af005f
-XTerm*color13:               #5f5faf
+XTerm*color5:                S_magenta
+XTerm*color13:               S_violet
+! XTerm*color5:                #af005f
+! XTerm*color13:               #5f5faf
 
 !! cyan dark/light
-XTerm*color6:                #00afaf
-XTerm*color14:               #8a8a8a
+XTerm*color6:                S_cyan
+XTerm*color14:               S_base1
+! XTerm*color6:                #00afaf
+! XTerm*color14:               #8a8a8a
 
 !! white dark/light
-XTerm*color7:                #e4e4e4
-XTerm*color15:               #ffffd7
+XTerm*color7:                S_base2
+XTerm*color15:               S_base3
+! XTerm*color7:                #e4e4e4
+! XTerm*color15:               #ffffd7
 
 !! set font size
 XTerm*faceName:              Monospace

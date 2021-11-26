@@ -38,12 +38,12 @@ esac
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
+  # We have color support; assume it's compliant with Ecma-48
+  # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+  # a case would tend to support setf rather than setaf.)
+  color_prompt=yes
     else
-	color_prompt=
+  color_prompt=
     fi
 fi
 
@@ -116,20 +116,16 @@ if [ -x /usr/lib/command-not-found -o -x /usr/share/command-not-found/command-no
     function command_not_found_handle {
         # check because c-n-f could've been removed in the meantime
         if [ -x /usr/lib/command-not-found ]; then
-	   /usr/lib/command-not-found -- "$1"
+     /usr/lib/command-not-found -- "$1"
            return $?
         elif [ -x /usr/share/command-not-found/command-not-found ]; then
-	   /usr/share/command-not-found/command-not-found -- "$1"
+     /usr/share/command-not-found/command-not-found -- "$1"
            return $?
-	else
-	   printf "%s: command not found\n" "$1" >&2
-	   return 127
-	fi
+  else
+     printf "%s: command not found\n" "$1" >&2
+     return 127
+  fi
     }
-fi
-
-if [ -e "/apollo/env/SDETools/bin" ]; then
-        export PATH="/apollo/env/SDETools/bin:$PATH"
 fi
 
 alias ..="cd .."
@@ -139,21 +135,6 @@ alias .....="cd ../../../.."
 alias mark="pwd > ~/.sd"
 alias port='cd $(cat ~/.sd)'
 
-export PATH="$HOME/bin:$PATH"
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-export PATH="$HOME/.cask/bin:$PATH"
-
-export PATH=$HOME/.toolbox/bin:$PATH
-export PATH=$HOME/.poetry/bin:$PATH
 export PATH=/var/lib/flatpak/exports/bin:$HOME/.local/share/flatpak/exports/bin:$PATH
 
 [ -s "/home/ANT.AMAZON.COM/chadcr/.jabba/jabba.sh" ] && source "/home/ANT.AMAZON.COM/chadcr/.jabba/jabba.sh"
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/ANT.AMAZON.COM/chadcr/.sdkman"
-[[ -s "/home/ANT.AMAZON.COM/chadcr/.sdkman/bin/sdkman-init.sh" ]] && source "/home/ANT.AMAZON.COM/chadcr/.sdkman/bin/sdkman-init.sh"
-
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
