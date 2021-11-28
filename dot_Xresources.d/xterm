@@ -64,3 +64,8 @@ XTerm*color15:               S_base3
 !! set font size
 XTerm*faceName:              Monospace
 XTerm*faceSize:              12
+
+!! override keybindings
+XTerm*translations: #override \
+                    Shift Ctrl <Key> C: copy-selection(CLIPBOARD) \n\
+                    Shift Ctrl <Key> V: insert-selection(CLIPBOARD)
