@@ -1,3 +1,4 @@
 nodejs lts-gallium
 python 3.10.0
 java adoptopenjdk-openj9-8.0.292+10.openj9-0.26.0
+maven 3.8.4
