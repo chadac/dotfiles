@@ -65,7 +65,9 @@
   :ensure t
   :init
   (setq lsp-keymap-prefix "C-c l")
-  ;; :config
+  :config
+  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]build\\'")
+  (add-to-list 'lsp-file-watch-ignored-files "[/\\\\]\\.pyc\\")
   ;; (lsp-register-custom-settings
   ;;  '(("pyls.plugins.pyls_mypy.enabled" t t)
   ;;    ("pyls.plugins.pyls_mypy.live_mode" nil t)
