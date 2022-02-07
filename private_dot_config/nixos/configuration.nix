@@ -8,6 +8,8 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./display.nix
+      ./vfio.nix
     ];
 
   # Use the systemd-boot EFI boot loader.
@@ -19,7 +21,7 @@
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Set your time zone.
-  # time.timeZone = "Europe/Amsterdam";
+  time.timeZone = "America/Los_Angeles";
 
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
@@ -32,19 +34,14 @@
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Select internationalisation properties.
-  # i18n.defaultLocale = "en_US.UTF-8";
+  i18n.defaultLocale = "en_US.UTF-8";
   # console = {
   #   font = "Lat2-Terminus16";
   #   keyMap = "us";
   # };
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.xserver.displayManager.lightdm.enable = true;
-  services.xserver.displayManager.autoLogin.enable = true;
   services.xserver.displayManager.autoLogin.user = "chadcr";
-  services.xserver.displayManager.defaultSession = "none+i3";
-  services.xserver.windowManager.i3.enable = true;
 
   # Configure keymap in X11
   services.xserver.layout = "us";
@@ -69,10 +66,11 @@
     isNormalUser = true;
     home = "/home/chadac";
     description = "Chad Crawford";
-    extraGroups = [ "wheel" "networkmanager" ];
+    extraGroups = [ "wheel" "networkmanager" "libvirtd" ];
   };
 
-  # fuck my life
+
+  # TODO: Eliminate this line
   nixpkgs.config.allowUnfree = true;
 
   # List packages installed in system profile. To search, run:
@@ -90,10 +88,6 @@
     # Build tools
     gcc
     gnumake
-    # Virtualization
-    libvirt
-    qemu
-    virt-manager
     # Desktop
     i3
     arandr

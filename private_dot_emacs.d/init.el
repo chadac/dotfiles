@@ -264,6 +264,11 @@
   :ensure t
   :mode "\\.groovy\\'")
 
+;; Nix
+(use-package nix-mode
+  :ensure t
+  :mode "\\.nix\\'")
+
 ;; MISC
 ;; Direnv for directory-local commands and such
 (use-package direnv
