@@ -27,7 +27,6 @@
     enable = true;
     onBoot = "ignore";
     onShutdown = "shutdown";
-    qemu.runAsRoot = true;
     qemu.ovmf.enable = true;
     qemu.verbatimConfig =
       ''
@@ -53,6 +52,7 @@
           systemd
           ripgrep
           sd
+          xorg.xrandr
         ];
       };
       in
@@ -109,23 +109,10 @@
         '';
       mode = "0755";
     };
-    "libvirt/hooks/kvm.conf" = {
-      text =
-        ''
-        VIRSH_GPU_VIDEO=pci_0000_04_00_0
-        VIRSH_GPU_AUDIO=pci_0000_04_00_1
-        '';
-      mode = "0755";
-    };
     "libvirt/hooks/qemu.d/workspace/prepare/begin/start.sh" = {
       text =
         ''
         #!/run/current-system/sw/bin/bash
-
-        source "/etc/libvirt/hooks/kvm.conf"
-
-        # Reconfigure monitors
-        . "/home/chadac/.screenlayout/vm.sh"
 
         # Unbind VTconsole
         echo 0 > /sys/class/vtconsole/vtcon0/bind
@@ -138,8 +125,7 @@
         virsh nodedev-detach $VIRSH_GPU_VIDEO
         virsh nodedev-detach $VIRSH_GPU_AUDIO
 
-        # Load vfio module
-        modprobe vfio-pci
+        XAUTHORITY=/home/chadac/.Xauthority /bin/sh "/home/chadac/.screenlayout/vm.sh"
         '';
       mode = "0755";
     };
@@ -148,17 +134,12 @@
         ''
         #!/run/current-system/sw/bin/bash
 
-        source "/etc/libvirt/hooks/kvm.conf"
-
-        virsh nodedev-reattach $VIRSH_GPU_VIDEO
-        virsh nodedev-reattach $VIRSH_GPU_AUDIO
-
-        . "/home/chacac/.screenlayout/main.sh"
+        echo 1 > /sys/class/vtconsole/vtcon0/bind
+        echo 1 > /sys/class/vtconsole/vtcon1/bind
 
         echo efi-framebuffer.0 > /sys/bus/platform/drivers/efi-framebuffer/bind
 
-        echo 1 > /sys/class/vtconsole/vtcon0/bind
-        echo 1 > /sys/class/vtconsole/vtcon1/bind
+        XAUTHORITY=/home/chadac/.Xauthority /bin/sh "/home/chacac/.screenlayout/main.sh"
         '';
       mode = "0755";
     };
