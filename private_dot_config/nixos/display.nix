@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 {
   services.xserver.enable = true;
   services.xserver.videoDrivers = [ "nvidia" ];

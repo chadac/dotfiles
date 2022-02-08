@@ -7,6 +7,7 @@
 {
   imports =
     [ # Include the results of the hardware scan.
+      <home-manager/nixos>
       ./hardware-configuration.nix
       ./display.nix
       ./vfio.nix
@@ -54,6 +55,24 @@
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
+  # Configuring zsh directly
+  programs.zsh = {
+    enable = true;
+    ohMyZsh.enable = true;
+    loginShellInit =
+    ''
+    if [ -f $HOME/.zprofile ]; then
+      source $HOME/.zprofile
+    fi
+    '';
+    shellInit =
+    ''
+    if [ -f $HOME/.zshrc ]; then
+      . $HOME/.zshrc
+    fi
+    '';
+  };
+
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
 
@@ -67,8 +86,12 @@
     home = "/home/chadac";
     description = "Chad Crawford";
     extraGroups = [ "wheel" "networkmanager" "libvirtd" ];
+    shell = pkgs.zsh;
   };
 
+  home-manager.users.chadac = {
+    home.packages = [ pkgs.atool pkgs.httpie pkgs.direnv ];
+  };
 
   # TODO: Eliminate this line
   nixpkgs.config.allowUnfree = true;
@@ -84,6 +107,8 @@
     chezmoi
     wget
     asdf-vm
+    binutils
+    pciutils
     # Editing tools
     # Build tools
     gcc
