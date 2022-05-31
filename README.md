@@ -1,5 +1,7 @@
 # Chad's dotfiles
 
-Swapped to chezmoi recently. For my own use:
+I'm using nix for everything now!
 
-    sh -c "$(curl -fsLS git.io/chezmoi)" -- init --ssh --apply chadac
+Using the bare repository method once again: https://www.atlassian.com/git/tutorials/dotfiles
+
+TODO: Setup instructions.
