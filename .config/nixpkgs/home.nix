@@ -36,6 +36,7 @@
     shellAliases = {
       # https://www.atlassian.com/git/tutorials/dotfiles
       config = "git --git-dir=$HOME/.cfg/ --work-tree=$HOME";
+      docker = "podman";
     };
 
     oh-my-zsh = {
@@ -64,6 +65,9 @@
     wget
     binutils
     pciutils
+
+    # Virtualisation
+    podman
 
     # Editing tools
     texlive.combined.scheme-full

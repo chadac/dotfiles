@@ -1,0 +1,19 @@
+[user]
+	email = chad@cacrawford.org
+	name = Chad Crawford
+[color]
+	ui = auto
+[core]
+	pager = less -FMRiX
+	excludesfile = /home/chadac/.config/git/gitignore
+[push]
+	default = simple
+[alias]
+	dag = log --graph --format='format:%C(yellow)%h%C(reset) %C(blue)\"%an\" <%ae>%C(reset) %C(magenta)%cr%C(reset)%C(auto)%d%C(reset)%n%s' --date-order
+[sequence]
+	editor = emacs -nw
+[init]
+	defaultBranch = main
+
+[credential]
+	helper = store --file ~/.my-credentials

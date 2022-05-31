@@ -61,6 +61,14 @@
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
+  virtualisation = {
+    podman = {
+      enable = true;
+
+      dockerCompat = true;
+    };
+  };
+
   # # Configuring zsh directly
   # programs.zsh = {
   #   enable = true;
