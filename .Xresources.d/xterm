@@ -1,3 +1,10 @@
+XTerm.vt100.locale: false
+XTerm.vt100.utf8: true
+XTerm.vt100.metaSendsEscape: true
+XTerm.vt100.backarrowKey: false
+XTerm.vt100.saveLines: 4096
+XTerm.ttyModes: erase ^?
+
 XTerm*background:            S_base03
 XTerm*foreground:            S_base0
 XTerm*fading:                40
