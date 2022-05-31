@@ -1,10 +1,15 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
+let
+  machine-name = import ./machine.nix;
+  gen-machine-config = import (./machine-config + "/${machine-name}.nix");
+  machine = gen-machine-config pkgs;
+in
 {
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
-  home.username = "chadac";
-  home.homeDirectory = "/home/chadac";
+  home.username = machine.username;
+  home.homeDirectory = machine.homeDirectory;
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
@@ -26,18 +31,21 @@
     autocd = true;
     dotDir = ".config/zsh";
     enableAutosuggestions = true;
-    enableCompletion = true;
+    enableCompletion = machine.zsh.enableCompletion;
 
     initExtra =
     ''
     eval "$(direnv hook zsh)"
-    '';
+    '' + machine.zsh.initExtra;
 
-    shellAliases = {
-      # https://www.atlassian.com/git/tutorials/dotfiles
-      config = "git --git-dir=$HOME/.cfg/ --work-tree=$HOME";
-      docker = "podman";
-    };
+    shellAliases = lib.mkMerge [
+      machine.zsh.shellAliases
+      {
+        # https://www.atlassian.com/git/tutorials/dotfiles
+        config = "git --git-dir=$HOME/.cfg/ --work-tree=$HOME";
+        docker = "podman";
+      }
+    ];
 
     oh-my-zsh = {
       enable = true;
@@ -51,6 +59,46 @@
   programs.fzf = {
     enable = true;
     enableZshIntegration = true;
+  };
+
+  programs.git = {
+    enable = true;
+
+    userName = "Chad Crawford";
+    userEmail = machine.git.userEmail;
+
+    ignores = [
+      # emacs
+      "*~"
+      "/.emacs.desktop"
+      "/.emacs.desktop.lock"
+      "*.elc"
+      "auto-save-list"
+      "tramp"
+      ".\#*"
+      # directory config
+      ".dir-locals.el"
+      # nix shell
+      "shell.nix"
+      # org-mode
+      ".org-id-locations"
+      "*_archive"
+      # pyenv
+      ".python-version"
+      # python
+      "__pycache__/"
+      "*.pyc"
+      # direnv
+      ".envrc"
+      # asdf
+      ".tool-versions"
+    ];
+
+    extraConfig = {
+      init = {
+        defaultBranch = "main";
+      };
+    };
   };
 
   home.packages = with pkgs; [
@@ -96,5 +144,5 @@
 
     # Entertainment
     spotify
-  ];
+  ] ++ machine.home.packages;
 }
