@@ -32,11 +32,16 @@ in
     dotDir = ".config/zsh";
     enableAutosuggestions = true;
     enableCompletion = machine.zsh.enableCompletion;
+    enableSyntaxHighlighting = true;
 
     initExtra =
     ''
     eval "$(direnv hook zsh)"
     '' + machine.zsh.initExtra;
+
+    localVariables = {
+      ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "fg=10";
+    };
 
     shellAliases = lib.mkMerge [
       machine.zsh.shellAliases
@@ -54,6 +59,18 @@ in
         "git"
       ];
     };
+
+    plugins = [
+      {
+        name = "zsh-256color";
+        src = pkgs.fetchFromGitHub {
+          owner = "chrissicool";
+          repo = "zsh-256color";
+          rev = "9d8fa1015dfa895f2258c2efc668bc7012f06da6";
+          sha256 = "14pfg49mzl32ia9i9msw9412301kbdjqrm7gzcryk4wh6j66kps1";
+        };
+      }
+    ];
   };
 
   programs.fzf = {
