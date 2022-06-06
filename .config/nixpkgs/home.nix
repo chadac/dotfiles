@@ -118,6 +118,10 @@ in
     };
   };
 
+  xdg = {
+    enable = true;
+  };
+
   home.packages = with pkgs; [
     # Text editors
     vim
