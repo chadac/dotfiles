@@ -10,6 +10,9 @@
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
+(if (file-exists-p "./.emacs.d/init.local.el")
+    (load-file "./.emacs.d/init.local.el"))
+
 ;; Require emacs to prompt when exiting
 (setq confirm-kill-emacs 'yes-or-no-p)
 
