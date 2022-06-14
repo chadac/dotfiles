@@ -140,11 +140,13 @@ in
 
     # Editing tools
     texlive.combined.scheme-full
-    fontconfig
 
     # Build tools
     gcc
     gnumake
+
+    # Development
+    nodePackages.pyright
 
     # Desktop
     i3
