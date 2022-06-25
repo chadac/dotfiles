@@ -21,8 +21,6 @@ in
   # changes in each release.
   home.stateVersion = "21.11";
 
-  services.lorri.enable = true;
-
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 

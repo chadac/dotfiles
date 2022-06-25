@@ -66,7 +66,7 @@
 
   environment.systemPackages = with pkgs; [
     virt-manager
-    gnome3.dconf
+    dconf
     libguestfs
   ];
 
