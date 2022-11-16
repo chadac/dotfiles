@@ -36,6 +36,9 @@
     pkgs.brgenml1lpr
     pkgs.brgenml1cupswrapper
   ];
+
+  manual.manpages.enable = false;
+
   # The global useDHCP flag is deprecated, therefore explicitly set to false here.
   # Per-interface useDHCP will be mandatory in the future, so this generated config
   # replicates the default behaviour.
@@ -67,6 +70,7 @@
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
+  boot.enableContainers = false;
   virtualisation = {
     podman = {
       enable = true;
@@ -148,10 +152,6 @@
   #   # Entertainment
   #   spotify
   # ];
-
-  fonts.fonts = with pkgs; [
-    font-awesome
-  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.

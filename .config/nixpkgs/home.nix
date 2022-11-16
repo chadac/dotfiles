@@ -4,7 +4,11 @@ let
   machine-name = import ./machine.nix;
   gen-machine-config = import (./machine-config + "/${machine-name}.nix");
   machine = gen-machine-config pkgs;
+<<<<<<< Updated upstream
   python-env = pkgs.python310.withPackages(p: with p; [ pip pipx ]);
+=======
+  pipx = import ./dev/pipx.nix pkgs;
+>>>>>>> Stashed changes
 in
 {
   # Home Manager needs a bit of information about you and the
@@ -22,6 +26,8 @@ in
   # the Home Manager release notes for a list of state version
   # changes in each release.
   home.stateVersion = "21.11";
+
+  manual.manpages.enable = false;
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
@@ -157,13 +163,21 @@ in
     # podman
     # podman-compose
 
+<<<<<<< Updated upstream
     # Editing tools
     # texlive.combined.scheme-full
 
+=======
+>>>>>>> Stashed changes
     # Build tools
+    gnuapl
     gcc
     gnumake
+<<<<<<< Updated upstream
     python-env
+=======
+    pipx
+>>>>>>> Stashed changes
 
     # Development
     nodePackages.pyright
