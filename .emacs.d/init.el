@@ -1,7 +1,8 @@
 ;; Add LPA
 (require 'package) ;; You might already have this line
-(add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
+(add-to-list
+ 'package-archives
+ '("melpa" . "https://melpa.org/packages/"))
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/")))
@@ -45,7 +46,7 @@
   :ensure t
   :init
   (projectile-mode +1)
-  (setq projectile-project-search-path '(("~/code/" . 3)))
+  ;; (setq projectile-project-search-path '(("~/code/" . 3)))
   :bind (:map projectile-mode-map
               ("C-c p" . projectile-command-map)))
 
@@ -62,47 +63,39 @@
   :config
   (evil-mode))
 
-;; LSP
-;; lsp-mode for language server
-(use-package lsp-mode
-  :ensure t
-  :init
-  (setq lsp-keymap-prefix "C-c l")
-  :config
-  (add-to-list 'lsp-file-watch-ignored-directories "[/\\\\]build\\'")
-  (add-to-list 'lsp-file-watch-ignored-files "[/\\\\]\\.pyc\\")
-  ;; (lsp-register-custom-settings
-  ;;  '(("pyls.plugins.pyls_mypy.enabled" t t)
-  ;;    ("pyls.plugins.pyls_mypy.live_mode" nil t)
-  ;;    ("pyls.plugins.flake8.enabled" t t)
-  ;;    ("pyls.plugins.pyls_black.enabled" t t)
-  ;;    ("pyls.plugins.pyls_isort.enabled" t t)))
-  :commands lsp
-  :hook
-  (python-mode . lsp)
-)
+;; ;; LSP
+;; ;; lsp-mode for language server
+;; (use-package lsp-mode
+;;   :ensure t
+;;   :init
+;;   (setq lsp-keymap-prefix "C-c l")
+;;   :config
+;;   :commands lsp
+;;   :hook
+;;   (python-mode . lsp)
+;; )
 
-(use-package lsp-treemacs
-  :after (treemacs lsp)
-  :ensure t
-  :config
-  (lsp-treemacs-sync-mode 1))
+;; (use-package lsp-treemacs
+;;   :after (treemacs lsp)
+;;   :ensure t
+;;   :config
+;;   (lsp-treemacs-sync-mode 1))
 
-(use-package lsp-ui
-  :ensure t
-  :commands lsp-ui-mode)
+;; (use-package lsp-ui
+;;   :ensure t
+;;   :commands lsp-ui-mode)
 
-;; Add metals backend for lsp-mode
-(use-package lsp-metals
-  :ensure t
-  :config (setq lsp-metals-treeview-show-when-views-received t))
+;; ;; Add metals backend for lsp-mode
+;; (use-package lsp-metals
+;;   :ensure t
+;;   :config (setq lsp-metals-treeview-show-when-views-received t))
 
-;; Python LSP server
-(use-package lsp-pyright
-  :ensure t
-  :hook (python-mode . (lambda ()
-                          (require 'lsp-pyright)
-                          (lsp))))  ; or lsp-deferred
+;; ;; Python LSP server
+;; (use-package lsp-pyright
+;;   :ensure t
+;;   :hook (python-mode . (lambda ()
+;;                           (require 'lsp-pyright)
+;;                           (lsp))))  ; or lsp-deferred
 
 ;; Lsp-mode supports snippets, but in order for them to work you need to use yasnippet
 ;; If you don't want to use snippets set lsp-enable-snippet to nil in your lsp-mode settings
@@ -224,23 +217,23 @@
   :hook (dired-mode . treemacs-icons-dired-enable-once)
   :ensure t)
 
-;; LANGUAGES
-;; Python
+;; ;; LANGUAGES
+;; ;; Python
 (use-package python
   :ensure t
   :mode ("\\.py\\'" . python-mode))
 
-;; Custom formatting of docstrings
-(use-package python-docstring
-  :ensure t
-  :hook
-  (python-mode . python-docstring-mode))
+;; ;; Custom formatting of docstrings
+;; (use-package python-docstring
+;;   :ensure t
+;;   :hook
+;;   (python-mode . python-docstring-mode))
 
-;; Python virtual env management
-(use-package pyvenv
-  :ensure t
-  :init
-  (setenv "WORKON_HOME" "~/.pyenv/versions"))
+;; ;; Python virtual env management
+;; (use-package pyvenv
+;;   :ensure t
+;;   :init
+;;   (setenv "WORKON_HOME" "~/.pyenv/versions"))
 
 ;; Typescript
 (use-package typescript-mode
@@ -256,6 +249,11 @@
 (use-package yaml-mode
     :ensure t
     :mode "\\.yaml\\'")
+
+;; TOML
+(use-package toml-mode
+    :ensure t
+    :mode "\\.toml\\'")
 
 ;; Gradle
 (use-package gradle-mode
@@ -276,6 +274,9 @@
 ;; Direnv for directory-local commands and such
 (use-package direnv
   :ensure t
+  :hook
+  (before-hack-local-variables . #'direnv-update-environment)
+  (prog-mode-hook . #'direnv--maybe-update-environment)
   :config
   (direnv-mode))
 
@@ -348,9 +349,10 @@
 ;; )
 
 ;; Enable nice rendering of diagnostics like compile errors.
-;; (use-package flycheck
-;;   :ensure t
-;;   :init (global-flycheck-mode))
+(use-package flycheck
+  :ensure t
+  :init
+  (global-flycheck-mode 1))
 
 ;; Babel
 (org-babel-do-load-languages

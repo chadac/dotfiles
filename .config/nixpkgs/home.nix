@@ -4,12 +4,14 @@ let
   machine-name = import ./machine.nix;
   gen-machine-config = import (./machine-config + "/${machine-name}.nix");
   machine = gen-machine-config pkgs;
+  python-env = pkgs.python310.withPackages(p: with p; [ pip pipx ]);
 in
 {
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
   home.username = machine.username;
   home.homeDirectory = machine.homeDirectory;
+
 
   # This value determines the Home Manager release that your
   # configuration is compatible with. This helps avoid breakage
@@ -24,6 +26,16 @@ in
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 
+  home.sessionVariables = {
+    EDITOR = "emacs -nw";
+    PIP_USE_FEATURE = "truststore";
+    PIPX_BIN_DIR = "$HOME/.local/pipx/bin";
+  };
+
+  home.sessionPath = [
+    "$HOME/.local/pipx/bin"
+  ];
+
   programs.zsh = {
     enable = true;
     autocd = true;
@@ -35,10 +47,15 @@ in
     initExtra =
     ''
     eval "$(direnv hook zsh)"
+    if [ -f $HOME/.asdf/asdf.sh ]; then
+      . $HOME/.asdf/asdf.sh
+    fi
+    export PIPX_BIN_DIR
     '' + machine.zsh.initExtra;
 
     localVariables = {
       ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "fg=10";
+      NIX_CONF_DIR = "$HOME/.config/nix";
     };
 
     shellAliases = lib.mkMerge [
@@ -46,7 +63,8 @@ in
       {
         # https://www.atlassian.com/git/tutorials/dotfiles
         config = "git --git-dir=$HOME/.cfg/ --work-tree=$HOME";
-        docker = "podman";
+        # docker = "podman";
+        # docker-compose = "podman-compose";
       }
     ];
 
@@ -105,6 +123,7 @@ in
       "*.pyc"
       # direnv
       ".envrc"
+      ".direnv/"
       # asdf
       ".tool-versions"
     ];
@@ -132,16 +151,19 @@ in
     wget
     binutils
     pciutils
+    act
 
     # Virtualisation
-    podman
+    # podman
+    # podman-compose
 
     # Editing tools
-    texlive.combined.scheme-full
+    # texlive.combined.scheme-full
 
     # Build tools
     gcc
     gnumake
+    python-env
 
     # Development
     nodePackages.pyright
@@ -160,7 +182,7 @@ in
 
     # Chat
     discord
-    slack-dark
+    slack
     signal-desktop
 
     # Entertainment
