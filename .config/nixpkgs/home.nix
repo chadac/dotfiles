@@ -4,11 +4,8 @@ let
   machine-name = import ./machine.nix;
   gen-machine-config = import (./machine-config + "/${machine-name}.nix");
   machine = gen-machine-config pkgs;
-<<<<<<< Updated upstream
-  python-env = pkgs.python310.withPackages(p: with p; [ pip pipx ]);
-=======
+  python-env = pkgs.python310.withPackages(p: with p; [ pip ]);
   pipx = import ./dev/pipx.nix pkgs;
->>>>>>> Stashed changes
 in
 {
   # Home Manager needs a bit of information about you and the
@@ -53,9 +50,6 @@ in
     initExtra =
     ''
     eval "$(direnv hook zsh)"
-    if [ -f $HOME/.asdf/asdf.sh ]; then
-      . $HOME/.asdf/asdf.sh
-    fi
     export PIPX_BIN_DIR
     '' + machine.zsh.initExtra;
 
@@ -163,21 +157,12 @@ in
     # podman
     # podman-compose
 
-<<<<<<< Updated upstream
-    # Editing tools
-    # texlive.combined.scheme-full
-
-=======
->>>>>>> Stashed changes
     # Build tools
     gnuapl
     gcc
     gnumake
-<<<<<<< Updated upstream
     python-env
-=======
     pipx
->>>>>>> Stashed changes
 
     # Development
     nodePackages.pyright

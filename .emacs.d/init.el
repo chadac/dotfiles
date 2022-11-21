@@ -2,10 +2,12 @@
 (require 'package) ;; You might already have this line
 (add-to-list
  'package-archives
- '("melpa" . "https://melpa.org/packages/"))
+ '("melpa" . "https://stable.melpa.org/packages/"))
+
 (when (< emacs-major-version 24)
   ;; For important compatibility libraries like cl-lib
   (add-to-list 'package-archives '("gnu" . "https://elpa.gnu.org/packages/")))
+
 (package-initialize)
 (unless package-archive-contents   (package-refresh-contents))
 (unless (package-installed-p 'use-package)
@@ -41,6 +43,11 @@
   (setq company-idle-delay 0.3)
   (global-company-mode t))
 
+(use-package company-jedi
+  :ensure t
+  :config
+  (add-to-list 'company-backends 'company-jedi))
+
 ;; APL
 (use-package gnu-apl-mode
   :ensure t)
@@ -66,40 +73,6 @@
   :init
   :config
   (evil-mode))
-
-;; ;; LSP
-;; ;; lsp-mode for language server
-;; (use-package lsp-mode
-;;   :ensure t
-;;   :init
-;;   (setq lsp-keymap-prefix "C-c l")
-;;   :config
-;;   :commands lsp
-;;   :hook
-;;   (python-mode . lsp)
-;; )
-
-;; (use-package lsp-treemacs
-;;   :after (treemacs lsp)
-;;   :ensure t
-;;   :config
-;;   (lsp-treemacs-sync-mode 1))
-
-;; (use-package lsp-ui
-;;   :ensure t
-;;   :commands lsp-ui-mode)
-
-;; ;; Add metals backend for lsp-mode
-;; (use-package lsp-metals
-;;   :ensure t
-;;   :config (setq lsp-metals-treeview-show-when-views-received t))
-
-;; ;; Python LSP server
-;; (use-package lsp-pyright
-;;   :ensure t
-;;   :hook (python-mode . (lambda ()
-;;                           (require 'lsp-pyright)
-;;                           (lsp))))  ; or lsp-deferred
 
 ;; Lsp-mode supports snippets, but in order for them to work you need to use yasnippet
 ;; If you don't want to use snippets set lsp-enable-snippet to nil in your lsp-mode settings
@@ -275,14 +248,6 @@
   :mode "\\.nix\\'")
 
 ;; MISC
-;; Direnv for directory-local commands and such
-(use-package direnv
-  :ensure t
-  :hook
-  (before-hack-local-variables . #'direnv-update-environment)
-  (prog-mode-hook . #'direnv--maybe-update-environment)
-  :config
-  (direnv-mode))
 
 ;; Editorconfig for unified formatting standards
 (use-package editorconfig
@@ -312,51 +277,24 @@
 (setq whitespace-style '(face empty tabs lines-tail trailing))
 (global-whitespace-mode t)
 
-;; ;; pyenv
-;; (setq exec-path (append exec-path '("~/.pyenv/bin" "~/.pyenv/shims")))
-;; (pyenv-mode)
-
-;; ;; elpy
-;; (use-package elpy
-;;   :ensure t
-;;   :init
-;;   (elpy-enable))
-
-;; (setq elpy-rpc-python-command (expand-file-name "~/.pyenv/shims/python"))
-;; (setq python-check-command (expand-file-name "~/.pyenv/shims/flake8"))
-;; (setq python-shell-interpreter (expand-file-name "~/.pyenv/shims/ipython")
-;;       python-shell-interpreter-args "-i --simple-prompt"
-;;       python-shell-prompt-detect-failure-warning nil)
-;; (add-to-list 'python-shell-completion-native-disabled-interpreters
-;;              "ipython")
-
-;; (use-package python)
-
-;; (use-package python-docstring
-;;   :hook (python-mode . python-docstring-mode))
-
-;; (use-package scala-mode
-;;   :interpreter
-;;     ("scala" . scala-mode))
-
-;; (use-package sbt-mode
-;;   :commands sbt-start sbt-command
-;;   :config
-;;   ;; WORKAROUND: https://github.com/ensime/emacs-sbt-mode/issues/31
-;;   ;; allows using SPACE when in the minibuffer
-;;   (substitute-key-definition
-;;    'minibuffer-complete-word
-;;    'self-insert-command
-;;    minibuffer-local-completion-map)
-;;    ;; sbt-supershell kills sbt-mode:  https://github.com/hvesalai/emacs-sbt-mode/issues/152
-;;    (setq sbt:program-options '("-Dsbt.supershell=false"))
-;; )
-
 ;; Enable nice rendering of diagnostics like compile errors.
 (use-package flycheck
   :ensure t
   :init
-  (global-flycheck-mode 1))
+  (global-flycheck-mode))
+
+;; Direnv for directory-local commands and such
+;; (use-package direnv
+;;   :ensure t
+;;   :hook
+;;   (before-hack-local-variables . #'direnv-update-environment)
+;;   (prog-mode-hook . #'direnv--maybe-update-environment)
+;;   :config
+;;   (direnv-mode))
+(use-package envrc
+  :ensure t
+  :config
+  (envrc-global-mode))
 
 ;; Babel
 (org-babel-do-load-languages
@@ -370,25 +308,6 @@
    (sql . t)))
 
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.5))
-
-
-;; ;; File associations not added automatically
-;; (adds-to-list 'auto-mode-alist
-;;               '(("\\.tex\\"      . latex-mode)
-;;                 ("\\.php\\"      . web-mode)
-;;                 ("\\.html\\'"     . web-mode)
-;;                 ("\\.js[x]?\\'"   . web-mode)
-;;                 ("\\.m$"          . octave-mode)
-;;                 ("\\.yml\\'"      . yaml-mode)))
-
-;; Theme
-;; (custom-set-variables
-;;  ;; custom-set-variables was added by Custom.
-;;  ;; If you edit it by hand, you could mess it up, so be careful.
-;;  ;; Your init file should contain only one such instance.
-;;  ;; If there is more than one, they won't work right.
-;;  '(custom-enabled-themes (quote (manoj-dark)))
-;;  '(safe-local-variable-values (quote ((eval setq web-mode-content-types-alist (\` (("jsx" \, (concat default-directory ".*\\.js"))))) (eval setq web-mode-content-types-alist (quote (("jsx" . "\\.js[x]?\\"))))))))
 
 (require 'generic-x)
 (add-to-list 'auto-mode-alist '("\\..*ignore$" . hosts-generic-mode))
@@ -404,7 +323,6 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes '(solarized-dark))
  '(custom-safe-themes
    '("2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" "0598c6a29e13e7112cfbc2f523e31927ab7dce56ebb2016b567e1eff6dc1fd4f" default))
  '(package-selected-packages
