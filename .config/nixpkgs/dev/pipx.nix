@@ -1,7 +1,7 @@
-{ pkgs, ... }:
+{ pkgs, python, ... }:
 let
-  python-env = pkgs.python310.withPackages(p: with p; [
-    poetry
+  python-env = python.withPackages(p: with p; [
+    pipx
   ]);
 in
 pkgs.stdenv.mkDerivation {
@@ -10,6 +10,6 @@ pkgs.stdenv.mkDerivation {
   unpackPhase = "true";
   installPhase = ''
     mkdir -p $out/bin
-    cp ${python-env}/bin/poetry $out/bin/poetry
+    cp ${python-env}/bin/pipx $out/bin/pipx
   '';
 }

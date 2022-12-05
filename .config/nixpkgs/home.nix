@@ -4,8 +4,10 @@ let
   machine-name = import ./machine.nix;
   gen-machine-config = import (./machine-config + "/${machine-name}.nix");
   machine = gen-machine-config pkgs;
+  python = pkgs.python310;
   python-env = pkgs.python310.withPackages(p: with p; [ pip ]);
-  pipx = import ./dev/pipx.nix pkgs;
+  pipx = import ./dev/pipx.nix { pkgs = pkgs; python = python-env; };
+  poetry = import ./dev/poetry.nix { pkgs = pkgs; python = pkgs.python310; poetry2nix = pkgs.poetry2nix; };
 in
 {
   # Home Manager needs a bit of information about you and the
@@ -31,7 +33,6 @@ in
 
   home.sessionVariables = {
     EDITOR = "emacs -nw";
-    PIP_USE_FEATURE = "truststore";
     PIPX_BIN_DIR = "$HOME/.local/pipx/bin";
   };
 
@@ -169,6 +170,7 @@ in
     pipx
     rustc
     cargo
+    poetry
 
     # Development
     nodePackages.pyright

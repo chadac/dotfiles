@@ -238,7 +238,7 @@
 ;; Rust
 (use-package rust-mode
   :ensure t
-  : mode "\\.rs\\'")
+  :mode "\\.rs\\'")
 
 ;; MISC
 
@@ -319,4 +319,4 @@
  '(custom-safe-themes
    '("2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" "0598c6a29e13e7112cfbc2f523e31927ab7dce56ebb2016b567e1eff6dc1fd4f" default))
  '(package-selected-packages
-   '(rust-mode gnu-apl-mode lsp-ui lsp-mode editorconfig babel ob-ipython sqlformat terraform-mode python-docstring evil-mc evil-visual-mark-mode typescript-mode pyenv-mode toml-mode ejc-sql solarized-theme use-package elpy yaml-mode web-mode smart-tabs-mode scss-mode sass-mode python-mode projectile php-mode pallet neotree markdown-mode lua-mode jdee helm haskell-mode groovy-mode gradle-mode go-mode gitignore-mode flappymacs ess-R-data-view ensime dockerfile-mode coffee-mode auctex)))
+   '(company-jedi envrc rust-mode gnu-apl-mode lsp-ui lsp-mode editorconfig babel ob-ipython sqlformat terraform-mode python-docstring evil-mc evil-visual-mark-mode typescript-mode pyenv-mode toml-mode ejc-sql solarized-theme use-package elpy yaml-mode web-mode smart-tabs-mode scss-mode sass-mode python-mode projectile php-mode pallet neotree markdown-mode lua-mode jdee helm haskell-mode groovy-mode gradle-mode go-mode gitignore-mode flappymacs ess-R-data-view ensime dockerfile-mode coffee-mode auctex)))
