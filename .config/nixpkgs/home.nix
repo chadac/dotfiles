@@ -109,6 +109,9 @@ in
       "auto-save-list"
       "tramp"
       ".\#*"
+      "\#*\#"
+      # nix
+      "result"
       # directory config
       ".dir-locals.el"
       # nix shell
@@ -121,6 +124,7 @@ in
       # python
       "__pycache__/"
       "*.pyc"
+      ".dmypy.json"
       # direnv
       ".envrc"
       ".direnv/"
@@ -163,6 +167,8 @@ in
     gnumake
     python-env
     pipx
+    rustc
+    cargo
 
     # Development
     nodePackages.pyright
