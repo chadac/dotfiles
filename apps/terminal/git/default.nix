@@ -1,30 +1,24 @@
 { pkgs, host, mkHomePkg }:
-mkHomePkg pkgs.git {
-  programs.git = {
-    enable = true;
+{
+  type = "app";
+  home = { config, ... }: {
+    programs.git = {
+      enable = true;
 
-    userName = "Chad Crawford";
-    userEmail = host.email;
+      userName = "Chad Crawford";
+      userEmail = host.email;
 
-    ignores = [
-      # emacs
-      "*~"
-      "/.emacs.desktop"
-      "/.emacs.desktop.lock"
-      "*.elc"
-      "auto-save-list"
-      "tramp"
-      ".\#*"
-      "\#*\#"
-      # nix
-      "result"
-      # nix shell
-      "shell.nix"
-    ];
+      ignores = [
+        # nix
+        "result"
+        # nix shell
+        "shell.nix"
+      ];
 
-    extraConfig = {
-      init = {
-        defaultBranch = "main";
+      extraConfig = {
+        init.defaultBranch = "main";
+        # Not sure why this isn't automatically set...
+        core.excludesfile = "${config.xdg.configHome}/git/ignore";
       };
     };
   };

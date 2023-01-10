@@ -30,8 +30,8 @@ mkApp {
       "*.elc"
       "auto-save-list"
       "tramp"
-      ".\#*"
-      "\#*\#"
+      ".\\#*"
+      "\\#*\\#"
       # org-mode
       ".org-id-locations"
       "*_archive"
