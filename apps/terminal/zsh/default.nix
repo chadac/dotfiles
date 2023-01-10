@@ -1,8 +1,14 @@
-{ pkgs, ... }:
-{
-  type = "app";
+{ pkgs, mkApp, ... }:
+mkApp {
   home = {
-    programs.bash.enable = true;
+    # have bash redirect to zsh
+    programs.bash = {
+      enable = true;
+      bashrcExtra = ''
+        exec ${pkgs.zsh}/bin/zsh
+      '';
+    };
+
     programs.zsh = {
       enable = true;
       autocd = true;
@@ -13,7 +19,7 @@
 
       initExtra =
       ''
-      eval "$(direnv hook zsh)"
+      eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
       '';
 
       localVariables = {
@@ -28,5 +34,9 @@
         ];
       };
     };
+
+    home.packages = with pkgs; [
+      direnv
+    ];
   };
 }

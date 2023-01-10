@@ -1,4 +1,4 @@
-{ pkgs, apps, lib, ... }:
+{ pkgs, lib, mkApp }:
 let
   config = pkgs.writeText "default.el" (builtins.readFile ./init.el);
   myEmacs = pkgs.emacsWithPackagesFromUsePackage {
@@ -11,8 +11,8 @@ let
        '')
     ];
   };
-in {
-  type = "app";
+in
+mkApp {
   home = {
     home.sessionVariables = {
       EDITOR = "emacs -nw";

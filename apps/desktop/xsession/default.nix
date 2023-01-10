@@ -1,6 +1,5 @@
-{ pkgs, ... }:
-{
-  type = "app";
+{ pkgs, mkApp }:
+mkApp {
   home = { config, ... }: {
     xsession = {
       enable = true;

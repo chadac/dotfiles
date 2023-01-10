@@ -1,9 +1,8 @@
-{ pkgs }:
+{ pkgs, mkApp }:
 let
   xpath = pkgs.copyPathToStore ./.;
 in
-{
-  type = "app";
+mkApp {
   home = {
     xsession.profileExtra = ''
       ${pkgs.xorg.xrdb}/bin/xrdb -merge ${xpath}/.Xresources

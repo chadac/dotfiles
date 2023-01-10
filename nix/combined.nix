@@ -5,15 +5,20 @@
 }@inputs:
 host:
 let
+  inherit (nixpkgs) lib;
   pkgs = import nixpkgs {
     inherit (host) system;
     overlays = [ (import emacs-overlay) ];
+    config.allowUnfreePredicate = pkg:
+      builtins.elem (lib.getName pkg) [
+        "slack"
+        "spotify"
+        "discord"
+      ];
   };
-  inherit (pkgs) lib stdenv;
   callPackage = lib.callPackageWith (pkgs // {
     inherit pkgs;
-    inherit lib;
-    inherit stdenv;
+    inherit (pkgs) lib stdenv;
     inherit apps;
     inherit host;
     inherit hostApps;
