@@ -16,14 +16,16 @@ let
         "discord"
       ];
   };
-  callPackage = lib.callPackageWith (pkgs // {
+  buildInputs = pkgs // {
     inherit pkgs;
     inherit (pkgs) lib stdenv;
     inherit apps;
     inherit host;
     inherit hostApps;
     inherit callPackage;
-  } // inputs);
+    inherit buildInputs;
+  } // inputs;
+  callPackage = lib.callPackageWith buildInputs;
   checkImport = property: file: if (builtins.hasAttr property host) then (callPackage file {}) else null;
   apps = callPackage ../apps { };
   hostApps = host.getApps apps;

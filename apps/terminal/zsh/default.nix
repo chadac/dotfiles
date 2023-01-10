@@ -1,4 +1,4 @@
-{ pkgs, mkApp, ... }:
+{ pkgs, mkApp }:
 mkApp {
   home = {
     # have bash redirect to zsh
@@ -33,7 +33,14 @@ mkApp {
           "git"
         ];
       };
+
     };
+
+    programs.git.ignores = [
+      # direnv
+      ".envrc"
+      ".direnv/"
+    ];
 
     home.packages = with pkgs; [
       direnv

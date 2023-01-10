@@ -1,14 +1,12 @@
-{ pkgs, callPackage, mkApp, ... }:
-let
-  defaultConfig = {
-    home = {
-      home.packages = with pkgs; [
-        python311
-      ];
-    };
-  };
-in
+{ pkgs, callPackage, mkApp, mkHomePkg, ... }:
 {
-  default = mkApp defaultConfig;
+  python = mkHomePkg pkgs.python311 {
+    programs.git.ignores = [
+      # python
+      "__pycache__/"
+      "*.pyc"
+      ".dmypy.json"
+    ];
+  };
   emacs = callPackage ./emacs {};
 }

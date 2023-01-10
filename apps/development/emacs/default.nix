@@ -22,5 +22,21 @@ mkApp {
       enable = true;
       package = myEmacs;
     };
+    # emacs gitignore
+    programs.git.ignores = [
+      "*~"
+      "/.emacs.desktop"
+      "/.emacs.desktop.lock"
+      "*.elc"
+      "auto-save-list"
+      "tramp"
+      ".\#*"
+      "\#*\#"
+      # org-mode
+      ".org-id-locations"
+      "*_archive"
+      # directory config
+      ".dir-locals.el"
+    ];
   };
 }

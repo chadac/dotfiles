@@ -4,7 +4,7 @@
  *
  * Hosts specify which applications they want to use.
  */
-{ pkgs, lib, ... }@buildInputs:
+{ pkgs, lib, buildInputs }:
 let
   collectImports = property: item:
     let collect = item:
