@@ -19,7 +19,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, flake-utils, ...}@inputs: 
+  outputs = { self, nixpkgs, home-manager, flake-utils, ...}@inputs:
     let
       inherit (nixpkgs) lib;
       inherit (builtins) listToAttrs map mapAttrs;

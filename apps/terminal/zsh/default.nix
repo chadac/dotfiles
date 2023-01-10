@@ -2,6 +2,7 @@
 {
   type = "app";
   home = {
+    programs.bash.enable = true;
     programs.zsh = {
       enable = true;
       autocd = true;
