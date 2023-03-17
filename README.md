@@ -7,9 +7,13 @@ flakes. Largely influenced by [@lovesegfault's Nix
 config](https://github.com/lovesegfault/nix-config).
 
 The project is an experiment in trying to organize apps in a readable
-fashion. Each program includes both Home Manager and NixOS configs in
-the same file. They use host information provided in `./hosts` to
-properly build the HM and NixOS configs.
+fashion. The `apps` folder is structured in a hierarchical fashion,
+meaning that new hosts can be deployed by composing together a
+tree-like structure of desired apps.
+
+Additionally, each app contains both its needed overlays, its Home
+Manager and its NixOS configurations. This enables me to organize my
+configuration conceptually rather than functionally.
 
 ## Installation
 

@@ -1,12 +1,25 @@
-{ pkgs, callPackage, mkApp, mkHomePkg, ... }:
+{ call, mkApp, rtx, ... }:
 {
-  python = mkHomePkg pkgs.python311 {
-    programs.git.ignores = [
-      # python
-      "__pycache__/"
-      "*.pyc"
-      ".dmypy.json"
-    ];
+  python = mkApp {
+    src = ./.;
+    home = { pkgs, ... }: {
+      home.packages = [ pkgs.python311 ];
+      programs.git.ignores = [
+        # python
+        "__pycache__/"
+        "*.pyc"
+        ".dmypy.json"
+      ];
+    };
   };
-  emacs = callPackage ./emacs {};
+
+  rtx = mkApp {
+    src = ./.;
+    overlay = rtx.overlay;
+    home = { pkgs, ... }: {
+      home.packages = [ pkgs.rtx ];
+    };
+  };
+
+  emacs = call ./emacs {};
 }

@@ -4,38 +4,46 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     flake-utils.url = "github:numtide/flake-utils";
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-      flake = false;
-    };
+    flake-parts.url = "github:hercules-ci/flake-parts";
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.utils.follows = "flake-utils";
     };
+
+    # Applications
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs.flake-utils.follows = "flake-utils";
     };
+
+    rtx = {
+      url = "github:jdxcode/rtx";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.flake-utils.follows = "flake-utils";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, flake-utils, ...}@inputs:
+  outputs = { self, nixpkgs, home-manager, flake-parts, ...}@inputs:
     let
       inherit (nixpkgs) lib;
-      inherit (builtins) listToAttrs map mapAttrs;
-      hosts = import ./hosts;
-      genHostOutput = import ./nix/combined.nix inputs;
-      hostOutputs = mapAttrs (name: host: genHostOutput host) hosts;
-      systems = lib.unique (lib.mapAttrsToList (_: host: host.system) hosts);
-      getHostConfigurations = property: mapAttrs (name: value: value.${property})
-        (lib.filterAttrs (n: v: v != null) hostOutputs);
-    in {
-      nixosConfigurations = getHostConfigurations "nixosConfiguration";
-      homeConfigurations = getHostConfigurations "homeConfiguration";
-      # devShells = getHostConfigurations "devShell";
-    } // flake-utils.lib.eachSystem systems (system: {
-      packages = {
-        default = home-manager.defaultPackage.${system};
-      };
-    });
+      inherit (builtins) attrValues getAttr removeAttrs map;
+      hosts = lib.attrValues (import ./hosts);
+      systems = lib.unique (map (getAttr "system") hosts);
+      modules = import ./flake-parts-modules;
+      flakeInputs = removeAttrs inputs ["self" "flake-parts" "flake-utils"];
+      hostFlakes = map (host:
+        let
+          hostInputs = flakeInputs // { inherit host; inherit apps; };
+          apps = import ./apps hostInputs;
+        in import ./make-host-config hostInputs
+      ) hosts;
+    in
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [ modules ] ++ hostFlakes;
+      inherit systems;
+
+      flake = { };
+    };
 }

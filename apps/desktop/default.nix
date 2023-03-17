@@ -1,7 +1,22 @@
-{ pkgs, callPackage, mkHomePkg }:
+{ call, mkApp, homePackage }:
 {
-  i3 = callPackage ./i3 { };
-  xsession = callPackage ./xsession { };
-  Xresources = callPackage ./Xresources { };
-  xterm = mkHomePkg pkgs.xterm;
+  i3 = call ./i3 { };
+  xsession = call ./xsession { };
+  Xresources = call ./Xresources { };
+
+  lightdm = mkApp {
+    src = ./.;
+    nixos = { inputs, ... }:
+      let
+        inherit (inputs) pkgs;
+      in
+        {
+          services.xserver = {
+            enable = true;
+            displayManager.lightdm.enable = true;
+          };
+        };
+  };
+
+  xterm = homePackage ./. "xterm";
 }

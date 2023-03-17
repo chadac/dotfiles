@@ -1,5 +1,5 @@
-{ pkgs, mkHomePkg }:
+{ homePackage }:
 {
-  discord = mkHomePkg pkgs.discord { };
-  slack = mkHomePkg pkgs.slack { };
+  discord = homePackage ./. "discord";
+  slack = homePackage ./. "slack";
 }

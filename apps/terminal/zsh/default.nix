@@ -1,6 +1,7 @@
-{ pkgs, mkApp }:
+{ host, mkApp }:
 mkApp {
-  home = {
+  src = ./.;
+  home = { pkgs, ... }: {
     # have bash redirect to zsh
     programs.bash = {
       enable = true;
@@ -46,4 +47,13 @@ mkApp {
       direnv
     ];
   };
+
+  nixos = { inputs, ... }:
+    let
+      inherit (inputs) pkgs;
+    in {
+      programs.zsh.enable = true;
+      users.users.${host.username}.shell = pkgs.zsh;
+      environment.shells = [ pkgs.zsh ];
+    };
 }

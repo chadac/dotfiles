@@ -1,6 +1,7 @@
-{ pkgs, mkApp }:
+{ mkApp }:
 mkApp {
-  home = { config, ... }: {
+  src = ./.;
+  home = { pkgs, config, ... }: {
     xsession = {
       enable = true;
     };

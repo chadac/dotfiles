@@ -1,5 +1,5 @@
-{ callPackage, ... }:
+{ call }:
 {
-  git = callPackage ./git { };
-  zsh = callPackage ./zsh { };
+  git = call ./git { };
+  zsh = call ./zsh { };
 }

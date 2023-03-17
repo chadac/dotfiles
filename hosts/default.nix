@@ -1,11 +1,17 @@
-{
-  amzn-laptop = {
-    system = "x86_64-linux";
-    email = "chadcr@amazon.com";
-    homeConfiguration = {
-      home.username = "635195093";
-      home.homeDirectory = "/home/ANT.AMAZON.COM/chadcr";
+let
+  hosts = {
+    odin = import ./odin;
+
+    # Ubuntu-based work machines
+    forseti = {
+      type = "home-manager";
+      system = "x86_64-linux";
+      username = "chadcr";
+      homeDirectory = "/home/ANT.AMAZON.COM/chadcr";
+      email = "chadcr@amazon.com";
+      getApps = apps: with apps; [ all ];
     };
-    getApps = apps: with apps; [ all ];
   };
-}
+
+  genHostConfig = hostname: config: config // { inherit hostname; };
+in builtins.mapAttrs genHostConfig hosts

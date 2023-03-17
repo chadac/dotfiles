@@ -1,4 +1,4 @@
-{ pkgs, mkHomePkg }:
+{ homePackage }:
 {
-  spotify = mkHomePkg pkgs.spotify { };
+  spotify = homePackage ./. "spotify";
 }

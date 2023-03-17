@@ -1,7 +1,7 @@
-{ pkgs, host, mkHomePkg }:
-{
-  type = "app";
-  home = { config, ... }: {
+{ host, mkApp }:
+mkApp {
+  src = ./.;
+  home = { pkgs, config, ... }: {
     programs.git = {
       enable = true;
 
