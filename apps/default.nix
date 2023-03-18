@@ -81,18 +81,30 @@ let
     { inherit call; inherit lib; inherit mkApp; inherit homePackage; } // inputs
   );
 
+  # Identifier for the hostname for automating deployments and such.
+  hostApp = mkApp {
+    src = ./.;
+    home = { host, config, pkgs, ... }: {
+      home.files = {
+        "${config.homeDirectory}/.config/dotfiles/host" = pkgs.writeText "$out/host" host.hostname;
+      };
+    };
+  };
+
   appTree =
     let
       tree = importTree {
         chat = call ./chat { };
+        core = [ hostApp ];
         desktop = call ./desktop { };
         development = call ./development { };
         entertainment = call ./entertainment { };
         terminal = call ./terminal { };
+        virt = call ./virt { };
       };
     in
       tree // {
-        all = with tree; [ chat desktop development entertainment terminal ];
+        main = with tree; [ chat desktop development entertainment terminal ];
         essential = with tree; [ development terminal ];
       };
 
@@ -103,9 +115,7 @@ let
     else [ ]
   ) apps;
 
-  hostApps =
-    let r = flattenTree (host.getApps appTree);
-    in traceSeq (listAppNames r) r;
+  hostApps = flattenTree (host.getApps appTree);
 in {
   overlays = getAppAttr "overlay" hostApps;
   homeModules = getAppAttr "home" hostApps;

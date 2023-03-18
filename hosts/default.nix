@@ -9,7 +9,7 @@ let
       username = "chadcr";
       homeDirectory = "/home/ANT.AMAZON.COM/chadcr";
       email = "chadcr@amazon.com";
-      getApps = apps: with apps; [ all ];
+      getApps = apps: [ apps.main ];
     };
   };
 

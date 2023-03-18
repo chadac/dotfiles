@@ -16,7 +16,9 @@ mkApp {
         data = ''
           rm -rf ${config.xdg.dataHome}/"applications/home-manager"
           mkdir -p ${config.xdg.dataHome}/"applications/home-manager"
-          cp -Lr ${config.home.homeDirectory}/.nix-profile/share/applications/* ${config.xdg.dataHome}/"applications/home-manager/"
+          if [ -d ${config.home.homeDirectory}/.nix-profile/share/applications ]; then
+            cp -Lr ${config.home.homeDirectory}/.nix-profile/share/applications/* ${config.xdg.dataHome}/"applications/home-manager/"
+          fi
         '';
       };
     };

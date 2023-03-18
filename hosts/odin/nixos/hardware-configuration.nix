@@ -15,6 +15,11 @@
       fsType = "vfat";
     };
 
+  fileSystems."/media/workspace" = {
+    device = "/dev/disk/by-uuid/b5bf3248-07b7-4cf2-95b9-c02f5ec78eac";
+    fsType = "ext4";
+  };
+
   swapDevices = [ ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
