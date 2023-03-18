@@ -1,5 +1,5 @@
 { host, apps, ... }:
 [
-  (import ./global.nix)
+  ./global.nix
   (host.homeConfiguration or {})
 ] ++ apps.homeModules

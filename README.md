@@ -36,3 +36,7 @@ Examples to use for reference in the future (potentially).
   scripts](https://github.com/chadac/dotfiles/tree/master) - I wrote
   my own setup scripts in Python. Abandoned because it was too
   Ubuntu-specific, and I moved to Arch.
+
+## TODO
+
+* Migrate my wallpapers. They should be hosted on S3 and fetched during build.

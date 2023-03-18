@@ -81,12 +81,14 @@ let
     { inherit call; inherit lib; inherit mkApp; inherit homePackage; } // inputs
   );
 
+
   # Identifier for the hostname for automating deployments and such.
   hostApp = mkApp {
     src = ./.;
     home = { host, config, pkgs, ... }: {
-      home.files = {
-        "${config.homeDirectory}/.config/dotfiles/host" = pkgs.writeText "$out/host" host.hostname;
+      home.file."${config.home.homeDirectory}/.config/dotfiles/host" = {
+        enable = true;
+        text = host.hostname;
       };
     };
   };
@@ -95,7 +97,7 @@ let
     let
       tree = importTree {
         chat = call ./chat { };
-        core = [ hostApp ];
+        core = { hostApp = hostApp; };
         desktop = call ./desktop { };
         development = call ./development { };
         entertainment = call ./entertainment { };
@@ -104,8 +106,8 @@ let
       };
     in
       tree // {
-        main = with tree; [ chat desktop development entertainment terminal ];
-        essential = with tree; [ development terminal ];
+        main = with tree; [ chat core desktop development entertainment terminal ];
+        essential = with tree; [ core development terminal ];
       };
 
   listAppNames = apps: map (app: app.name) apps;

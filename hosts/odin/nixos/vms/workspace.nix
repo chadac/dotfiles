@@ -1,7 +1,14 @@
 { ... }:
 {
   environment.etc = {
-    "libvirt/qemu/workspace.xml" = builtins.readFile ./workspace.xml;
+    # TODO: This needs a bit more work to happen.
+    # Best approach may be to add some additional options and a service
+    # which allows registering VMs that get copied to /var/lib/libvirt/qemu
+    # similar to how current VMs are being added.
+
+    # "libvirt/qemu/workspace.xml" = {
+    #   text = builtins.readFile ./workspace.xml;
+    # };
     "libvirt/hooks/qemu.d/workspace/prepare/begin/start.sh" = {
       text =
         ''

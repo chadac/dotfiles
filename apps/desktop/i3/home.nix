@@ -1,5 +1,14 @@
-{ config, inputs, pkgs, lib, ... }:
+{ host, config, inputs, pkgs, lib, ... }:
 let
+  inherit (builtins)
+    concatLists
+    hasAttr
+    toString
+  ;
+  inherit (lib)
+    mapAttrsToList
+  ;
+
   mod = "Mod4";
   up = "l";
   down = "k";
@@ -18,6 +27,12 @@ in {
     enable = true;
     config = {
       modifier = mod;
+      workspaceOutputAssign = lib.mkIf (hasAttr "displays" host) (concatLists (
+        mapAttrsToList
+          (display: cfg: if(hasAttr "workspace" cfg) then
+            [ { workspace = toString cfg.workspace; output = display; } ] else [ ])
+          host.displays
+      ));
       keybindings = lib.mkDefault {
         "${mod}+d" = "exec '${pkgs.dmenu}/bin/dmenu_run'";
         "${mod}+Return" = "exec ${pkgs.xterm}/bin/xterm";

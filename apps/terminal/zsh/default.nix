@@ -48,12 +48,9 @@ mkApp {
     ];
   };
 
-  nixos = { inputs, ... }:
-    let
-      inherit (inputs) pkgs;
-    in {
-      programs.zsh.enable = true;
-      users.users.${host.username}.shell = pkgs.zsh;
-      environment.shells = [ pkgs.zsh ];
-    };
+  nixos = { pkgs, ... }: {
+    programs.zsh.enable = true;
+    users.users.${host.username}.shell = pkgs.zsh;
+    environment.shells = [ pkgs.zsh ];
+  };
 }

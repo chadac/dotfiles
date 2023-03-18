@@ -1,4 +1,4 @@
-{ host, inputs, ... }:
+{ host, apps, inputs, ... }:
 let
   inherit (inputs) pkgs home-manager;
 in
@@ -11,7 +11,7 @@ in
       home-manager.useUserPackages = true;
       home-manager.extraSpecialArgs = { inherit host; inherit inputs; };
       home-manager.users.${host.username} = {
-        imports = import ../home-modules inputs;
+        imports = import ../home-modules ({ inherit apps; inherit host; inherit pkgs; });
       };
     }
   ];

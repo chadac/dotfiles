@@ -1,15 +1,20 @@
-{ host, nixpkgs, pkgs, ... }@inputs:
+{ host, pkgs, apps }@args:
+{ inputs, ... }:
 let
-  nixosModules = import ./nixos-modules inputs;
+  inherit (inputs) nixpkgs;
+  inherit (pkgs) lib;
+  nixosModules = import ./nixos-modules args;
 in
 {
-  flake.nixosConfigurations.${host.hostname} = nixpkgs.lib.nixosSystem {
-    system = host.system;
+  flake.nixosConfigurations.${host.hostname} = lib.mkIf (host.type == "nixos") (
+    nixpkgs.lib.nixosSystem {
+      inherit (host) system;
 
-    inherit pkgs;
+      inherit pkgs;
 
-    modules = nixosModules;
+      modules = nixosModules;
 
-    specialArgs = { inherit host; inherit inputs; };
-  };
+      specialArgs = { inherit host; inherit inputs; inherit apps; inherit pkgs; };
+    }
+  );
 }

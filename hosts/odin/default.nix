@@ -1,4 +1,4 @@
-# My personal, primary desktop.
+# My primary desktop.
 {
   type = "nixos";
   system = "x86_64-linux";
@@ -15,19 +15,19 @@
 
   displays = {
     HDMI-0 = {
-      workspace = 0;
+      workspace = 1;
       mode = "2560x1440";
       pos = "0x0";
       rotate = "right";
     };
     DP-4 = {
-      workspace = 1;
+      workspace = 2;
       mode = "2560x1440";
       pos = "1440x1120";
       rotate = "normal";
     };
     DP-0 = {
-      workspace = 2;
+      workspace = 3;
       primary = true;
       mode = "2560x1440";
       pos = "4000x1120";

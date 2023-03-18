@@ -35,14 +35,22 @@
       flakeInputs = removeAttrs inputs ["self" "flake-parts" "flake-utils"];
       hostFlakes = map (host:
         let
-          hostInputs = flakeInputs // { inherit host; inherit apps; };
           apps = import ./apps hostInputs;
+          hostInputs = flakeInputs // { inherit host; inherit apps; };
         in import ./make-host-config hostInputs
       ) hosts;
     in
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [ modules ] ++ hostFlakes;
       inherit systems;
+
+      perSystem = { system, pkgs, ... }: {
+        packages = {
+          home-manager = home-manager.defaultPackage.${system};
+          nixos-rebuild = pkgs.nixos-rebuild;
+          default = pkgs.writeShellScriptBin "dummy" ''echo "Hello World!"'';
+        };
+      };
 
       flake = { };
     };

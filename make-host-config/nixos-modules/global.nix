@@ -1,7 +1,4 @@
-{ host, inputs, ...}:
-let
-  inherit (inputs) pkgs;
-in
+{ host, pkgs, ...}:
 {
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;

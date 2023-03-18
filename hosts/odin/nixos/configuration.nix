@@ -1,7 +1,9 @@
 {
   imports = [
     ./hardware-configuration.nix
-    ./display.nix
     ./virt.nix
+
+    # KVM Virtual Machine Configurations
+    ./vms/workspace.nix
   ];
 }
