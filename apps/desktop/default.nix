@@ -1,6 +1,8 @@
 { call, mkApp, homePackage }:
 {
+  wallpapers = call ./wallpapers { };
   i3 = call ./i3 { };
+
   xserver = call ./xserver { };
   xsession = call ./xsession { };
   Xresources = call ./Xresources { };
@@ -20,4 +22,17 @@
 
   xterm = homePackage ./. "xterm";
   firefox = homePackage ./. "firefox";
+
+  thunar = mkApp {
+    src = ./.;
+    home = { pkgs, ... }: { home.packages = [ pkgs.xfce.thunar ]; };
+  };
+  ristretto = mkApp {
+    src = ./.;
+    home = { pkgs, ... }: { home.packages = [ pkgs.xfce.ristretto ]; };
+  };
+  tumbler = mkApp {
+    src = ./.;
+    home = { pkgs, ... }: { home.packages = [ pkgs.xfce.tumbler ]; };
+  };
 }

@@ -1,4 +1,7 @@
-{ host, pkgs, ...}:
+{ host, pkgs, inputs, ...}:
+let
+  inherit (inputs) nixpkgs;
+in
 {
   boot = {
     kernelPackages = pkgs.linuxPackages_latest;
@@ -8,11 +11,18 @@
 
   nix = {
     package = pkgs.nixFlakes;
+
+    registry = {
+      nixpkgs.flake = nixpkgs;
+    };
+
     settings.trusted-users = [ "root" host.username ];
     extraOptions = ''
       experimental-features = nix-command flakes
     '';
   };
+
+  nixpkgs.pkgs = pkgs;
 
   users.users.${host.username} = {
     isNormalUser = true;

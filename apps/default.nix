@@ -73,7 +73,7 @@ let
   homePackage = src: name: mkApp {
     inherit src;
     home = { pkgs, ... }@args: {
-      home.packages = [ pkgs.${name} ];
+      home.packages = [ pkgs."${name}" ];
     };
   };
 
