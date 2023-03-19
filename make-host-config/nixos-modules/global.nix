@@ -28,7 +28,7 @@ in
     isNormalUser = true;
     home = host.homeDirectory or "/home/${host.username}";
     description = host.username;
-    extraGroups = [ "wheel" "networkmanager" "libvirtd" ];
+    extraGroups = [ "wheel" "networkmanager" ];
   };
 
   i18n.defaultLocale = "en_US.UTF-8";
@@ -37,15 +37,6 @@ in
 
   sound.enable = true;
   hardware.pulseaudio.enable = true;
-
-  # disable default containers
-  boot.enableContainers = false;
-  virtualisation = {
-    podman = {
-      enable = true;
-      dockerCompat = true;
-    };
-  };
 
   services.openssh.enable = true;
   system.stateVersion = "22.11";

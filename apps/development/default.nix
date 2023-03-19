@@ -13,6 +13,7 @@
     };
   };
 
+  # rtx for language runtime version management
   rtx = mkApp {
     src = ./.;
     overlay = rtx.overlay;
@@ -21,5 +22,7 @@
     };
   };
 
-  emacs = call ./emacs {};
+  emacs = call ./emacs { };
+
+  podman = call ./podman.nix { };
 }
