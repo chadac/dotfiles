@@ -6,22 +6,47 @@ This is a multi-host deployment for NixOS and Home Manager using
 flakes. Largely influenced by [@lovesegfault's Nix
 config](https://github.com/lovesegfault/nix-config).
 
-The project is an experiment in trying to organize apps in a readable
-fashion. The `apps` folder is structured in a hierarchical fashion,
-meaning that new hosts can be deployed by composing together a
-tree-like structure of desired apps.
+## Features
 
-Additionally, each app contains both its needed overlays, its Home
-Manager and its NixOS configurations. This enables me to organize my
-configuration conceptually rather than functionally.
+* Multi-host configuration with `flake-parts`: Each host deployment is
+  its own flake created in `./make-host-config`, and then those are
+  composed together using `flake-parts`. This makes it much easier for
+  me to modularize my code.
+* `apps`: Contains home-manager, NixOS and nixpkgs overlays all in one
+  file. Organized by concept rather than function, so that I don't
+  need to navigate to multiple directories at once.
+* Multihead display configuration: Hosts can now specify a monitor
+  configuration using standard `xrandr` outputs in a much more
+  flexible fashion than what NixOS offers by default. I also include
+  some Home Manager hooks so that display configurations can be
+  applied at login on non-NixOS systems. See
+  [./apps/desktop/wallpapers/default.nix](/apps/desktop/wallpapers/default.nix)
+  for more details.
 
-## Installation
+## Usage
 
-    nix run .# switch -- --flake .#<host>
+For rebuilding NixOS:
+
+    nix run .#nixos-rebuild switch -- --flake .#<host>
+
+For rebuilding Home Manager:
+
+    nix run .#home-manager switch -- --flake .#<host>
+
+## TODO
+
+* Flake integration tests via GitHub.
+* Automated `flake update` CI task once a week.
+* Service for my hosts to self-update once a week.
+* Entrypoint package to simplify executing `nixos-rebuild` and
+  `home-manager`.
 
 ## Previous Iterations
 
-Examples to use for reference in the future (potentially).
+I've been maintaining my own dotfiles repo since around 2015-2016, but
+my commit history is a bit dishonest because I usually reset the repo
+from scratch when I decide to do total refactors. For those interested
+in my historical configurations:
 
 * [Generic Nix Setup + Hacky Git
   Config](https://github.com/chadac/dotfiles/tree/nix) - Back when I
@@ -36,7 +61,3 @@ Examples to use for reference in the future (potentially).
   scripts](https://github.com/chadac/dotfiles/tree/master) - I wrote
   my own setup scripts in Python. Abandoned because it was too
   Ubuntu-specific, and I moved to Arch.
-
-## TODO
-
-* Migrate my wallpapers. They should be hosted on S3 and fetched during build.
