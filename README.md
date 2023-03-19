@@ -37,9 +37,20 @@ For rebuilding Home Manager:
 
 * Flake integration tests via GitHub.
 * Automated `flake update` CI task once a week.
+* Explicit declarations of nonfree software used. I'll be aiming to
+  eliminate nonfree software from my system entirely.
 * Service for my hosts to self-update once a week.
 * Entrypoint package to simplify executing `nixos-rebuild` and
   `home-manager`.
+* Better QEMU virtual machine configuration. Currently there doesn't seem
+  to be a way to deploy QEMU virtual machine XML configuration files
+  via Nix directly, so I just need a script similar to what already
+  exists for `libvirtd` that copies any machine configurations to
+  `/var/lib/libvirtd/qemu.conf`.
+* Multi-user configuration: Current setup is fairly opinionated about
+  deploying to systems with a single user. It'd be nice to extend it
+  for multi-user configurations, perhaps by splitting up the `host`
+  configuration into separate `host` and `user` configurations...
 
 ## Previous Iterations
 
