@@ -1,4 +1,4 @@
-{ host, mkApp }:
+{ host, mkApp, zsh-256color }:
 mkApp {
   src = ./.;
   home = { pkgs, ... }: {
@@ -27,6 +27,10 @@ mkApp {
         ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "fg=10";
       };
 
+      plugins = [
+        { name = "zsh-256color"; src = zsh-256color; }
+      ];
+
       oh-my-zsh = {
         enable = true;
         theme = "tjkirch";
@@ -34,7 +38,6 @@ mkApp {
           "git"
         ];
       };
-
     };
 
     programs.git.ignores = [
@@ -42,6 +45,11 @@ mkApp {
       ".envrc"
       ".direnv/"
     ];
+
+    programs.fzf = {
+      enable = true;
+      enableZshIntegration = true;
+    };
 
     home.packages = with pkgs; [
       direnv

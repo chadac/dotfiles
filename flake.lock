@@ -134,7 +134,8 @@
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs_2",
-        "rtx": "rtx"
+        "rtx": "rtx",
+        "zsh-256color": "zsh-256color"
       }
     },
     "rtx": {
@@ -157,6 +158,22 @@
       "original": {
         "owner": "jdxcode",
         "repo": "rtx",
+        "type": "github"
+      }
+    },
+    "zsh-256color": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1663105634,
+        "narHash": "sha256-P/pbpDJmsMSZkNi5GjVTDy7R+OxaIVZhb/bEnYQlaLo=",
+        "owner": "chrissicool",
+        "repo": "zsh-256color",
+        "rev": "559fee48bb74b75cec8b9887f8f3e046f01d5d8f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "chrissicool",
+        "repo": "zsh-256color",
         "type": "github"
       }
     }

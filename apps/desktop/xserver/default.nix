@@ -35,16 +35,9 @@ mkApp {
   };
   home = { host, pkgs, ...}: {
     # Set up a service to configure the displays if it we're not on a NixOS system
-    systemd.user.services.setup-display = lib.mkIf (host.type == "home-manager" && hasAttr "displays" host) {
-      Unit = {
-        Description = "Runs xrandr to set up display configuration.";
-      };
-      Install = {
-        WantedBy = [ "multi-user.target" ];
-      };
-      Service = {
-        ExecStart = mkXrandrCmd pkgs.xorg.xrandr host.displays;
-      };
-    };
+    xsession.initExtra =
+      lib.mkIf (host.type == "home-manager" && hasAttr "displays" host)
+      (lib.mkBefore # Make this the highest priority item
+        (mkXrandrCmd pkgs.xorg.xrandr host.displays));
   };
 }

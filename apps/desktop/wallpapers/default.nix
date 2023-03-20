@@ -35,16 +35,7 @@ mkApp {
       ];
 
       # Set up a service to run on login
-      systemd.user.services.wallpapers = {
-        Unit = {
-          Description = "Sets up new wallpapers on user login.";
-        };
-        Install = {
-          WantedBy = [ "multi-user.target" ];
-        };
-        Service = {
-          ExecStart = ''${pkgs.feh}/bin/feh --randomize --bg-fill ${wallDir}'';
-        };
-      };
+      xsession.initExtra =
+        ''${pkgs.feh}/bin/feh --randomize --bg-fill ${wallDir}'';
     };
 }

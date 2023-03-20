@@ -23,6 +23,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
+
+    # Assets to auto-update
+    zsh-256color = {
+      url = "github:chrissicool/zsh-256color";
+      flake = false;
+    };
   };
 
   outputs = { self, nixpkgs, home-manager, flake-parts, ...}@inputs:
