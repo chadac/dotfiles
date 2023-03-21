@@ -30,11 +30,15 @@ mkApp {
           [ env ];
     };
 
+    environment.systemPackages = with pkgs; [
+      dconf
+      libguestfs
+    ];
+
     # Add hooks for qemu images.
-    system.activationScripts.libvirt-hooks.text =
-      ''
+    system.activationScripts.libvirt-hooks.text = ''
       ln -Tfs /etc/libvirt/hooks /var/lib/libvirt/hooks
-      '';
+    '';
 
     environment.etc = {
       "libvirt/hooks/qemu" = {

@@ -7,4 +7,6 @@
     # KVM Virtual Machine Configurations
     ./vms/workspace.nix
   ];
+
+  time.timeZone = "America/New_York";
 }

@@ -19,6 +19,7 @@ in
     settings.trusted-users = [ "root" host.username ];
     extraOptions = ''
       experimental-features = nix-command flakes
+      allow-import-from-derivation = true
     '';
   };
 

@@ -1,4 +1,4 @@
-{ call, mkApp, rtx, ... }:
+{ call, mkApp, rtx, poetry2nix, ... }:
 {
   python = mkApp {
     src = ./.;
@@ -20,6 +20,11 @@
     home = { pkgs, ... }: {
       home.packages = [ pkgs.rtx ];
     };
+  };
+
+  poetry2nix = mkApp {
+    src = ./.;
+    overlay = poetry2nix.overlay;
   };
 
   emacs = call ./emacs { };

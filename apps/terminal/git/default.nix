@@ -11,6 +11,7 @@ mkApp {
       ignores = [
         # nix
         "result"
+        "result-man"
         # nix shell
         "shell.nix"
       ];

@@ -18,6 +18,14 @@
       inputs.flake-utils.follows = "flake-utils";
     };
 
+    poetry2nix = {
+      url = "github:nix-community/poetry2nix";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        flake-utils.follows = "flake-utils";
+      };
+    };
+
     rtx = {
       url = "github:jdxcode/rtx";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -50,6 +58,8 @@
       imports = [ modules ] ++ hostFlakes;
       inherit systems;
 
+      # TODO: This `pkgs` definitely doesn't have my overrides. Need
+      # to migrate this to `./make-host-config`.
       perSystem = { system, pkgs, ... }: {
         packages = {
           home-manager = home-manager.defaultPackage.${system};
