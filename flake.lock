@@ -172,11 +172,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1679502020,
-        "narHash": "sha256-hH0lJ/4j0H1XbziYuKxUPtq4qdH/zFQAPNO/OKCTdIM=",
+        "lastModified": 1679510579,
+        "narHash": "sha256-kjy+PLAdKBlgfYLEwLKvB3Ld7HC3UruLuI65fUn5gmY=",
         "owner": "jdxcode",
         "repo": "rtx",
-        "rev": "59d1f3d206a47cb3fbc3fba24f205311f5a73338",
+        "rev": "00a6425279d9bd54625bcf4cfa6fefbba2eba55c",
         "type": "github"
       },
       "original": {
