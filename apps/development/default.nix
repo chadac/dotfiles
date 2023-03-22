@@ -1,4 +1,4 @@
-{ call, mkApp, rtx, poetry2nix, ... }:
+{ call, mkApp, homePackage, rtx, poetry2nix, ... }:
 {
   python = mkApp {
     src = ./.;
@@ -12,6 +12,9 @@
       ];
     };
   };
+
+  # GitHub CLI
+  gh = homePackage ./. "gh";
 
   # rtx for language runtime version management
   rtx = mkApp {
