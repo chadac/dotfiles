@@ -251,6 +251,7 @@
 (setq-default tab-width 2)
 (defvaralias 'c-basic-offset 'tab-width)
 (defvaralias 'cperl-indent-level 'tab-width)
+(setq-default sh-basic-offset 2)
 (setq-default js-indent-level 2)
 (setq-default css-indent-offset 2)
 (setq-default web-mode-markup-indent-offset 2)
