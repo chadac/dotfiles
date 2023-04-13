@@ -8,6 +8,8 @@ mkApp {
       userName = "Chad Crawford";
       userEmail = host.email;
 
+      lfs.enable = true;
+
       ignores = [
         # nix
         "result"
