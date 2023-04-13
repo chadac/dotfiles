@@ -4,6 +4,7 @@
   username = "chadcr";
   homeDirectory = "/home/ANT.AMAZON.COM/chadcr";
   email = "chadcr@amazon.com";
+  homeConfiguration = import ./home.nix;
   getApps = apps: [ apps.main ];
   displays = {
     DisplayPort-0 = {
