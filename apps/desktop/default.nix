@@ -22,6 +22,7 @@
 
   xterm = homePackage ./. "xterm";
   firefox = homePackage ./. "firefox";
+  evince = homePackage ./. "evince";
 
   thunar = mkApp {
     src = ./.;
