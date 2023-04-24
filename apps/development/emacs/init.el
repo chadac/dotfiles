@@ -18,6 +18,9 @@
 ;; Disable startup screen
 (setq inhibit-startup-screen t)
 
+;; Disable the native comp warnings/style warnings
+(setq warning-minimum-level :error)
+
 ;; Copy config
 (setq backup-directory-alist `(("." . "~/.emacs.d/saves")))
 (setq backup-by-copying t)
