@@ -26,7 +26,17 @@
 
   thunar = mkApp {
     src = ./.;
-    home = { pkgs, ... }: { home.packages = [ pkgs.xfce.thunar ]; };
+    home = { pkgs, ... }: {
+      home.packages = [ pkgs.xfce.thunar ];
+    };
+    nixos = { pkgs, ... }: {
+      programs.thunar.plugins = with pkgs.xfce; [
+        thunar-archive-plugin
+        thunar-volman
+        thunar-media-tags-plugin
+      ];
+      services.tumbler.enable = true;
+    };
   };
   ristretto = mkApp {
     src = ./.;

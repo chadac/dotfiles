@@ -9,7 +9,7 @@
 
   allowUnfreePackages = [ "nvidia-x11" "nvidia-settings" ];
 
-  getApps = apps: [ apps.main apps.virt ];
+  getApps = apps: [ apps.full apps.virt ];
 
   nixosConfiguration = import ./nixos/configuration.nix;
 

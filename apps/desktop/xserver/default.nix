@@ -29,8 +29,8 @@ mkApp {
       # setup is not chaining desktops left-to-right. Can't change that
       # without an upstream PR, so the temporary workaround is a separate call
       # to xrandr right after starting the xserver.
-      displayManager.setupCommands =
-        lib.mkIf (hasAttr "displays" host) (mkXrandrCmd pkgs.xorg.xrandr host.displays);
+      # displayManager.setupCommands =
+      #   lib.mkIf (hasAttr "displays" host) (mkXrandrCmd pkgs.xorg.xrandr host.displays);
     };
   };
   home = { host, pkgs, ...}: {
