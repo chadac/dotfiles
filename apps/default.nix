@@ -142,11 +142,13 @@ let
         desktop = call ./desktop { };
         development = call ./development { };
         entertainment = call ./entertainment { };
+        gaming = call ./gaming { };
         terminal = call ./terminal { };
         virt = call ./virt { };
       };
     in
       tree // {
+        full = with tree; [ chat core desktop development entertainment gaming terminal ];
         main = with tree; [ chat core desktop development entertainment terminal ];
         essential = with tree; [ core development terminal ];
       };
