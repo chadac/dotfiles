@@ -15,9 +15,11 @@ let
       + (if(hasAttr "status" display) then " --off" else "")
       + (if(hasAttr "mode" display) then " --mode ${display.mode}" else "")
       + (if(hasAttr "pos" display) then " --pos ${display.pos}" else "")
+      + (if(hasAttr "scale" display) then " --scale ${display.scale}" else "")
       + (if(hasAttr "rotate" display) then " --rotate ${display.rotate}" else "")
       + (if(hasAttr "primary" display && display.primary) then " --primary" else "")
     ) displays)
+    ++ [ " 2> /var/log/screenlayout.log || true" ]
   );
 in
 mkApp {
@@ -30,7 +32,8 @@ mkApp {
       # without an upstream PR, so the temporary workaround is a separate call
       # to xrandr right after starting the xserver.
       displayManager.setupCommands =
-        lib.mkIf (hasAttr "displays" host) (mkXrandrCmd pkgs.xorg.xrandr host.displays);
+        lib.mkIf (hasAttr "displays" host)
+          (mkXrandrCmd pkgs.xorg.xrandr host.displays);
     };
   };
   home = { host, pkgs, ...}: {
