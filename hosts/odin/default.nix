@@ -9,7 +9,7 @@
 
   allowUnfreePackages = [ "nvidia-x11" "nvidia-settings" ];
 
-  getApps = apps: [ apps.main apps.virt ];
+  getApps = apps: [ apps.full apps.virt ];
 
   nixosConfiguration = import ./nixos/configuration.nix;
 
@@ -20,23 +20,23 @@
       pos = "0x0";
       rotate = "right";
     };
-    DP-4 = {
+    DP-0 = {
       workspace = 2;
+      primary = true;
       mode = "2560x1440";
       pos = "1440x1120";
       rotate = "normal";
     };
-    DP-0 = {
+    DP-2 = {
       workspace = 3;
-      primary = true;
-      mode = "2560x1440";
-      pos = "4000x1120";
+      mode = "3840x2160";
+      pos = "4000x760";
+      scale = "0.75x0.75";
       rotate = "normal";
     };
-    DVI-D-0.status = "off";
     DP-1.status = "off";
-    DP-2.status = "off";
     DP-3.status = "off";
+    DP-4.status = "off";
     DP-5.status = "off";
   };
 }
