@@ -8,10 +8,10 @@ XTerm.ttyModes: erase ^?
 XTerm*background:            S_base03
 XTerm*foreground:            S_base0
 XTerm*fading:                40
-XTerm*fadeColor:             S_base03
+XTerm*fadeColor:             S_base02
 XTerm*cursorColor:           S_base1
 XTerm*pointerColorBackground:S_base01
-XTerm*pointerColorForeground:S_base1
+XTerm*pointerColorForeground:S_base2
 ! XTerm*background:            #1c1c1c
 ! XTerm*foreground:            #626262
 ! XTerm*fading:                40
