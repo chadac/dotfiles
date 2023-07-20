@@ -1,6 +1,5 @@
 <domain xmlns:qemu="http://libvirt.org/schemas/domain/qemu/1.0" type="kvm">
-  <name>workspace</name>
-  <uuid>b176a2ce-f4a7-4033-b398-b447fee7dcbe</uuid>
+  <name>workspace</name> <uuid>b176a2ce-f4a7-4033-b398-b447fee7dcbe</uuid>
   <metadata>
     <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
       <libosinfo:os id="http://ubuntu.com/ubuntu/20.04"/>
@@ -109,13 +108,13 @@
       </source>
       <address type="pci" domain="0x0000" bus="0x00" slot="0x0f" function="0x0"/>
     </hostdev>
-    <hostdev mode="subsystem" type="usb" managed="yes">
-      <source>
-        <vendor id="0x046d"/>
-        <product id="0x0825"/>
-      </source>
-      <address type="usb" bus="0" port="4"/>
-    </hostdev>
+    <!-- <hostdev mode="subsystem" type="usb" managed="yes"> -->
+    <!--   <source> -->
+    <!--     <vendor id="0x046d"/> -->
+    <!--     <product id="0x0825"/> -->
+    <!--   </source> -->
+    <!--   <address type="usb" bus="0" port="4"/> -->
+    <!-- </hostdev> -->
     <hostdev mode="subsystem" type="usb" managed="yes">
       <source>
         <vendor id="0x1050"/>
