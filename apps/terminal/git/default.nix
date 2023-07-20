@@ -20,9 +20,15 @@ mkApp {
 
       extraConfig = {
         init.defaultBranch = "main";
+        # Sign all commits by default
+        commit.gpgsign = true;
         # Not sure why this isn't automatically set...
         core.excludesfile = "${config.xdg.configHome}/git/ignore";
       };
     };
+  };
+
+  nixos = { ... }: {
+    programs.gnupg.agent.enable = true;
   };
 }
