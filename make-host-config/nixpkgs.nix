@@ -10,5 +10,9 @@ import nixpkgs {
       "slack"
       "spotify"
       "discord"
+      "steam"
+      "steam-original"
+      "steam-runtime"
+      "steam-run"
     ] ++ (host.allowUnfreePackages or []));
 }
