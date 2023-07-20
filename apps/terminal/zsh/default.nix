@@ -5,9 +5,6 @@ mkApp {
     # have bash redirect to zsh
     programs.bash = {
       enable = true;
-      bashrcExtra = ''
-        exec ${pkgs.zsh}/bin/zsh
-      '';
     };
 
     programs.zsh = {
