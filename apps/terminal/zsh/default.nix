@@ -13,7 +13,8 @@ mkApp {
       dotDir = ".config/zsh";
       enableAutosuggestions = true;
       enableCompletion = true;
-      enableSyntaxHighlighting = true;
+
+      syntaxHighlighting.enable = true;
 
       initExtra =
       ''

@@ -4,7 +4,7 @@ let
   # Generate a custom emacs package that downloads all packages from the
   # use-package command in my init.el
   myEmacs = pkgs.emacsWithPackagesFromUsePackage {
-    package = pkgs.emacsUnstable;
+    package = pkgs.emacs-unstable;
     config = ./init.el;
     extraEmacsPackages = epkgs: [
       # I add my init.el to the site-lisp so that it pulls in my
