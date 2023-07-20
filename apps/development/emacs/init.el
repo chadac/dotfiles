@@ -190,31 +190,12 @@
   :hook (dired-mode . treemacs-icons-dired-enable-once)
   :ensure t)
 
-;; ;; LANGUAGES
-;; ;; Python
-(use-package python
+;; LANGUAGES
+
+;; Dockerfiles
+(use-package dockerfile-mode
   :ensure t
-  :mode ("\\.py\\'" . python-mode))
-
-;; Typescript
-(use-package typescript-mode
-  :ensure t
-  :mode "\\.ts\\'")
-
-;; Kotlin
-(use-package kotlin-mode
-  :ensure t
-  :mode "\\.kt\\'")
-
-;; Yaml
-(use-package yaml-mode
-    :ensure t
-    :mode "\\.yaml\\'")
-
-;; TOML
-(use-package toml-mode
-    :ensure t
-    :mode "\\.toml\\'")
+  :mode ("Dockerfile" "Containerfile"))
 
 ;; Gradle
 (use-package gradle-mode
@@ -226,15 +207,50 @@
   :ensure t
   :mode "\\.groovy\\'")
 
+;; Kotlin
+(use-package kotlin-mode
+  :ensure t
+  :mode "\\.kt\\'")
+
 ;; Nix
 (use-package nix-mode
   :ensure t
   :mode "\\.nix\\'")
 
+;; Nickel
+(use-package nickel-mode
+  :ensure t
+  :mode "\\.ncl\\'")
+
+;; Python
+(use-package python
+  :ensure t
+  :mode ("\\.py\\'" . python-mode))
+
 ;; Rust
 (use-package rust-mode
   :ensure t
   :mode "\\.rs\\'")
+
+;; Terraform
+(use-package terraform-mode
+  :ensure t
+  :mode "\\.tf\\'")
+
+;; TOML
+(use-package toml-mode
+    :ensure t
+    :mode "\\.toml\\'")
+
+;; Typescript
+(use-package typescript-mode
+  :ensure t
+  :mode "\\.ts\\'")
+
+;; Yaml
+(use-package yaml-mode
+    :ensure t
+    :mode "\\.yaml\\'")
 
 ;; MISC
 
