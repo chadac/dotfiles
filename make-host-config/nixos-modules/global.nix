@@ -10,13 +10,17 @@ in
   };
 
   nix = {
-    package = pkgs.nixFlakes;
+    package = pkgs.nixVersions.nix_2_17;
 
     registry = {
       nixpkgs.flake = nixpkgs;
     };
 
-    settings.trusted-users = [ "root" host.username ];
+    settings = {
+      trusted-users = [ "root" host.username ];
+      experimental-features = [ "nix-command" "flakes" ];
+    };
+
     extraOptions = ''
       experimental-features = nix-command flakes
       allow-import-from-derivation = true
@@ -40,5 +44,5 @@ in
   hardware.pulseaudio.enable = true;
 
   services.openssh.enable = true;
-  system.stateVersion = "22.11";
+  system.stateVersion = "23.11";
 }

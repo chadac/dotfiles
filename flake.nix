@@ -2,12 +2,16 @@
   description = "@chadac's dotfiles";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "https://api.flakehub.com/f/NixOS/nixpkgs/0.1.0.tar.gz";
+
+    # # flakehub cli
+    fh.url = "https://api.flakehub.com/f/DeterminateSystems/fh/0.1.*.tar.gz";
+
     flake-utils.url = "github:numtide/flake-utils";
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     home-manager = {
-      url = "github:nix-community/home-manager";
+      url = "https://api.flakehub.com/f/nix-community/home-manager/0.1.2984.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

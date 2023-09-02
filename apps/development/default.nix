@@ -1,4 +1,4 @@
-{ call, mkApp, homePackage, rtx, poetry2nix, ... }:
+{ call, mkApp, homePackage, fh, rtx, poetry2nix, ... }:
 {
   python = mkApp {
     src = ./.;
@@ -15,6 +15,15 @@
 
   # GitHub CLI
   gh = homePackage ./. "gh";
+
+  # FlakeHub CLI
+  fh = mkApp {
+    src = ./.;
+    overlay = fh.overlays.default;
+    home = { pkgs, ... }: {
+      home.packages = [ pkgs.fh ];
+    };
+  };
 
   # rtx for language runtime version management
   rtx = mkApp {
