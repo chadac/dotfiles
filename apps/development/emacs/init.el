@@ -202,6 +202,11 @@
   :ensure t
   :mode "\\.gradle\\'")
 
+;; GraphQL
+(use-package graphql-mode
+  :ensure t
+  :mode "\\.graphql\\'")
+
 ;; Groovy
 (use-package groovy-mode
   :ensure t
