@@ -100,17 +100,15 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1692799911,
         "narHash": "sha256-3eihraek4qL744EvQXsK1Ha6C3CR7nnT8X2qWap4RNk=",
-        "owner": "numtide",
-        "repo": "flake-utils",
         "rev": "f9e7cf818399d17d347f847525c5a5a8032e4e44",
-        "type": "github"
+        "revCount": 85,
+        "type": "tarball",
+        "url": "https://api.flakehub.com/f/pinned/numtide/flake-utils/0.1.85%2Brev-f9e7cf818399d17d347f847525c5a5a8032e4e44/018a2375-3956-7f5c-9bbc-bd668014303a/source.tar.gz"
       },
       "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
+        "type": "tarball",
+        "url": "https://api.flakehub.com/f/numtide/flake-utils/0.1.%2A.tar.gz"
       }
     },
     "home-manager": {
@@ -128,7 +126,7 @@
       },
       "original": {
         "type": "tarball",
-        "url": "https://api.flakehub.com/f/nix-community/home-manager/0.1.2984.tar.gz"
+        "url": "https://api.flakehub.com/f/nix-community/home-manager/0.1.%2A.tar.gz"
       }
     },
     "naersk": {

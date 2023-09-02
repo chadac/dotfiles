@@ -7,11 +7,11 @@
     # # flakehub cli
     fh.url = "https://api.flakehub.com/f/DeterminateSystems/fh/0.1.*.tar.gz";
 
-    flake-utils.url = "github:numtide/flake-utils";
+    flake-utils.url = "https://api.flakehub.com/f/numtide/flake-utils/0.1.*.tar.gz";
     flake-parts.url = "github:hercules-ci/flake-parts";
 
     home-manager = {
-      url = "https://api.flakehub.com/f/nix-community/home-manager/0.1.2984.tar.gz";
+      url = "https://api.flakehub.com/f/nix-community/home-manager/0.1.*.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
