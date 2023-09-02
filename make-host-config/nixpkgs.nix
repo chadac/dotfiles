@@ -7,9 +7,10 @@ import nixpkgs {
   overlays = apps.overlays;
   config.allowUnfreePredicate = pkg:
     builtins.elem (lib.getName pkg) ([
+      "discord"
+      "minecraft"
       "slack"
       "spotify"
-      "discord"
       "steam"
       "steam-original"
       "steam-runtime"
