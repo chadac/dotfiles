@@ -50,11 +50,12 @@
       systems = lib.unique (map (getAttr "system") hosts);
       modules = import ./flake-parts-modules;
       flakeInputs = removeAttrs inputs ["self" "flake-parts" "flake-utils"];
+      makeHostFlake = import ./make-host-flake;
       hostFlakes = map (host:
         let
           apps = import ./apps hostInputs;
           hostInputs = flakeInputs // { inherit host; inherit apps; };
-        in import ./make-host-config hostInputs
+        in makeHostFlake hostInputs
       ) hosts;
     in
     flake-parts.lib.mkFlake { inherit inputs; } {
@@ -71,6 +72,11 @@
         };
       };
 
-      flake = { };
+      flake = {
+        lib = {
+          inherit hosts;
+          inherit makeHostFlake;
+        };
+      };
     };
 }

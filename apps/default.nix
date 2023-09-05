@@ -145,12 +145,13 @@ let
         gaming = call ./gaming { };
         terminal = call ./terminal { };
         virt = call ./virt { };
+        self = call ./self { };
       };
     in
       tree // {
-        full = with tree; [ chat core desktop development entertainment gaming terminal ];
-        main = with tree; [ chat core desktop development entertainment terminal ];
-        essential = with tree; [ core development terminal ];
+        full = with tree; [ chat core desktop development entertainment gaming terminal self ];
+        main = with tree; [ chat core desktop development entertainment terminal self ];
+        essential = with tree; [ core development terminal self ];
       };
 
   # Lists unique app names within a given list of apps.
