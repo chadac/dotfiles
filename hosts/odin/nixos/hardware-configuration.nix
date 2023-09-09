@@ -20,7 +20,11 @@
     fsType = "ext4";
   };
 
-  swapDevices = [ ];
+  swapDevices = [
+    {
+      device = "/dev/nvme0n1p2";
+    }
+  ];
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 }
