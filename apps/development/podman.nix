@@ -16,5 +16,6 @@ mkApp {
         defaultNetwork.settings.dns_enabled = true;
       };
     };
+
   };
 }
