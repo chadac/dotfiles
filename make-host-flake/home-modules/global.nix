@@ -1,4 +1,4 @@
-{ host, ... }:
+{ host, pkgs, ... }:
 {
   home = {
     stateVersion = "23.05";

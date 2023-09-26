@@ -10,8 +10,6 @@ in
   };
 
   nix = {
-    package = pkgs.nixVersions.nix_2_17;
-
     registry = {
       nixpkgs.flake = nixpkgs;
     };

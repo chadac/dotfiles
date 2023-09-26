@@ -42,4 +42,16 @@
   emacs = call ./emacs { };
 
   podman = call ./podman.nix { };
+
+  nix = let
+    nixVersion = "nix_2_17";
+  in mkApp {
+    src = ./.;
+    nixos = { pkgs, ... }: {
+      nix.package = pkgs.nixVersions.${nixVersion};
+    };
+    home = { pkgs, ... }: {
+      home.packages = with pkgs; [ nixVersions.${nixVersion} ];
+    };
+  };
 }
