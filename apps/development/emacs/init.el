@@ -44,10 +44,6 @@
 ;;   :config
 ;;   (add-to-list 'company-backends 'company-jedi))
 
-;; APL
-(use-package gnu-apl-mode
-  :ensure t)
-
 ;; PROJECTILE
 (use-package projectile
   :ensure t
@@ -56,6 +52,11 @@
   ;; (setq projectile-project-search-path '(("~/code/" . 3)))
   :bind (:map projectile-mode-map
               ("C-c p" . projectile-command-map)))
+
+;; IVY
+(use-package ivy
+  :ensure t
+  :config (ivy-mode))
 
 ;; MAGIT
 (use-package magit
@@ -197,6 +198,10 @@
   :ensure t
   :mode ("Dockerfile" "Containerfile"))
 
+;; GNU APL
+(use-package gnu-apl-mode
+  :ensure t)
+
 ;; Gradle
 (use-package gradle-mode
   :ensure t
@@ -256,6 +261,34 @@
 (use-package yaml-mode
     :ensure t
     :mode "\\.yaml\\'")
+
+;; LSP
+
+(use-package lsp-mode
+  :ensure t
+  :init
+  (setq lsp-keymap-prefix "C-c l")
+  :hook
+  (python-mode . lsp)
+  :commands lsp)
+
+(use-package lsp-ui
+  :ensure t
+  :commands lsp-ui-mode)
+
+(use-package lsp-treemacs
+  :ensure t
+  :commands lsp-treemacs-error-list)
+
+(use-package lsp-pyright
+  :ensure t
+  :hook (python-mode . (lambda ()
+                         (require 'lsp-pyright)
+                         (lsp))))
+
+(use-package lsp-java
+  :hook
+  (java-mode . lsp))
 
 ;; MISC
 
