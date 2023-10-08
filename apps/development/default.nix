@@ -3,7 +3,13 @@
   python = mkApp {
     src = ./.;
     home = { pkgs, ... }: {
-      home.packages = [ pkgs.python311 ];
+      home.packages = with pkgs; [
+        python311
+        poetry
+        black
+        isort
+        pylint
+      ];
       programs.git.ignores = [
         # python
         "__pycache__/"
@@ -34,10 +40,10 @@
     };
   };
 
-  poetry2nix = mkApp {
-    src = ./.;
-    overlay = poetry2nix.overlay;
-  };
+  # poetry2nix = mkApp {
+  #   src = ./.;
+  #   overlay = poetry2nix.overlay;
+  # };
 
   emacs = call ./emacs { };
 
@@ -52,6 +58,16 @@
     };
     home = { pkgs, ... }: {
       home.packages = with pkgs; [ nixVersions.${nixVersion} ];
+    };
+  };
+
+  essential = mkApp {
+    src = ./.;
+    home = { pkgs, ... }: {
+      home.packages = with pkgs; [
+        awscli
+        gnumake
+      ];
     };
   };
 }
