@@ -16,8 +16,13 @@ let
     ];
   };
 in {
-  home.sessionVariables = {
-    EDITOR = "emacs -nw";
+  home = {
+    packages = with pkgs; [
+      ispell
+    ];
+    sessionVariables = {
+      EDITOR = "emacsclient";
+    };
   };
 
   services.emacs.enable = true;

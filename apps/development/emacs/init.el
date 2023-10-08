@@ -333,6 +333,10 @@
   :config
   (envrc-global-mode))
 
+;; org-mode
+(use-package ob-graphql
+  :ensure t)
+
 ;; Babel
 (org-babel-do-load-languages
  'org-babel-load-languages
