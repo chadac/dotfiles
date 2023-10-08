@@ -1,4 +1,4 @@
-{ mkApp, ... }:
+{ call, mkApp, ... }:
 {
   steam = mkApp {
     src = ./.;
@@ -11,12 +11,5 @@
     };
   };
 
-  # mame = mkApp {
-  #   src = ./mame;
-  #   home = { pkgs, ... }: let
-  #     mame = pkgs.callPackage ./mame { };
-  #   in {
-  #     home.packages = [ mame ];
-  #   };
-  # };
+  emu = call ./emu { };
 }
