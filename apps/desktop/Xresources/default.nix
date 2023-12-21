@@ -1,9 +1,28 @@
 { mkApp }:
 mkApp {
   src = ./.;
-  home = { pkgs, ... }:
+  home = { pkgs, lib, ... }:
     let
-      xpath = pkgs.copyPathToStore ./.;
+      inherit (pkgs) stdenv;
+      xpath = stdenv.mkDerivation {
+        name = "xpath";
+        src = ./.;
+        # unpackPhase = ''
+        #   mkdir source
+        #   cp -a $src source/
+        #   cd source
+        # '';
+        patchPhase = ''
+          substituteInPlace .Xresources \
+            --replace '.Xresources.d' "$out/.Xresources.d"
+        '';
+        buildPhase = ''true'';
+        installPhase = ''
+          mkdir -p $out
+          cp -ra . $out/
+        '';
+      };
+      #pkgs.copyPathToStore ./.;
     in
       {
         xsession.profileExtra = ''

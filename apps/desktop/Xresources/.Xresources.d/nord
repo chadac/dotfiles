@@ -1,0 +1,70 @@
+! Copyright (c) 2016-present Sven Greb <development@svengreb.de>
+! This source code is licensed under the MIT license found in the license file.
+
+#define nord0 #2E3440
+#define S_base02 #2E3440
+
+#define nord1 #3B4252
+#define S_red #3B4252
+
+#define nord2 #434C5E
+#define nord3 #4C566A
+#define S_base03#4C566A
+
+#define nord4 #D8DEE9
+
+#define nord5 #E5E9F0
+#define S_magenta #E5E9F0
+#define S_violet #E5E9F0
+
+#define nord6 #ECEFF4
+
+#define nord7 #8FBCBB
+#define S_base1 #8FBCBB
+
+#define nord8 #88C0D0
+#define S_cyan #88C0D0
+
+#define nord9 #81A1C1
+#define S_blue #81A1C1
+#define S_base0 #81A1C1
+
+#define nord10 #5E81AC
+
+#define nord11 #BF616A
+#define S_orange #BF616A
+
+#define nord12 #D08770
+
+#define nord13 #EBCB8B
+#define S_yellow #EBCB8B
+#define S_base00 #EBCB8B
+
+#define nord14 #A3BE8C
+#define S_green #A3BE8C
+#define S_base01 #A3BE8C
+
+#define nord15 #B48EAD
+
+*.foreground:   nord4
+*.background:   nord0
+*.cursorColor:  nord4
+*fading: 35
+*fadeColor: nord3
+
+*.color0: nord1
+*.color1: nord11
+*.color2: nord14
+*.color3: nord13
+*.color4: nord9
+*.color5: nord15
+*.color6: nord8
+*.color7: nord5
+*.color8: nord3
+*.color9: nord11
+*.color10: nord14
+*.color11: nord13
+*.color12: nord9
+*.color13: nord15
+*.color14: nord7
+*.color15: nord6
