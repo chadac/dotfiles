@@ -240,7 +240,8 @@
 ;; Rust
 (use-package rust-mode
   :ensure t
-  :mode "\\.rs\\'")
+  :mode "\\.rs\\'"
+  :after (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 ;; Terraform
 (use-package terraform-mode
@@ -327,6 +328,9 @@
   :init
   (global-flycheck-mode))
 
+(use-package flycheck-rust
+  :ensure t)
+
 ;; Direnv for directory-local commands and such
 (use-package envrc
   :ensure t
@@ -335,7 +339,9 @@
 
 ;; org-mode
 (use-package ob-graphql
-  :ensure t)
+  :ensure t
+  :init
+  (require 'ob-graphql))
 
 ;; Babel
 (org-babel-do-load-languages
