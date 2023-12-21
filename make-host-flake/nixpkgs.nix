@@ -5,9 +5,12 @@ in
 import nixpkgs {
   inherit (host) system;
   overlays = apps.overlays;
-  config.allowUnfreePredicate = pkg:
-    builtins.elem (lib.getName pkg) ([
+  config.allowUnfreePredicate = pkg: (
+    (lib.hasPrefix "libretro-" (lib.getName pkg)) ||
+    (builtins.elem (lib.getName pkg) ([
       "discord"
+      "libretro-fbalpha2012"
+      "libretro-fbneo"
       "minecraft"
       "slack"
       "spotify"
@@ -15,5 +18,6 @@ import nixpkgs {
       "steam-original"
       "steam-runtime"
       "steam-run"
-    ] ++ (host.allowUnfreePackages or []));
+    ] ++ (host.allowUnfreePackages or [])))
+  );
 }
