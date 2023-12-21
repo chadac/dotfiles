@@ -1,5 +1,13 @@
 { call, mkApp, homePackage, fh, rtx, poetry2nix, ... }:
 {
+  # to solve dynamic loading issues
+  nix-ld = mkApp {
+    src = ./.;
+    nixos = { pkgs, ... }: {
+      programs.nix-ld.enable = true;
+    };
+  };
+
   python = mkApp {
     src = ./.;
     home = { pkgs, ... }: {
