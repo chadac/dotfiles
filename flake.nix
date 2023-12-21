@@ -15,6 +15,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    dt = {
+      url = "github:so-dang-cool/dt";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # Applications
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
