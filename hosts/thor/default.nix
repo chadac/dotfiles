@@ -9,5 +9,20 @@
 
   allowUnfreePackages = [ "nvidia-x11" "nvidia-settings" ];
 
+  nixosConfiguration = { ... }: {
+    imports = [ ./nixos/hardware-configuration.nix ];
+    networking.networkmanager.enable = true;
+    services.logind = {
+      powerKey = "hibernate";
+      powerKeyLongPress = "poweroff";
+    };
+    programs.nm-applet.enable = true;
+    hardware.pulseaudio.enable = true;
+  };
+
+  homeConfiguration = { pkgs, ... }: {
+    home.packages = with pkgs; [ pavucontrol ];
+  };
+
   getApps = apps: [ apps.full ];
 }
