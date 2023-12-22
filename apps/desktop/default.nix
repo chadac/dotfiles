@@ -7,6 +7,13 @@
   xsession = call ./xsession { };
   Xresources = call ./Xresources { };
 
+  vlc = mkApp {
+    src = ./.;
+    home = { pkgs, ... }: {
+      home.packages = with pkgs; [ vlc ];
+    };
+  };
+
   lightdm = mkApp {
     src = ./.;
     nixos = { inputs, ... }:
