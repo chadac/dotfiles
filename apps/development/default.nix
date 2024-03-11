@@ -17,6 +17,7 @@
         black
         isort
         pylint
+        pyright
       ];
       programs.git.ignores = [
         # python
@@ -58,7 +59,7 @@
   podman = call ./podman.nix { };
 
   nix = let
-    nixVersion = "nix_2_17";
+    nixVersion = "nix_2_19";
   in mkApp {
     src = ./.;
     nixos = { pkgs, ... }: {
@@ -75,6 +76,7 @@
       home.packages = with pkgs; [
         awscli
         gnumake
+        ripgrep
       ];
     };
   };
