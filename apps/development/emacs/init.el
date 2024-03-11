@@ -53,6 +53,10 @@
   :bind (:map projectile-mode-map
               ("C-c p" . projectile-command-map)))
 
+;; ripgrep
+(use-package projectile-ripgrep
+  :ensure t)
+
 ;; IVY
 (use-package ivy
   :ensure t
@@ -198,6 +202,11 @@
   :ensure t
   :mode ("Dockerfile" "Containerfile"))
 
+;; golang
+(use-package go-mode
+  :ensure t
+  :mode "\\.go\\'")
+
 ;; GNU APL
 (use-package gnu-apl-mode
   :ensure t)
@@ -285,11 +294,17 @@
   :ensure t
   :hook (python-mode . (lambda ()
                          (require 'lsp-pyright)
-                         (lsp))))
+                         (lsp)))
+  :config
+  (setq lsp-pyright-multi-root nil))
 
 (use-package lsp-java
   :hook
   (java-mode . lsp))
+
+(use-package lsp-terraform-ls
+  :hook
+  (terraform-mode . lsp))
 
 ;; MISC
 
