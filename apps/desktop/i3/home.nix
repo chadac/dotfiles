@@ -33,7 +33,8 @@ in {
             [ { workspace = toString cfg.workspace; output = display; } ] else [ ])
           host.displays
       ));
-      keybindings = lib.mkDefault {
+
+      keybindings = {
         "${mod}+d" = "exec '${pkgs.dmenu}/bin/dmenu_run'";
         "${mod}+Return" = "exec ${pkgs.xterm}/bin/xterm";
         "${mod}+Shift+q" = "kill";
@@ -89,5 +90,15 @@ in {
         "${mod}+e" = "layout toggle split";
       };
     };
+
+    extraConfig = ''
+      for_window [window_role="alert"] floating enable
+      for_window [window_role="pop-up"]                       floating enable
+      for_window [window_role="bubble"]                       floating enable
+      for_window [window_role="task_dialog"]                  floating enable
+      for_window [window_role="Preferences"]                  floating enable
+      for_window [window_type="dialog"]                       floating enable
+      for_window [window_type="menu"]                         floating enable
+    '';
   };
 }
