@@ -20,4 +20,7 @@ import nixpkgs {
       "steam-run"
     ] ++ (host.allowUnfreePackages or [])))
   );
+  config.permittedInsecurePackages = [
+    "freeimage-unstable-2021-11-01"
+  ];
 }
