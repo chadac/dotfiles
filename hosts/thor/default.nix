@@ -1,7 +1,7 @@
 # My primary laptop.
 {
   nix-config.hosts.thor = {
-    type = "nixos";
+    kind = "nixos";
     system = "x86_64-linux";
 
     username = "chadac";

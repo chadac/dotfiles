@@ -43,6 +43,26 @@
     enable = true;
     nixos = {
       system.stateVersion = "23.11";
+
+      nix.settings = {
+        substituters = [
+          "https://cache.garnix.io"
+        ];
+        trusted-public-keys = [
+          "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
+        ];
+      };
+
+      boot.loader = {
+        efi = {
+          canTouchEfiVariables = true;
+          efiSysMountPoint = "/boot/efi";
+        };
+        grub = {
+          efiSupport = true;
+          device = "nodev";
+        };
+      };
     };
     home = {
       home.stateVersion = "23.05";
