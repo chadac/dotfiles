@@ -5,7 +5,8 @@
     username = "chadcr";
     homeDirectory = "/home/ANT.AMAZON.COM/chadcr";
     email = "chadcr@amazon.com";
-    homeConfiguration = import ./home.nix;
+
+    home = import ./home.nix;
 
     displays = {
       DisplayPort-0 = {

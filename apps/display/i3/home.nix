@@ -92,7 +92,7 @@ in {
     };
 
     extraConfig = ''
-      for_window [window_role="alert"] floating enable
+      for_window [window_role="alert"]                        floating enable
       for_window [window_role="pop-up"]                       floating enable
       for_window [window_role="bubble"]                       floating enable
       for_window [window_role="task_dialog"]                  floating enable
