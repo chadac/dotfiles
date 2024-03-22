@@ -28,7 +28,7 @@
         rotate = "normal";
         workspace = 3;
       };
-      DVI-D-1.status = "off";
+      DVI-D-1.enable = false;
     };
   };
 }
