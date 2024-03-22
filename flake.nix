@@ -9,6 +9,7 @@
 
     flake-utils.url = "https://api.flakehub.com/f/numtide/flake-utils/0.1.*.tar.gz";
     flake-parts.url = "github:hercules-ci/flake-parts";
+    nix-config-modules.url = "github:chadac/nix-config-modules";
 
     home-manager = {
       url = "https://api.flakehub.com/f/nix-community/home-manager/0.1.*.tar.gz";
@@ -47,41 +48,13 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, flake-parts, ...}@inputs:
-    let
-      inherit (nixpkgs) lib;
-      inherit (builtins) attrValues getAttr removeAttrs map;
-      hosts = lib.attrValues (import ./hosts);
-      systems = lib.unique (map (getAttr "system") hosts);
-      modules = import ./flake-parts-modules;
-      flakeInputs = removeAttrs inputs ["self" "flake-parts" "flake-utils"];
-      makeHostFlake = import ./make-host-flake;
-      hostFlakes = map (host:
-        let
-          apps = import ./apps hostInputs;
-          hostInputs = flakeInputs // { inherit host; inherit apps; };
-        in makeHostFlake hostInputs
-      ) hosts;
-    in
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [ modules ] ++ hostFlakes;
-      inherit systems;
+  outputs = { flake-parts, ...}@inputs: flake-parts.lib.mkFlake { inherit inputs; } {
+    imports = [
+      inputs.nix-config-modules.flakeModule
+      ./hosts
+      ./apps
+    ];
 
-      # TODO: This `pkgs` definitely doesn't have my overrides. Need
-      # to migrate this to `./make-host-config`.
-      perSystem = { system, pkgs, ... }: {
-        packages = {
-          home-manager = home-manager.defaultPackage.${system};
-          nixos-rebuild = pkgs.nixos-rebuild;
-          default = pkgs.writeShellScriptBin "dummy" ''echo "Hello World!"'';
-        };
-      };
-
-      flake = {
-        lib = {
-          inherit hosts;
-          inherit makeHostFlake;
-        };
-      };
-    };
+    systems = [ ];
+  };
 }

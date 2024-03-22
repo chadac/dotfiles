@@ -1,28 +1,34 @@
 # My primary laptop.
 {
-  type = "nixos";
-  system = "x86_64-linux";
+  nix-config.hosts.thor = {
+    type = "nixos";
+    system = "x86_64-linux";
 
-  username = "chadac";
-  email = "chad@cacrawford.org";
-  homeDirectory = "/home/chadac";
+    username = "chadac";
+    email = "chad@cacrawford.org";
+    homeDirectory = "/home/chadac";
 
-  allowUnfreePackages = [ "nvidia-x11" "nvidia-settings" ];
-
-  nixosConfiguration = { ... }: {
-    imports = [ ./nixos/hardware-configuration.nix ];
-    networking.networkmanager.enable = true;
-    services.logind = {
-      powerKey = "hibernate";
-      powerKeyLongPress = "poweroff";
+    tags = {
+      laptop = true;
+      gaming = true;
+      nvidia = true;
     };
-    programs.nm-applet.enable = true;
-    hardware.pulseaudio.enable = true;
-  };
 
-  homeConfiguration = { pkgs, ... }: {
-    home.packages = with pkgs; [ pavucontrol ];
-  };
+    nixpkgs.packages.unfree = [ "nvidia-x11" "nvidia-settings" ];
 
-  getApps = apps: [ apps.full ];
+    nixos = {
+      imports = [ ./nixos/hardware-configuration.nix ];
+      networking.networkmanager.enable = true;
+      services.logind = {
+        powerKey = "hibernate";
+        powerKeyLongPress = "poweroff";
+      };
+      programs.nm-applet.enable = true;
+      hardware.pulseaudio.enable = true;
+    };
+
+    home = { pkgs, ... }: {
+      home.packages = with pkgs; [ pavucontrol ];
+    };
+  };
 }
