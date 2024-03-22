@@ -1,0 +1,5 @@
+builds:
+  - include:
+    - "homeConfigurations.*"
+    - "nixosConfigurations.*"
+    branch: "nix-config"

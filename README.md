@@ -8,30 +8,25 @@ config](https://github.com/lovesegfault/nix-config).
 
 ## Features
 
-* Multi-host configuration with `flake-parts`: Each host deployment is
-  its own flake created in `./make-host-config`, and then those are
-  composed together using `flake-parts`. This makes it much easier for
-  me to modularize my code.
-* `apps`: Contains home-manager, NixOS and nixpkgs overlays all in one
-  file. Organized by concept rather than function, so that I don't
-  need to navigate to multiple directories at once.
+* Multi-host configuration with [nix-config-modules](https://github.com/chadac/nix-config-modules)
+* Custom app configurations for building more complex host specs
 * Multihead display configuration: Hosts can now specify a monitor
   configuration using standard `xrandr` outputs in a much more
   flexible fashion than what NixOS offers by default. I also include
   some Home Manager hooks so that display configurations can be
   applied at login on non-NixOS systems. See
-  [./apps/desktop/wallpapers/default.nix](/apps/desktop/wallpapers/default.nix)
+  [./apps/display/wallpapers/default.nix](/apps/display/wallpapers/default.nix)
   for more details.
 
 ## Usage
 
 For rebuilding NixOS:
 
-    nix run .#nixos-rebuild switch -- --flake .#<host>
+    nixos-rebuild switch --flake .#<host>
 
 For rebuilding Home Manager:
 
-    nix run .#home-manager switch -- --flake .#<host>
+    home-manager switch --flake .#<host>
 
 ### Ubuntu Desktop with gdm
 
