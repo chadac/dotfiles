@@ -1,8 +1,6 @@
 let
   tags = [ "gaming" ];
 in {
-  nix-config.defaultTags.gaming = false;
-
   nix-config.apps = {
     steam = {
       inherit tags;

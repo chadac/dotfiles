@@ -4,8 +4,6 @@ let
 in
 {
   nix-config = {
-    defaultTags.display = true;
-
     homeApps = [{
       inherit tags;
       packages = [

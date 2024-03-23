@@ -37,6 +37,18 @@
   nix-config.defaultTags = {
     # if true, keep the deployment small
     minimal = false;
+
+    # hardware-specific
+    desktop = false;
+    laptop = false;
+
+    # categories
+    chat = true;
+    development = true;
+    display = true;
+    entertainment = true;
+    gaming = false;
+    virt = false;
   };
 
   nix-config.apps.init = {

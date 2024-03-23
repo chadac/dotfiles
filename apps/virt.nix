@@ -1,8 +1,6 @@
 let
   tags = [ "virt" ];
 in {
-  nix-config.defaultTags.virt = false;
-
   nix-config.homeApps = [{
     inherit tags;
     packages = [ "virt-manager" ];

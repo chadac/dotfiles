@@ -14,6 +14,4 @@ in {
       nixpkgs.packages.unfree = [ "discord" ];
     };
   };
-
-  nix-config.defaultTags.chat = true;
 }

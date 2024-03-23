@@ -2,8 +2,6 @@
 let
   tags = [ "development" ];
 in {
-  nix-config.defaultTags.development = true;
-
   nix-config.homeApps = [
     {
       inherit tags;

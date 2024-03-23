@@ -4,8 +4,6 @@ let
 in
 {
   nix-config = {
-    defaultTags.entertainment = true;
-
     homeApps = [{
       inherit tags;
       disableTags = [ "minimal" ];
