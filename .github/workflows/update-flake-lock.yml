@@ -21,6 +21,7 @@ jobs:
             automated
           commit-msg: "chore: update flake.lock"
           sign-commits: true
+          token: ${{ secrets.GH_TOKEN_FOR_UPDATES }}
           gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
           gpg-fingerprint: ${{ secrets.GPG_FINGERPRINT }}
           gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }}
