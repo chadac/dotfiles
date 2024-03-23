@@ -19,3 +19,8 @@ jobs:
           pr-labels: |                  # Labels to be set on the PR
             dependencies
             automated
+          commit-msg: "chore: update flake.lock"
+          sign-commits: true
+          gpg-private-key: ${{ secrets.GPG_PRIVATE_KEY }}
+          gpg-fingerprint: ${{ secrets.GPG_FINGERPRINT }}
+          gpg-passphrase: ${{ secrets.GPG_PASSPHRASE }}
