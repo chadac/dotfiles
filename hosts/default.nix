@@ -4,5 +4,6 @@
     ./thor
     ./forseti
     ./baldur
+    ./iso
   ];
 }

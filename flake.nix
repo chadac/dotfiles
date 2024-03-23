@@ -53,8 +53,9 @@
       inputs.nix-config-modules.flakeModule
       ./hosts
       ./apps
-    ];
-
+    ] ++
+    # map iso images to packages for simplicity
+    (map (import ./iso.nix) ["x86_64-linux" "aarch64-linux"]);
     systems = [ ];
   };
 }
