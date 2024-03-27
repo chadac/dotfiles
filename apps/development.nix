@@ -28,10 +28,23 @@ in {
   ];
 
   nix-config.apps = {
-    nix-ld = {
+    fh = {
       inherit tags;
-      nixos = {
-        programs.nix-ld.enable = true;
+      nixpkgs = { inputs, ... }: {
+        params.overlays = [ inputs.fh.overlays.default ];
+      };
+      home = { pkgs, ... }: {
+        home.packages = [ pkgs.fh ];
+      };
+    };
+
+    kubernetes = {
+      inherit tags;
+      home = { pkgs, ... }: {
+        home.packages = with pkgs; [
+          kubectl
+          k9s
+        ];
       };
     };
 
@@ -54,16 +67,6 @@ in {
       };
     };
 
-    fh = {
-      inherit tags;
-      nixpkgs = { inputs, ... }: {
-        params.overlays = [ inputs.fh.overlays.default ];
-      };
-      home = { pkgs, ... }: {
-        home.packages = [ pkgs.fh ];
-      };
-    };
-
     rtx = {
       inherit tags;
       nixpkgs = { inputs, ... }: {
@@ -83,6 +86,13 @@ in {
       };
       home = { pkgs, ... }: {
         home.packages = [ pkgs.nixVersions.${nixVersion} ];
+      };
+    };
+
+    nix-ld = {
+      inherit tags;
+      nixos = {
+        programs.nix-ld.enable = true;
       };
     };
   };
