@@ -1,6 +1,15 @@
 {
   description = "@chadac's dotfiles";
 
+  nixConfig = {
+    extra-trusted-substituters = [
+      "https://cache.garnix.io"
+    ];
+    extra-trusted-public-keys = [
+      "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
+    ];
+  };
+
   inputs = {
     nixpkgs.url = "https://api.flakehub.com/f/NixOS/nixpkgs/0.1.0.tar.gz";
 
@@ -48,14 +57,20 @@
     };
   };
 
-  outputs = { flake-parts, ...}@inputs: flake-parts.lib.mkFlake { inherit inputs; } {
-    imports = [
-      inputs.nix-config-modules.flakeModule
-      ./hosts
-      ./apps
-    ] ++
-    # map iso images to packages for simplicity
-    (map (import ./iso.nix) ["x86_64-linux" "aarch64-linux"]);
-    systems = [ ];
-  };
+  outputs = { flake-parts, ...}@inputs: let
+    flakeModule = {
+      imports = [
+        inputs.nix-config-modules.flakeModule
+        ./hosts
+        ./apps
+      ] ++
+      # map iso images to packages for simplicity
+      (map (import ./iso.nix) ["x86_64-linux" "aarch64-linux"]);
+
+      systems = [ ];
+    };
+  in
+    (flake-parts.lib.mkFlake { inherit inputs; } flakeModule) //
+    { inherit flakeModule; }
+  ;
 }

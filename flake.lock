@@ -212,11 +212,11 @@
         "systems": "systems_3"
       },
       "locked": {
-        "lastModified": 1711148350,
-        "narHash": "sha256-A3WK3gSmRda4AIFiD35/aQvNxf8kkSi6fVIBKx+wKrQ=",
+        "lastModified": 1711385006,
+        "narHash": "sha256-qTv+Kcy/+fjE7PMsRNrwND8hnkOSlm+KkvbrMBBR3TU=",
         "owner": "chadac",
         "repo": "nix-config-modules",
-        "rev": "1dc155d05d1fd502c9433f0faf2599b75dc33c3a",
+        "rev": "c9aa6b8c5ec1af2fa03387e4667aa35d11c41c9b",
         "type": "github"
       },
       "original": {
