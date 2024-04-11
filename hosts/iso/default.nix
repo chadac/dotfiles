@@ -4,9 +4,9 @@ let
       kind = "nixos";
       inherit system;
 
-      username = "chadac";
+      username = "nixos";
       email = "chad@cacrawford.org";
-      homeDirectory = "/home/chadac";
+      homeDirectory = "/home/nixos";
 
       tags = {
         minimal = true;
