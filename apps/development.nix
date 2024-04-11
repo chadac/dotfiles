@@ -31,7 +31,7 @@ in {
     podman = {
       inherit tags;
       nixos = { pkgs, ... }: {
-        virtualision.containers.enable = true;
+        virtualisation.containers.enable = true;
 
         virtualisation.podman = {
           enable = true;
