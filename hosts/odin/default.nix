@@ -14,6 +14,11 @@
       virt = true;
     };
 
+    apps = {
+      # disable podman in favor of dumb docker... for now
+      apps.podman.enable = false;
+    };
+
     nixpkgs.packages.unfree = [
       "nvidia-x11"
       "nvidia-settings"

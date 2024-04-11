@@ -28,6 +28,25 @@ in {
   ];
 
   nix-config.apps = {
+    podman = {
+      inherit tags;
+      nixos = { pkgs, ... }: {
+        virtualision.containers.enable = true;
+
+        virtualisation.podman = {
+          enable = true;
+          dockerCompat = true;
+          defaultNetwork.settings.dns_enabled = true;
+        };
+
+        environment.systemPackages = with pkgs; [
+          dive
+          podman-tui
+          podman-compose
+        ];
+      };
+    };
+
     fh = {
       inherit tags;
       nixpkgs = { inputs, ... }: {
