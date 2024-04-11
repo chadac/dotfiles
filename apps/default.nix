@@ -53,7 +53,7 @@
 
   nix-config.apps.init = {
     enable = true;
-    nixos = {
+    nixos = { host, ... }: {
       system.stateVersion = "23.11";
 
       nix.settings = {
@@ -68,12 +68,12 @@
       boot.loader = {
         efi = {
           canTouchEfiVariables = true;
-          efiSysMountPoint = "/boot/efi";
         };
-        grub = {
-          efiSupport = true;
-          device = "nodev";
-        };
+        systemd-boot.enable = true;
+      };
+
+      users.users.${host.username} = {
+        extraGroups = [ "wheel" ];
       };
     };
     home = {
