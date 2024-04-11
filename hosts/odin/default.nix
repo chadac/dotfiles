@@ -14,7 +14,7 @@
       virt = true;
     };
 
-    apps = {
+    nix-config = {
       # disable podman in favor of dumb docker... for now
       apps.podman.enable = false;
     };
