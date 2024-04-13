@@ -5,5 +5,6 @@
     ./forseti
     ./baldur
     ./iso
+    ./bragi
   ];
 }
