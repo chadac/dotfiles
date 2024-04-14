@@ -1,6 +1,10 @@
 let
   tags = [ "virt" ];
 in {
+  imports = [
+    ./libvirtd
+  ];
+
   nix-config.homeApps = [{
     inherit tags;
     packages = [ "virt-manager" ];

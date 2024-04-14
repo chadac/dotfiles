@@ -8,30 +8,20 @@
     ./entertainment.nix
 
     # general display
-    ./display.nix
-    ./display/i3
-    ./display/Xresources
-    ./display/wallpapers
-    ./display/xserver
-    ./display/xsession
+    ./display
 
     # development
-    ./development.nix
-    ./development/emacs
-    ./development/git
-    ./development/zsh
+    ./development
 
     # gaming
-    ./gaming.nix
-    ./gaming/emu
+    ./gaming
 
     # hardware-specific configs
     ./hardware/desktop.nix
     ./hardware/laptop.nix
 
     # virtualization for kvms
-    ./virt.nix
-    ./virt/libvirtd
+    ./virt
   ];
 
   nix-config.defaultTags = {
@@ -78,6 +68,19 @@
     };
     home = {
       home.stateVersion = "23.05";
+    };
+  };
+
+  nix-config.apps.pulseaudio = { host, ... }: {
+    enable = true;
+    nixos = {
+      hardware.pulseaudio.enable = true;
+      users.users.${host.username} = {
+        extraGroups = [ "audio" ];
+      };
+    };
+    home = { pkgs, ... }: {
+      home.packages = with pkgs; [ pavucontrol ];
     };
   };
 }

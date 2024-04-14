@@ -3,6 +3,14 @@ let
   tags = [ "display" ];
 in
 {
+  imports = [
+    ./i3
+    ./Xresources
+    ./wallpapers
+    ./xserver
+    ./xsession
+  ];
+
   nix-config = {
     homeApps = [{
       inherit tags;

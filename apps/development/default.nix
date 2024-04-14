@@ -1,83 +1,135 @@
-{ call, mkApp, homePackage, fh, rtx, poetry2nix, ... }:
-{
-  # to solve dynamic loading issues
-  nix-ld = mkApp {
-    src = ./.;
-    nixos = { pkgs, ... }: {
-      programs.nix-ld.enable = true;
-    };
-  };
+{ ... }:
+let
+  tags = [ "development" ];
+in {
+  # nix-config.systemApps = [{
+  #   inherit tags;
+  #   packages = [
+  #   ];
+  # }];
+  imports = [
+    ./emacs
+    ./git
+    ./zsh
+  ];
 
-  python = mkApp {
-    src = ./.;
-    home = { pkgs, ... }: {
-      home.packages = with pkgs; [
-        python311
-        poetry
-        black
-        isort
-        pylint
-        pyright
+  nix-config.homeApps = [
+    {
+      inherit tags;
+      packages = [
+        "busybox"
+        "dig"
+        "gnumake"
+        "jq"
+        "lm_sensors"
+        "pciutils"
+        "unzip"
+        "vim"
+        "zip"
+
+        "unzip"
+        "hyperfine"
+        "ripgrep"
+        "opentofu"
       ];
-      programs.git.ignores = [
-        # python
-        "__pycache__/"
-        "*.pyc"
-        ".dmypy.json"
+    }
+    {
+      inherit tags;
+      disableTags = [ "minimal" ];
+      packages = [
+        "awscli2"
+        "gh"
       ];
+    }
+  ];
+
+  nix-config.apps = {
+    podman = {
+      inherit tags;
+      nixos = { pkgs, ... }: {
+        virtualisation.containers.enable = true;
+
+        virtualisation.podman = {
+          enable = true;
+          dockerCompat = true;
+          dockerSocket.enable = true;
+          defaultNetwork.settings.dns_enabled = true;
+        };
+
+        environment.systemPackages = with pkgs; [
+          dive
+          podman-tui
+          podman-compose
+        ];
+      };
     };
-  };
 
-  # GitHub CLI
-  gh = homePackage ./. "gh";
-
-  # FlakeHub CLI
-  fh = mkApp {
-    src = ./.;
-    overlay = fh.overlays.default;
-    home = { pkgs, ... }: {
-      home.packages = [ pkgs.fh ];
+    fh = {
+      inherit tags;
+      nixpkgs = { inputs, ... }: {
+        params.overlays = [ inputs.fh.overlays.default ];
+      };
+      home = { pkgs, ... }: {
+        home.packages = [ pkgs.fh ];
+      };
     };
-  };
 
-  # rtx for language runtime version management
-  rtx = mkApp {
-    src = ./.;
-    overlay = rtx.overlay;
-    home = { pkgs, ... }: {
-      home.packages = [ pkgs.rtx ];
+    kubernetes = {
+      inherit tags;
+      home = { pkgs, ... }: {
+        home.packages = with pkgs; [
+          kubectl
+          k9s
+        ];
+      };
     };
-  };
 
-  # poetry2nix = mkApp {
-  #   src = ./.;
-  #   overlay = poetry2nix.overlay;
-  # };
-
-  emacs = call ./emacs { };
-
-  podman = call ./podman.nix { };
-
-  nix = let
-    nixVersion = "nix_2_19";
-  in mkApp {
-    src = ./.;
-    nixos = { pkgs, ... }: {
-      nix.package = pkgs.nixVersions.${nixVersion};
+    nix = let
+      nixVersion = "nix_2_19";
+    in {
+      inherit tags;
+      nixos = { pkgs, ... }: {
+        nix.package = pkgs.nixVersions.${nixVersion};
+      };
+      home = { pkgs, ... }: {
+        home.packages = [ pkgs.nixVersions.${nixVersion} ];
+      };
     };
-    home = { pkgs, ... }: {
-      home.packages = with pkgs; [ nixVersions.${nixVersion} ];
-    };
-  };
 
-  essential = mkApp {
-    src = ./.;
-    home = { pkgs, ... }: {
-      home.packages = with pkgs; [
-        awscli
-        gnumake
-        ripgrep
-      ];
+    nix-ld = {
+      inherit tags;
+      nixos = {
+        programs.nix-ld.enable = true;
+      };
+    };
+
+    python = {
+      inherit tags;
+      home = { pkgs, ... }: {
+        home.packages = with pkgs; [
+          python311
+          poetry
+          black
+          isort
+          pylint
+          pyright
+        ];
+        programs.git.ignores = [
+          "__pycache__/"
+          "*.pyc"
+          ".dmypy.json"
+        ];
+      };
+    };
+
+    rtx = {
+      inherit tags;
+      nixpkgs = { inputs, ... }: {
+        params.overlays = [ inputs.rtx.overlay ];
+      };
+      home = { pkgs, ... }: {
+        home.packages = [ pkgs.rtx ];
+      };
     };
   };
 }
