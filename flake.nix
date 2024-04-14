@@ -13,7 +13,7 @@
   inputs = {
     nixpkgs.url = "https://api.flakehub.com/f/NixOS/nixpkgs/0.1.0.tar.gz";
 
-    # # flakehub cli
+    # flakehub cli
     fh.url = "https://api.flakehub.com/f/DeterminateSystems/fh/0.1.*.tar.gz";
 
     flake-utils.url = "https://api.flakehub.com/f/numtide/flake-utils/0.1.*.tar.gz";
@@ -21,7 +21,8 @@
     nix-config-modules.url = "github:chadac/nix-config-modules";
 
     home-manager = {
-      url = "https://api.flakehub.com/f/nix-community/home-manager/0.1.*.tar.gz";
+      # url = "https://api.flakehub.com/f/nix-community/home-manager/0.2405.*.tar.gz";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -63,9 +64,9 @@
         inputs.nix-config-modules.flakeModule
         ./hosts
         ./apps
-      ] ++
+      ]
       # map iso images to packages for simplicity
-      (map (import ./iso.nix) ["x86_64-linux" "aarch64-linux"]);
+      ++ (map (import ./iso.nix) ["x86_64-linux" "aarch64-linux"]);
 
       systems = [ ];
     };
