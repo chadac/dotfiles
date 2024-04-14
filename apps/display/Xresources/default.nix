@@ -1,11 +1,12 @@
 {
   nix-config.apps.Xresources = {
     tags = [ "display" ];
-    home = { pkgs, lib, ... }:
+    home = { pkgs, lib, config, ... }:
       let
         inherit (pkgs) stdenv;
         xpath = stdenv.mkDerivation {
-          name = "xpath";
+          pname = "xpath";
+          version = "1.0.0";
           src = ./.;
           patchPhase = ''
             substituteInPlace .Xresources \
@@ -19,8 +20,15 @@
         };
       in
         {
+          home.file = {
+            "${config.home.homeDirectory}/.Xresources" = { source = ./.Xresources; };
+            "${config.home.homeDirectory}/.Xresources.d" = {
+              source = ./.Xresources.d;
+              recursive = true;
+            };
+          };
           xsession.profileExtra = ''
-            ${pkgs.xorg.xrdb}/bin/xrdb -merge ${xpath}/.Xresources
+            ${pkgs.xorg.xrdb}/bin/xrdb -merge ${config.home.homeDirectory}/.Xresources
           '';
         };
   };
