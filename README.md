@@ -49,7 +49,6 @@ rather than its own WM.
 ## TODO
 
 * Flake integration tests via GitHub.
-* Automated `flake update` CI task once a week.
 * Explicit declarations of nonfree software used. I'll be aiming to
   eliminate nonfree software from my system entirely.
 * Service for my hosts to self-update once a week.
