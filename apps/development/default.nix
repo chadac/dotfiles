@@ -44,6 +44,17 @@ in {
   ];
 
   nix-config.apps = {
+    direnv = {
+      inherit tags;
+      home = {
+        programs.direnv.enable = true;
+        programs.git.ignores = [
+          ".envrc"
+          ".direnv/"
+        ];
+      };
+    };
+
     podman = {
       inherit tags;
       nixos = { pkgs, ... }: {

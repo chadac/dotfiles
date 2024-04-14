@@ -4,7 +4,6 @@
     tags = [ "development" ];
 
     home = { pkgs, ... }: {
-      # have bash redirect to zsh
       programs.bash = {
         enable = true;
       };
@@ -17,11 +16,6 @@
         enableCompletion = true;
 
         syntaxHighlighting.enable = true;
-
-        initExtra =
-        ''
-        eval "$(${pkgs.direnv}/bin/direnv hook zsh)"
-        '';
 
         localVariables = {
           ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE = "fg=10";
@@ -40,20 +34,10 @@
         };
       };
 
-      programs.git.ignores = [
-        # direnv
-        ".envrc"
-        ".direnv/"
-      ];
-
       programs.fzf = {
         enable = true;
         enableZshIntegration = true;
       };
-
-      home.packages = with pkgs; [
-        direnv
-      ];
     };
 
     nixos = { host, pkgs, ... }: {
