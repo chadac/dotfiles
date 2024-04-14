@@ -71,9 +71,9 @@
     };
   };
 
-  nix-config.apps.pulseaudio = { host, ... }: {
+  nix-config.apps.pulseaudio = {
     enable = true;
-    nixos = {
+    nixos = { host, ... }: {
       hardware.pulseaudio.enable = true;
       users.users.${host.username} = {
         extraGroups = [ "audio" ];
