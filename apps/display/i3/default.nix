@@ -3,8 +3,8 @@
     tags = [ "display" ];
     home = import ./home.nix;
     nixos = {
+      services.displayManager.defaultSession = "none+i3";
       services.xserver = {
-        displayManager.defaultSession = "none+i3";
         windowManager.i3.enable = true;
       };
     };
