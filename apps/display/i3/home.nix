@@ -9,6 +9,12 @@ let
     mapAttrsToList
   ;
 
+  i3 = pkgs.i3.overrideAttrs (final: prev: {
+    patches = (prev.patches or []) ++ [
+      ./i3-wintype-fix.patch
+    ];
+  });
+
   mod = "Mod4";
   up = "l";
   down = "k";
@@ -25,6 +31,7 @@ in {
 
   xsession.windowManager.i3 = {
     enable = true;
+    package = i3;
     config = {
       modifier = mod;
       workspaceOutputAssign = lib.mkIf (hasAttr "displays" host) (concatLists (
