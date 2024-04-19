@@ -32,4 +32,15 @@
       programs.gnupg.agent.enable = true;
     };
   };
+
+  nix-config.apps.gpg = {
+    home = { ... }: {
+      programs.gpg = {
+        enable = true;
+      };
+    };
+    nixos = { ... }: {
+      programs.gnupg.agent.enable = true;
+    };
+  };
 }
