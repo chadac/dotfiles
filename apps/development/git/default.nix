@@ -34,6 +34,8 @@
   };
 
   nix-config.apps.gpg = {
+    tags = [ "development" ];
+
     home = { ... }: {
       programs.gpg = {
         enable = true;
