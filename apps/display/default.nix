@@ -37,6 +37,19 @@ in
         home.packages = [ pkgs.xfce.ristretto ];
       };
     };
+
+    apps.picom = {
+      inherit tags;
+      home = {
+        services.picom = {
+          enable = true;
+          fade = true;
+          fadeDelta = 5;
+          inactiveOpacity = 0.9;
+        };
+      };
+    };
+
     apps.thunar = {
       inherit tags;
       home = { pkgs, ... }: {

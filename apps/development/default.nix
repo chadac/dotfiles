@@ -91,6 +91,10 @@ in {
         programs.kitty = {
           enable = true;
           theme = "Nord";
+          settings = {
+            background_opacity = "0.95";
+            enable_audio_bell = "no";
+          };
         };
       };
     };
