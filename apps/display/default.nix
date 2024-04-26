@@ -43,9 +43,9 @@ in
       home = {
         services.picom = {
           enable = true;
-          fade = true;
-          fadeDelta = 5;
-          inactiveOpacity = 0.9;
+          opacityRules = [
+            "0:_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'"
+          ];
         };
       };
     };
