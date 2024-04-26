@@ -22,6 +22,7 @@ in {
         "jq"
         "lm_sensors"
         "pciutils"
+        "psmisc"
         "unzip"
         "vim"
         "zip"
