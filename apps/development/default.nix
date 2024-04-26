@@ -17,7 +17,6 @@ in {
     {
       inherit tags;
       packages = [
-        "busybox"
         "dig"
         "gnumake"
         "jq"
@@ -82,6 +81,16 @@ in {
       };
       home = { pkgs, ... }: {
         home.packages = [ pkgs.fh ];
+      };
+    };
+
+    kitty = {
+      inherit tags;
+      home = {
+        programs.kitty = {
+          enable = true;
+          theme = "Nord";
+        };
       };
     };
 
