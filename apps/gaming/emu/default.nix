@@ -4,7 +4,15 @@
 
     # temporary fix while waiting on
     # https://github.com/NixOS/nixpkgs/pull/303494
-    nixpkgs.params.overlays = [(final: prev: {
+    nixpkgs.params.overlays = [(final: prev: rec {
+      retroarch = prev.wrapRetroArch {
+        retroarch = prev.retroarchBare;
+        settings = {
+          assets_directory = "${prev.retroarch-assets}/share/retroarch/assets";
+          libretro_info_path = "${prev.libretro-core-info}/share/retroarch/cores";
+        };
+      };
+
       libretro = prev.libretro // {
         mame = prev.libretro.mame.overrideAttrs(old: {
           src = prev.fetchFromGitHub {
