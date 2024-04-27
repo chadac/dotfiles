@@ -45,6 +45,7 @@
     enable = true;
     nixos = { host, ... }: {
       system.stateVersion = "23.11";
+      time.timeZone = "America/New_York";
 
       nix.settings = {
         substituters = [
