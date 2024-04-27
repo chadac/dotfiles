@@ -20,12 +20,10 @@ let
   down = "k";
   left = "j";
   right = "semicolon";
-  i3StatusConfig = pkgs.writeText "i3status.conf" (builtins.readFile ./i3status.conf);
   i3-nagbar = "${pkgs.i3}/bin/i3-nagbar";
 in {
   home.packages = with pkgs; [
     dmenu
-    i3status
     i3lock
   ];
 
@@ -96,6 +94,65 @@ in {
         "${mod}+w" = "layout tabbed";
         "${mod}+e" = "layout toggle split";
       };
+
+      colors = let
+        defaults = {
+          background = "#5E81ACF6";
+          border = "#81A1C1F6";
+          childBorder = "#4C566AF6";
+          indicator = "#BF616A";
+          text = "#ECEFF4";
+        };
+      in {
+        background = "#4C566A00";
+        focused = defaults;
+        focusedInactive = defaults // {
+          background = "#81A1C1F6";
+          text = "#000000";
+        };
+        unfocused = defaults // {
+          background = "#3B4252F6";
+          border = "#434C5EF6";
+          text = "#C8CEF9";
+        };
+      };
+
+      bars = [{
+        command = "i3bar -t";
+        statusCommand = "i3blocks";
+        colors = {
+          background = "#2E3440E6";
+          focusedWorkspace = {
+            background = "#5E81ACF6";
+            border = "#434C5EE6";
+            text = "#D8DEE9";
+          };
+          activeWorkspace = {
+            background = "#4C566AE6";
+            border = "#434C5EE6";
+            text = "#D8DEE9";
+          };
+          inactiveWorkspace = {
+            background = "#2E3440E6";
+            border = "#434C5EE6";
+            text = "#D8DEE9";
+          };
+          urgentWorkspace = {
+            background = "#BF616AF6";
+            border = "#434C5EE6";
+            text = "#D8DEE9";
+          };
+        };
+        fonts = {
+          size = 12.0;
+        };
+        position = "top";
+        trayOutput = "primary";
+        trayPadding = 1;
+        extraConfig = ''
+          padding 0 6px 0 0
+        '';
+      }];
     };
 
     extraConfig = ''
@@ -107,5 +164,35 @@ in {
       for_window [window_type="dialog"]                       floating enable
       for_window [window_type="menu"]                         floating enable
     '';
+  };
+
+  programs.i3status.enable = false;
+  programs.i3blocks = {
+    enable = true;
+    bars = {
+      config = {
+        title = {
+          full_text = "${host.name}";
+        };
+        weather = lib.hm.dag.entryAfter ["title"] {
+          command = "curl 'https://wttr.in/Fort_Lauderdale?m&format=%c%t\\n'";
+          interval = 3600;
+        };
+        disk = lib.hm.dag.entryAfter ["weather"] {
+          command = "echo disk used: $(df / -h --output=used | cut -c 2- | tail -1) free: $(df / -h --output=avail | cut -c 2- | tail -1)";
+          interval = 60;
+        };
+        memory = lib.hm.dag.entryAfter ["disk"] {
+          command = ''
+            cat /proc/meminfo | grep -E 'MemAvailable' | awk '{ print "mem avail: " int($2/1024) "M" }'
+          '';
+          interval = 1;
+        };
+        date = lib.hm.dag.entryAfter ["memory"] {
+          command = "date";
+          interval = 1;
+        };
+      };
+    };
   };
 }
