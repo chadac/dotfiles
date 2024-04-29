@@ -24,6 +24,7 @@ in {
     ];
     sessionVariables = {
       EDITOR = "emacsclient";
+      VISUAL = "emacsclient";
     };
   };
 
