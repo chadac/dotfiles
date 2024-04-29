@@ -19,6 +19,10 @@
 ;; Require emacs to prompt when exiting
 (setq confirm-kill-emacs 'yes-or-no-p)
 
+;; prefer splitting width
+(setq split-height-threshold 160
+      split-width-threshold 60)
+
 ;; Disable weird indentation
 (electric-indent-mode -1)
 
