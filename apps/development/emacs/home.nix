@@ -1,6 +1,5 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 let
-  config = pkgs.writeText "default.el" (builtins.readFile ./init.el);
   # Generate a custom emacs package that downloads all packages from the
   # use-package command in my init.el
   myEmacs = pkgs.emacsWithPackagesFromUsePackage {
@@ -8,17 +7,13 @@ let
       withGTK3 = true;
     });
     config = ./init.el;
-    extraEmacsPackages = epkgs: [
-      # I add my init.el to the site-lisp so that it pulls in my
-      # configurations.
-      (pkgs.runCommand "default.el" {} ''
-         mkdir -p $out/share/emacs/site-lisp
-         cp ${config} $out/share/emacs/site-lisp/default.el
-       '')
-    ];
   };
 in {
   home = {
+    file = {
+      "${config.home.homeDirectory}/.emacs.d/early-init.el" = { source = ./early-init.el; };
+      "${config.home.homeDirectory}/.emacs.d/init.el" = { source = ./init.el; };
+    };
     packages = with pkgs; [
       ispell
     ];
