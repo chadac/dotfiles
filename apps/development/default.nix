@@ -147,13 +147,17 @@ in {
       };
     };
 
-    rtx = {
+    mise = {
       inherit tags;
       nixpkgs = { inputs, ... }: {
-        params.overlays = [ inputs.rtx.overlay ];
+        params.overlays = [ inputs.mise.overlay ];
       };
       home = { pkgs, ... }: {
-        home.packages = [ pkgs.rtx ];
+        home.packages = [ pkgs.mise ];
+
+        programs.zsh.profileExtra = ''
+          eval "$(mise activate zsh)"
+        '';
       };
     };
   };
