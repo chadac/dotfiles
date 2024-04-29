@@ -1,4 +1,4 @@
-{ host, config, inputs, pkgs, lib, ... }:
+theme: { host, config, inputs, pkgs, lib, ... }:
 let
   inherit (builtins)
     concatLists
@@ -8,6 +8,7 @@ let
   inherit (lib)
     mapAttrsToList
   ;
+
 
   i3 = pkgs.i3.overrideAttrs (final: prev: {
     patches = (prev.patches or []) ++ [
@@ -22,6 +23,8 @@ let
   right = "semicolon";
   i3-nagbar = "${pkgs.i3}/bin/i3-nagbar";
 in {
+  _file = __curPos.file;
+
   home.packages = with pkgs; [
     dmenu
     i3lock
@@ -97,27 +100,35 @@ in {
 
       colors = let
         defaults = {
-          background = "#5E81ACF6";
-          border = "#81A1C1F6";
-          childBorder = "#4C566AF6";
-          indicator = "#BF616A";
-          text = "#ECEFF4";
+          background = "${theme.color9}F6";
+          border = "${theme.color4}F6";
+          childBorder = "${theme.color8}F6";
+          indicator = theme.color1;
+          text = theme.foreground;
         };
       in {
-        background = "#4C566A00";
-        focused = defaults;
+        background = "${theme.color8}00";
+        focused = defaults // {
+          text = "#FFFFFF";
+        };
         focusedInactive = defaults // {
-          background = "#81A1C1F6";
+          background = "${theme.color4}F6";
           text = "#000000";
         };
         unfocused = defaults // {
-          background = "#3B4252F6";
+          background = "${theme.color0}F6";
           border = "#434C5EF6";
           text = "#C8CEF9";
         };
       };
 
-      bars = [{
+      bars = let
+        defaults = {
+          background = "#5E81ACF6";
+          border = "#434C5EE6";
+          text = "#D8DEE9";
+        };
+      in [{
         command = "i3bar -t";
         statusCommand = "i3blocks";
         colors = {

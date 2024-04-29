@@ -1,8 +1,0 @@
-! defaults
-*Xft.dpi: 96
-
-! theme
-#include ".Xresources.d/nord"
-
-! apps
-#include ".Xresources.d/xterm"
