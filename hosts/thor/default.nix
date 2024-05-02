@@ -32,5 +32,11 @@
     home = { pkgs, ... }: {
       home.packages = with pkgs; [ pavucontrol ];
     };
+
+    displays = {
+      eDP-1 = {
+        workspace = 1;
+      };
+    };
   };
 }
