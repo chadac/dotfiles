@@ -149,9 +149,9 @@ in {
 
     mise = {
       inherit tags;
-      nixpkgs = { inputs, ... }: {
-        params.overlays = [ inputs.mise.overlay ];
-      };
+      # nixpkgs = { inputs, ... }: {
+      #   params.overlays = [ inputs.mise.overlay ];
+      # };
       home = { pkgs, ... }: {
         home.packages = [ pkgs.mise ];
 
