@@ -31,6 +31,8 @@ in {
         "hyperfine"
         "ripgrep"
         "opentofu"
+        "terraform"
+        "terraform-ls"
       ];
     }
     {
@@ -44,6 +46,11 @@ in {
   ];
 
   nix-config.apps = {
+    terraform = {
+      inherit tags;
+      nixpkgs.packages.unfree = [ "terraform" ];
+    };
+
     direnv = {
       inherit tags;
       home = {
@@ -52,6 +59,13 @@ in {
           ".envrc"
           ".direnv/"
         ];
+      };
+    };
+
+    golang = {
+      inherit tags;
+      home = { pkgs, ... }: {
+        home.packages = with pkgs; [ gopls ];
       };
     };
 
