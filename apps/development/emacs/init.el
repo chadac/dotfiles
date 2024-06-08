@@ -12,10 +12,6 @@
 ;; Require emacs to prompt when exiting
 (setq confirm-kill-emacs 'yes-or-no-p)
 
-;; prefer splitting width
-(setq split-height-threshold 160
-      split-width-threshold 60)
-
 ;; Disable weird indentation
 (electric-indent-mode -1)
 
@@ -163,7 +159,8 @@
     ;; using a Hi-DPI display, uncomment this to double the icon size.
     ;;(treemacs-resize-icons 44)
 
-    (treemacs-follow-mode t)
+    (treemacs-follow-mode nil)
+    (treemacs-project-follow-mode t)
     (treemacs-filewatch-mode t)
     (treemacs-fringe-indicator-mode 'always)
 
@@ -215,7 +212,8 @@
 ;; golang
 (use-package go-mode
   :ensure t
-  :mode "\\.go\\'")
+  :mode "\\.go\\'"
+  :bind (("C-c C-c" . compile)))
 
 ;; GNU APL
 (use-package gnu-apl-mode
@@ -265,7 +263,9 @@
 ;; Terraform
 (use-package terraform-mode
   :ensure t
-  :mode "\\.tf\\'")
+  :mode "\\.tf\\'"
+  :config
+  (setq 'terraform-format-on-save t))
 
 ;; TOML
 (use-package toml-mode
@@ -288,8 +288,8 @@
   :ensure t
   :init
   (setq lsp-keymap-prefix "C-c l")
-  :hook
-  (python-mode . lsp)
+  :hook ((python-mode . lsp)
+         (go-mode . lsp))
   :commands lsp)
 
 (use-package lsp-ui
