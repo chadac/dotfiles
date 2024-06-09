@@ -20,6 +20,7 @@
     };
 
     nixpkgs.packages.unfree = [
+      "libXNVCtrl"
       "nvidia-x11"
       "nvidia-settings"
     ];
