@@ -21,5 +21,9 @@ in {
         };
       };
     };
+    gamemode = {
+      inherit tags;
+      nixos.programs.gamemode.enable = true;
+    };
   };
 }
