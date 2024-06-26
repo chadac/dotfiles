@@ -38,6 +38,13 @@ in
       };
     };
 
+    apps.easyeffects = {
+      inherit tags;
+      home = {
+        services.easyeffects.enable = true;
+      };
+    };
+
     apps.picom = {
       inherit tags;
       home = {

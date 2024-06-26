@@ -72,8 +72,25 @@
     };
   };
 
-  nix-config.apps.pulseaudio = {
+  nix-config.apps.pipewire = {
     enable = true;
+    nixos = { host, ... }: {
+      services.pipewire = {
+        enable = true;
+        alsa = {
+          enable = true;
+          support32Bit = true;
+        };
+        pulse.enable = true;
+      };
+    };
+    home = { pkgs, ... }: {
+      home.packages = with pkgs; [ pavucontrol ];
+    };
+  };
+
+  nix-config.apps.pulseaudio = {
+    enable = false;
     nixos = { host, ... }: {
       hardware.pulseaudio.enable = true;
       users.users.${host.username} = {
