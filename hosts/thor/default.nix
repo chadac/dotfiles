@@ -24,7 +24,6 @@
         powerKeyLongPress = "poweroff";
       };
       programs.nm-applet.enable = true;
-      hardware.pulseaudio.enable = true;
       hardware.bluetooth.enable = true;
       hardware.bluetooth.powerOnBoot = true;
     };
