@@ -36,13 +36,18 @@
   nix-config.apps.gpg = {
     tags = [ "development" ];
 
-    home = { ... }: {
+    home = { pkgs, ... }: {
       programs.gpg = {
         enable = true;
+        settings = {
+          pinentry-mode = "loopback";
+        };
       };
-    };
-    nixos = { ... }: {
-      programs.gnupg.agent.enable = true;
+
+      services.gpg-agent = {
+        enable = true;
+        pinentryPackage = pkgs.pinentry-gtk2;
+      };
     };
   };
 }
