@@ -44,7 +44,7 @@
   nix-config.apps.init = {
     enable = true;
     nixos = { host, ... }: {
-      system.stateVersion = "23.11";
+      system.stateVersion = "24.05";
       time.timeZone = "America/New_York";
 
       nix.settings = {
@@ -68,7 +68,7 @@
       };
     };
     home = {
-      home.stateVersion = "23.11";
+      home.stateVersion = "24.05";
     };
   };
 
