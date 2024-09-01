@@ -1,4 +1,5 @@
 # My primary desktop.
+{ config, ... }:
 {
   nix-config.hosts.odin = {
     kind = "nixos";
@@ -23,8 +24,9 @@
       "libXNVCtrl"
       "nvidia-x11"
       "nvidia-settings"
+      "hplip"
     ];
-    nixos = import ./nixos/configuration.nix;
+    nixos = ./nixos/configuration.nix;
 
     displays = {
       HDMI-0 = {

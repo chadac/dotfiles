@@ -14,9 +14,25 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
+    { device = "/dev/disk/by-uuid/caaf1c53-9f71-405f-9914-b6bc5f0f4cae";
+      fsType = "btrfs";
+    };
+
+  # older Nix filesystem
+  fileSystems."/media/old" =
     { device = "/dev/disk/by-uuid/793af4fd-8927-420f-94a6-a4625d53d9c0";
       fsType = "btrfs";
     };
+
+  # # bind mount the old nix store for now
+  # fileSystems."/nix/store" =
+  #   {
+  #     device = "/media/old/nix/store";
+  #     options = [ "bind" ];
+  #       # "x-systemd.requires-mounts-for=/mnt-root/media/old"
+  #     fsType = "none";
+  #     depends = [ "/" "/media/old" "/mnt-root/media/old" ];
+  #   };
 
   fileSystems."/var/lib/docker/btrfs" =
     { device = "/var/lib/docker/btrfs";
@@ -45,10 +61,10 @@
       fsType = "vfat";
     };
 
-  fileSystems."/media/workspace" =
-    { device = "/dev/disk/by-uuid/b5bf3248-07b7-4cf2-95b9-c02f5ec78eac";
-      fsType = "ext4";
-    };
+  # fileSystems."/media/workspace" =
+  #   { device = "/dev/disk/by-uuid/b5bf3248-07b7-4cf2-95b9-c02f5ec78eac";
+  #     fsType = "ext4";
+  #   };
 
   swapDevices =
     [ { device = "/dev/disk/by-uuid/97140d54-fd19-47ef-b180-3b01e1815e90"; }

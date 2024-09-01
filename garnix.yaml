@@ -3,3 +3,7 @@ builds:
     - "homeConfigurations.*"
     - "nixosConfigurations.*"
     branch: "nix-config"
+  - include:
+    - "homeConfigurations.*"
+    - "nixosConfigurations.*"
+    type: on-pull-request
