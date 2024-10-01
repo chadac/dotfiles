@@ -66,6 +66,8 @@
       users.users.${host.username} = {
         extraGroups = [ "wheel" ];
       };
+
+      networking.hostName = host.name;
     };
     home = {
       home.stateVersion = "24.05";
