@@ -144,13 +144,17 @@ in {
 
     python = {
       inherit tags;
-      home = { pkgs, ... }: {
-        home.packages = with pkgs; [
-          python311
-          poetry
-          black
+      home = { pkgs, ... }: let
+        python-env = pkgs.python311.withPackages (p: with p; [
+          rope
+          flake8
           isort
-          pylint
+          black
+        ]);
+      in {
+        home.packages = with pkgs; [
+          python-env
+          poetry
           pyright
         ];
         programs.git.ignores = [

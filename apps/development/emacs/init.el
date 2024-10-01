@@ -290,6 +290,8 @@
   (setq lsp-keymap-prefix "C-c l")
   :hook ((python-mode . lsp)
          (go-mode . lsp))
+  :config
+  (setq lsp-pyright-multi-root nil)
   :commands lsp)
 
 (use-package lsp-ui
@@ -300,13 +302,10 @@
   :ensure t
   :commands lsp-treemacs-error-list)
 
-(use-package lsp-pyright
-  :ensure t
-  :hook (python-mode . (lambda ()
-                         (require 'lsp-pyright)
-                         (lsp)))
-  :config
-  (setq lsp-pyright-multi-root nil))
+;; (use-package lsp
+;;   :ensure t
+;;   :config
+;;   )
 
 (use-package lsp-java
   :hook
