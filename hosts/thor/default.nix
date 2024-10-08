@@ -12,6 +12,7 @@
       laptop = true;
       gaming = true;
       nvidia = true;
+      bluetooth = true;
     };
 
     nixpkgs.packages.unfree = [ "nvidia-x11" "nvidia-settings" ];
@@ -24,8 +25,6 @@
         powerKeyLongPress = "poweroff";
       };
       programs.nm-applet.enable = true;
-      hardware.bluetooth.enable = true;
-      hardware.bluetooth.powerOnBoot = true;
     };
 
     home = { pkgs, ... }: {

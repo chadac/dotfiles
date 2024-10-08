@@ -19,6 +19,7 @@
     # hardware-specific configs
     ./hardware/desktop.nix
     ./hardware/laptop.nix
+    ./hardware/bluetooth.nix
 
     # virtualization for kvms
     ./virt

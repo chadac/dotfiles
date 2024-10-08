@@ -13,6 +13,7 @@
       desktop = true;
       gaming = true;
       virt = true;
+      bluetooth = true;
     };
 
     nix-config = {
