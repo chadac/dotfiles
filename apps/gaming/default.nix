@@ -20,7 +20,11 @@ in {
           dedicatedServer.openFirewall = true;
         };
       };
+      home = { pkgs, ... }: {
+        home.packages = with pkgs; [ lutris ];
+      };
     };
+
     gamemode = {
       inherit tags;
       nixos.programs.gamemode.enable = true;
