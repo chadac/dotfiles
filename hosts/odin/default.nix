@@ -33,26 +33,30 @@
       HDMI-0 = {
         workspace = 1;
         mode = "2560x1440";
-        pos = "0x0";
+        pos = "0x320";
         rotate = "right";
       };
       DP-0 = {
         workspace = 2;
         primary = true;
         mode = "2560x1440";
-        pos = "1440x1120";
+        pos = "1440x1440";
         rotate = "normal";
       };
       DP-2 = {
         workspace = 3;
         mode = "3840x2160";
-        pos = "4000x760";
-        scale = "0.75x0.75";
+        pos = "4000x1260";
+        scale = "0.66x0.66";
         rotate = "normal";
+      };
+      DP-4 = {
+        workspace = 4;
+        mode = "2560x1440";
+        pos = "1440x0";
       };
       DP-1.enable = false;
       DP-3.enable = false;
-      DP-4.enable = false;
       DP-5.enable = false;
     };
   };
