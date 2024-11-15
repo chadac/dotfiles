@@ -3,5 +3,7 @@
     ./odin
     ./thor
     ./iso
+
+    ./nott
   ];
 }
