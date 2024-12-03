@@ -13,6 +13,7 @@ in {
     file = {
       "${config.home.homeDirectory}/.emacs.d/early-init.el" = { source = ./early-init.el; };
       "${config.home.homeDirectory}/.emacs.d/init.el" = { source = ./init.el; };
+      "${config.home.homeDirectory}/.emacs.d/lisp" = { source = ./lisp; recursive = true; };
     };
     packages = with pkgs; [
       ispell

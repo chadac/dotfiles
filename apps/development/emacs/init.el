@@ -261,11 +261,15 @@
   :after (add-hook 'flycheck-mode-hook #'flycheck-rust-setup))
 
 ;; Terraform
+(use-package hcl-mode
+  :ensure t)
 (use-package terraform-mode
-  :ensure t
+  :ensure nil
+  :load-path "~/.emacs.d/lisp"
   :mode "\\.tf\\'"
   :config
-  (setq 'terraform-format-on-save t))
+  (setq terraform-format-on-save t)
+  (setq terraform-command "tofu"))
 
 ;; TOML
 (use-package toml-mode
