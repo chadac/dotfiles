@@ -69,6 +69,24 @@ in {
       };
     };
 
+    latex = {
+      inherit tags;
+      nixos = {
+        # evince used for viewing/auctex
+        programs.evince.enable = true;
+      };
+      home = { pkgs, ... }: let
+        # usually I already have latex set up... this is barebones
+        latex = (pkgs.texlive.combine {
+          inherit (pkgs.texlive)
+            scheme-basic
+          ;
+        });
+      in {
+        home.packages = [ latex ];
+      };
+    };
+
     podman = {
       inherit tags;
       nixos = { pkgs, ... }: {
@@ -124,7 +142,7 @@ in {
     };
 
     nix = let
-      nixVersion = "nix_2_25";
+      nixVersion = "nix_2_23";
     in {
       inherit tags;
       nixos = { pkgs, ... }: {
