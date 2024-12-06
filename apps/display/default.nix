@@ -50,9 +50,7 @@ in
       home = {
         services.picom = {
           enable = true;
-          opacityRules = [
-            "0:_NET_WM_STATE@:32a *= '_NET_WM_STATE_HIDDEN'"
-          ];
+          extraArgs = [ "--transparent-clipping" ];
         };
       };
     };
