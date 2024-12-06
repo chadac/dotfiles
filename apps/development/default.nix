@@ -122,7 +122,7 @@ in {
       home = {
         programs.kitty = {
           enable = true;
-          theme = "Nord";
+          themeFile = "Nord";
           settings = {
             background_opacity = "0.95";
             enable_audio_bell = "no";
