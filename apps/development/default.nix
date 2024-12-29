@@ -142,7 +142,7 @@ in {
     };
 
     nix = let
-      nixVersion = "nix_2_23";
+      nixVersion = "latest";
     in {
       inherit tags;
       nixos = { pkgs, ... }: {
