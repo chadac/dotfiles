@@ -2,26 +2,12 @@
   nix-config.apps.emu = {
     tags = [ "gaming" ];
 
-    # temporary fix while waiting on
-    # https://github.com/NixOS/nixpkgs/pull/303494
     nixpkgs.params.overlays = [(final: prev: rec {
       retroarch = prev.wrapRetroArch {
-        retroarch = prev.retroarchBare;
         settings = {
           assets_directory = "${prev.retroarch-assets}/share/retroarch/assets";
           libretro_info_path = "${prev.libretro-core-info}/share/retroarch/cores";
         };
-      };
-
-      libretro = prev.libretro // {
-        mame = prev.libretro.mame.overrideAttrs(old: {
-          src = prev.fetchFromGitHub {
-            owner = "libretro";
-            repo = "mame";
-            rev = "3aa1ff0d6c087ac35530572d09bc42a2591ff78f";
-            hash = "sha256-78e+3RSOIIblFMD8ivPw0b3SZyDXe8u0pQiRVwr1NFY=";
-          };
-        });
       };
     })];
 
