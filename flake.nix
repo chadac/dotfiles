@@ -34,7 +34,6 @@
     # Applications
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
-      inputs.flake-utils.follows = "flake-utils";
     };
 
     poetry2nix = {
