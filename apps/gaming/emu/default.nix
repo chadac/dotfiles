@@ -1,5 +1,7 @@
 {
   nix-config.apps.emu = {
+    # temporarily disable until I can get this working again
+    enable = false;
     tags = [ "gaming" ];
 
     nixpkgs.params.overlays = [(final: prev: rec {
