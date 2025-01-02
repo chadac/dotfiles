@@ -39,7 +39,8 @@ in {
       inherit tags;
       disableTags = [ "minimal" ];
       packages = [
-        "awscli2"
+        # temp: remove since it has mismatched dependencies
+        # "awscli2"
         "gh"
       ];
     }
