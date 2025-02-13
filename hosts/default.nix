@@ -4,6 +4,7 @@
     ./thor
     ./iso
 
-    ./nott
+    # disable since it has no hardware-configuration.nix
+    # ./nott
   ];
 }
