@@ -188,9 +188,7 @@ in {
       inherit tags;
       home = { pkgs, ... }: {
         home.packages = with pkgs; [
-          cargo
           rustup
-          rust-analyzer
         ];
       };
     };
