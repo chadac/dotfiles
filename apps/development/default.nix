@@ -184,6 +184,17 @@ in {
       };
     };
 
+    rust = {
+      inherit tags;
+      home = { pkgs, ... }: {
+        home.packages = with pkgs; [
+          cargo
+          rustup
+          rust-analyzer
+        ];
+      };
+    };
+
     mise = {
       inherit tags;
       # nixpkgs = { inputs, ... }: {
