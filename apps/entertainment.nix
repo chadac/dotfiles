@@ -4,15 +4,23 @@ let
 in
 {
   nix-config = {
-    homeApps = [{
-      inherit tags;
-      disableTags = [ "minimal" ];
-      packages = [
-        "vlc"
-        "spotify"
-        "tidal-hifi"
-      ];
-    }];
+    homeApps = [
+      {
+        inherit tags;
+        systems = [ "x86_64-linux" "aarch64-linux" ];
+        packages = [
+          "tidal-hifi"
+          "vlc"
+        ];
+      }
+      {
+        inherit tags;
+        disableTags = [ "minimal" ];
+        packages = [
+          "spotify"
+        ];
+      }
+    ];
 
     apps = {
       spotify = {

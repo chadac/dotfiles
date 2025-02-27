@@ -1,7 +1,7 @@
 # My primary desktop.
 { config, ... }:
-{
-  nix-config.hosts.odin = {
+let
+  odin = {
     kind = "nixos";
     system = "x86_64-linux";
 
@@ -58,6 +58,16 @@
       DP-1.enable = false;
       DP-3.enable = false;
       DP-5.enable = false;
+    };
+  };
+in {
+  nix-config.hosts = {
+    inherit odin;
+    odin-darwin = odin // {
+      kind = "darwin";
+      system = "aarch64-darwin";
+
+      displays = null;
     };
   };
 }

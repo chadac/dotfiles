@@ -2,8 +2,10 @@ builds:
   - include:
     - "homeConfigurations.*"
     - "nixosConfigurations.*"
+    - "darwinConfigurations.*"
     branch: "nix-config"
   - include:
     - "homeConfigurations.*"
     - "nixosConfigurations.*"
+    - "darwinConfigurations.*"
     type: on-pull-request

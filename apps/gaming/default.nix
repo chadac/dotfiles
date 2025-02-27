@@ -21,6 +21,11 @@ in {
           dedicatedServer.openFirewall = true;
         };
       };
+    };
+
+    lutris = {
+      inherit tags;
+      systems = [ "x86_64-linux" "aarch64-linux" ];
       home = { pkgs, ... }: {
         home.packages = with pkgs; [ lutris ];
       };
