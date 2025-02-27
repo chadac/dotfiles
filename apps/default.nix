@@ -73,10 +73,14 @@
     home = {
       home.stateVersion = "24.05";
     };
+    darwin = {
+      system.stateVersion = 6;
+    };
   };
 
   nix-config.apps.pipewire = {
     enable = true;
+    systems = [ "x86_64-linux" "aarch64-linux" ];
     nixos = { host, ... }: {
       services.pipewire = {
         enable = true;

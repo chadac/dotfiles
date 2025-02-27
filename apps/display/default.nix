@@ -1,6 +1,7 @@
 { ... }:
 let
   tags = [ "display" ];
+  systems = [ "x86_64-linux" "aarch64-linux" ];
 in
 {
   imports = [
@@ -13,7 +14,7 @@ in
 
   nix-config = {
     homeApps = [{
-      inherit tags;
+      inherit systems tags;
       packages = [
         "xterm"
         "firefox"
@@ -22,7 +23,7 @@ in
     }];
 
     apps.lightdm = {
-      inherit tags;
+      inherit systems tags;
       nixos = {
         services.xserver = {
           enable = true;
@@ -32,21 +33,21 @@ in
     };
 
     apps.ristretto = {
-      inherit tags;
+      inherit systems tags;
       home = { pkgs, ... }: {
         home.packages = [ pkgs.xfce.ristretto ];
       };
     };
 
     apps.easyeffects = {
-      inherit tags;
+      inherit systems tags;
       home = {
         services.easyeffects.enable = true;
       };
     };
 
     apps.picom = {
-      inherit tags;
+      inherit systems tags;
       home = {
         services.picom = {
           enable = true;
@@ -56,7 +57,7 @@ in
     };
 
     apps.thunar = {
-      inherit tags;
+      inherit systems tags;
       home = { pkgs, ... }: {
         home.packages = [ pkgs.xfce.thunar ];
       };
@@ -73,7 +74,7 @@ in
     };
 
     apps.tumbler = {
-      inherit tags;
+      inherit systems tags;
       home = { pkgs, ... }: {
         home.packages = [ pkgs.xfce.tumbler ];
       };

@@ -19,6 +19,14 @@
     flake-utils.url = "https://api.flakehub.com/f/numtide/flake-utils/0.1.*.tar.gz";
     flake-parts.url = "github:hercules-ci/flake-parts";
     nix-config-modules.url = "github:chadac/nix-config-modules";
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+    mac-app-util = {
+      url = "github:hraban/mac-app-util";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     home-manager = {
       # url = "https://api.flakehub.com/f/nix-community/home-manager/0.2405.*.tar.gz";

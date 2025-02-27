@@ -16,13 +16,19 @@ in {
   nix-config.homeApps = [
     {
       inherit tags;
+      systems = [ "x86_64-linux" "aarch64-linux" ];
+      packages = [
+        "psmisc"
+        "lm_sensors"
+      ];
+    }
+    {
+      inherit tags;
       packages = [
         "dig"
         "gnumake"
         "jq"
-        "lm_sensors"
         "pciutils"
-        "psmisc"
         "unzip"
         "vim"
         "zip"
@@ -110,6 +116,7 @@ in {
 
     fh = {
       inherit tags;
+      systems = [ "x86_64-linux" "aarch64-linux" ];
       nixpkgs = { inputs, ... }: {
         params.overlays = [ inputs.fh.overlays.default ];
       };
