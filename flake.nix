@@ -11,7 +11,8 @@
   };
 
   inputs = {
-    nixpkgs.url = "https://api.flakehub.com/f/NixOS/nixpkgs/0.1.0.tar.gz";
+    # use unstable for latest features
+    nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     # flakehub cli
     fh.url = "https://api.flakehub.com/f/DeterminateSystems/fh/0.1.*.tar.gz";
@@ -78,7 +79,7 @@
       # map iso images to packages for simplicity
       ++ (map (import ./iso.nix) ["x86_64-linux" "aarch64-linux"]);
 
-      systems = [ ];
+      systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
     };
   in
     (flake-parts.lib.mkFlake { inherit inputs; } flakeModule) //
