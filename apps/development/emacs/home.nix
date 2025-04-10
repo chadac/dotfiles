@@ -5,14 +5,9 @@ let
   myEmacs = pkgs.emacsWithPackagesFromUsePackage {
     package = pkgs.emacs-unstable.override({
       withGTK3 = true;
+      withNativeCompilation = if(pkgs.stdenv.isDarwin) then false else true;
     });
     config = ./init.el;
-    override = final: prev: {
-      # temporary while waiting for https://github.com/nix-community/emacs-overlay/issues/467
-      dap-mode = prev.melpaPackages.dap-mode.overrideAttrs(old: {
-        preBuild = null;
-      });
-    };
   };
 in {
   home = {
