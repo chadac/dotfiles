@@ -9,7 +9,7 @@ in {
     {
       inherit tags;
       systems = [ "x86_64-linux" "aarch64-linux" ];
-      packages = [ "signal-desktop" ];
+      packages = [ "signal-desktop-bin" ];
     }
   ];
 
