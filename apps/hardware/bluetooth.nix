@@ -4,8 +4,15 @@
   nix-config.apps.bluetooth = {
     tags = [ "bluetooth" ];
     nixos = {
-      hardware.bluetooth.enable = true;
-      hardware.bluetooth.powerOnBoot = true;
+      hardware.bluetooth = {
+        enable = true;
+        settings = {
+          General = {
+            ControllerMode = "bredr";
+          };
+        };
+        powerOnBoot = true;
+      };
     };
   };
 }
