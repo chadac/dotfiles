@@ -30,6 +30,10 @@ in {
     i3lock
   ];
 
+  services.dunst = {
+    enable = true;
+  };
+
   xsession.windowManager.i3 = {
     enable = true;
     package = i3;
