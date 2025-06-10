@@ -199,7 +199,16 @@ in {
       inherit tags;
       home = { pkgs, ... }: {
         home.packages = with pkgs; [
-          rustup
+          rust-analyzer
+        ];
+      };
+    };
+
+    kotlin = {
+      inherit tags;
+      home = { pkgs, ... }: {
+        home.packages = with pkgs; [
+          kotlin-language-server
         ];
       };
     };
@@ -215,6 +224,14 @@ in {
         programs.zsh.profileExtra = ''
           eval "$(mise activate zsh)"
         '';
+      };
+    };
+
+    gnome-keyring = {
+      inherit tags;
+      nixos = {
+        security.pam.services.lightdm.enableGnomeKeyring = true;
+        services.gnome.gnome-keyring.enable = true;
       };
     };
   };
