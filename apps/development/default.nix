@@ -20,6 +20,7 @@ in {
       packages = [
         "psmisc"
         "lm_sensors"
+        "awscli2"
       ];
     }
     {
