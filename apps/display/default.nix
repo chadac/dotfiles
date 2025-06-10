@@ -19,6 +19,7 @@ in
         "xterm"
         "firefox"
         "evince"
+        "libnotify"
       ];
     }];
 
