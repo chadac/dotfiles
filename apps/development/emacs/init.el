@@ -9,6 +9,8 @@
 (if (file-exists-p "./.emacs.d/init.local.el")
     (load-file "./.emacs.d/init.local.el"))
 
+(setq custom-file "./.emacs.d/init.local.el")
+
 ;; Require emacs to prompt when exiting
 (setq confirm-kill-emacs 'yes-or-no-p)
 
@@ -28,6 +30,9 @@
   kept-new-versions 6
   kept-old-versions 2
   version-control t)
+
+(require 'secrets)
+(setq auth-sources '("~/.authinfo.gpg"))
 
 ;; COMPANY-MODE
 (use-package company
@@ -263,6 +268,7 @@
 ;; Terraform
 (use-package hcl-mode
   :ensure t)
+
 (use-package terraform-mode
   :ensure nil
   :load-path "~/.emacs.d/lisp"
@@ -292,7 +298,9 @@
   :ensure t
   :init
   (setq lsp-keymap-prefix "C-c l")
-  :hook ((go-mode . lsp))
+  :hook ((go-mode . lsp)
+         (rust-mode . lsp)
+         (kotlin-mode . lsp))
   :commands lsp)
 
 (use-package lsp-ui
@@ -320,6 +328,13 @@
   :hook
   (terraform-mode . lsp))
 
+(use-package just-mode
+  :ensure t
+  :mode "\\justfile\\'")
+
+(use-package justl
+  :ensure t)
+
 ;; MISC
 
 ;; Editorconfig for unified formatting standards
@@ -331,6 +346,53 @@
 (use-package auctex
   :ensure t
   :defer t)
+
+(use-package chatgpt-shell
+  :ensure t
+  :custom
+  ((chatgpt-shell-openai-key
+    (lambda ()
+      (auth-source-pass-get 'secret "openai-key")))
+   (chatgpt-shell-anthropic-key
+    (lambda ()
+      (auth-source-pass-get 'secret "anthropic-key"))))
+)
+
+(use-package slack
+  :ensure t
+  :bind (("C-c S K" . slack-stop)
+         ("C-c S c" . slack-select-rooms)
+         ("C-c S u" . slack-select-unread-rooms)
+         ("C-c S U" . slack-user-select)
+         ("C-c S s" . slack-search-from-messages)
+         ("C-c S J" . slack-jump-to-browser)
+         ("C-c S j" . slack-jump-to-app)
+         ("C-c S e" . slack-insert-emoji)
+         ("C-c S E" . slack-message-edit)
+         ("C-c S r" . slack-message-add-reaction)
+         ("C-c S t" . slack-thread-show-or-create)
+         ("C-c S g" . slack-message-redisplay)
+         ("C-c S G" . slack-conversations-list-update-quick)
+         ("C-c S q" . slack-quote-and-reply)
+         ("C-c S Q" . slack-quote-and-reply-with-link)
+         (:map slack-mode-map
+               (("@" . slack-message-embed-mention)
+                ("#" . slack-message-embed-channel)))
+         (:map slack-thread-message-buffer-mode-map
+               (("C-c '" . slack-message-write-another-buffer)
+                ("@" . slack-message-embed-mention)
+                ("#" . slack-message-embed-channel)))
+         (:map slack-message-buffer-mode-map
+               (("C-c '" . slack-message-write-another-buffer)))
+         (:map slack-message-compose-buffer-mode-map
+               (("C-c '" . slack-message-send-from-buffer)))
+         )
+)
+
+(use-package alert
+  :commands (alert)
+  :config
+  (setq alert-default-style 'libnotify))
 
 ;; FORMATTING
 ;; Default tabs
@@ -387,19 +449,3 @@
 
 (require 'generic-x)
 (add-to-list 'auto-mode-alist '("\\..*ignore$" . hosts-generic-mode))
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   '("2809bcb77ad21312897b541134981282dc455ccd7c14d74cc333b6e549b824f3" "0598c6a29e13e7112cfbc2f523e31927ab7dce56ebb2016b567e1eff6dc1fd4f" default))
- '(package-selected-packages
-   '(envrc rust-mode gnu-apl-mode lsp-ui lsp-mode editorconfig babel ob-ipython sqlformat terraform-mode python-docstring evil-mc evil-visual-mark-mode typescript-mode pyenv-mode toml-mode ejc-sql solarized-theme use-package elpy yaml-mode web-mode smart-tabs-mode scss-mode sass-mode python-mode projectile php-mode pallet neotree markdown-mode lua-mode jdee helm haskell-mode groovy-mode gradle-mode go-mode gitignore-mode flappymacs ess-R-data-view ensime dockerfile-mode coffee-mode auctex)))
