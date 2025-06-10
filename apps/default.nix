@@ -23,6 +23,9 @@
 
     # virtualization for kvms
     ./virt
+
+    # darwin-specific items
+    ./darwin
   ];
 
   nix-config.defaultTags = {
