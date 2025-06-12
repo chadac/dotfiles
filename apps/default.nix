@@ -48,7 +48,7 @@
   nix-config.apps.init = {
     enable = true;
     nixos = { host, ... }: {
-      system.stateVersion = "24.05";
+      system.stateVersion = "25.05";
       time.timeZone = "America/New_York";
 
       nix.settings = {
@@ -74,7 +74,7 @@
       networking.hostName = host.name;
     };
     home = {
-      home.stateVersion = "24.05";
+      home.stateVersion = "25.05";
     };
     darwin = {
       system.stateVersion = 6;
