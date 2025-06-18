@@ -26,6 +26,9 @@ in
       spotify = {
         nixpkgs.packages.unfree = [ "spotify" ];
       };
+      tidal-hifi = {
+        nixpkgs.packages.unfree = [ "castlabs-electron" ];
+      };
     };
   };
 }
