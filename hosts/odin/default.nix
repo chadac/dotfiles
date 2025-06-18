@@ -68,6 +68,9 @@ in {
       system = "aarch64-darwin";
 
       displays = null;
+      darwin = { lib, ... }: {
+        system.primaryUser = lib.mkDefault "chadac";
+      };
     };
   };
 }
