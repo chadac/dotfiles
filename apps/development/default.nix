@@ -21,6 +21,7 @@ in {
         "psmisc"
         "lm_sensors"
         "awscli2"
+        "nh"
       ];
     }
     {
