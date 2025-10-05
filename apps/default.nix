@@ -26,6 +26,9 @@
 
     # darwin-specific items
     ./darwin
+
+    # nix upgrade
+    ./determinate.nix
   ];
 
   nix-config.defaultTags = {
@@ -43,6 +46,8 @@
     entertainment = true;
     gaming = false;
     virt = false;
+    x11 = false;
+    wayland = false;
   };
 
   nix-config.apps.init = {
