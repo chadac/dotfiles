@@ -4,9 +4,11 @@
   nixConfig = {
     extra-trusted-substituters = [
       "https://cache.garnix.io"
+      "https://install.determinate.systems"
     ];
     extra-trusted-public-keys = [
       "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
+      "cache.flakehub.com-3:hJuILl5sVK4iKm86JzgdXW12Y2Hwd5G07qKtHTOcDCM="
     ];
   };
 
@@ -29,22 +31,29 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # Determinate Nix
+    determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
+
+    # Home Manager
     home-manager = {
-      # url = "https://api.flakehub.com/f/nix-community/home-manager/0.2405.*.tar.gz";
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    ## Applications
+
+    # dt - duct tape for your pipes
     dt = {
       url = "github:so-dang-cool/dt";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Applications
+    # emacs - latest versions
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
     };
 
+    # for building poetry packages
     poetry2nix = {
       url = "github:nix-community/poetry2nix";
       inputs = {
@@ -53,13 +62,16 @@
       };
     };
 
+    # for managing dev environments
     mise = {
       url = "github:jdx/mise";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.flake-utils.follows = "flake-utils";
     };
 
-    # Assets to auto-update
+    ## Assets
+
+    # zsh-256color is useful to be cutting-edge
     zsh-256color = {
       url = "github:chrissicool/zsh-256color";
       flake = false;
@@ -72,6 +84,7 @@
         inputs.nix-config-modules.flakeModule
         ./hosts
         ./apps
+        ./tests.nix
 
         ./themes
         ./themes/nord.nix

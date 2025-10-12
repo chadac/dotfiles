@@ -132,10 +132,19 @@ in {
 
     kitty = {
       inherit tags;
-      home = {
+      nixos = { pkgs, ... }: {
+        fonts.packages = with pkgs; [
+          courier-unicode
+        ];
+      };
+      home = { pkgs, ... }: {
         programs.kitty = {
           enable = true;
           themeFile = "Nord";
+          font = {
+            package = pkgs.courier-unicode;
+            name = "Courier";
+          };
           settings = {
             background_opacity = "0.95";
             enable_audio_bell = "no";
@@ -157,7 +166,7 @@ in {
     nix = let
       nixVersion = "latest";
     in {
-      inherit tags;
+      enable = false;
       nixos = { pkgs, ... }: {
         nix.package = pkgs.nixVersions.${nixVersion};
       };
@@ -222,9 +231,9 @@ in {
       home = { pkgs, ... }: {
         home.packages = [ pkgs.mise ];
 
-        programs.zsh.profileExtra = ''
-          eval "$(mise activate zsh)"
-        '';
+        # programs.zsh.profileExtra = ''
+        #   eval "$(mise activate zsh)"
+        # '';
       };
     };
 

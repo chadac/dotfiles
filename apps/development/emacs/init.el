@@ -6,10 +6,11 @@
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
-(if (file-exists-p "./.emacs.d/init.local.el")
-    (load-file "./.emacs.d/init.local.el"))
-
-(setq custom-file "./.emacs.d/init.local.el")
+(let
+    ((localfile (expand-file-name "~/.emacs.d/init.local.el")))
+  (if (file-exists-p localfile)
+      (load-file localfile))
+  (setq custom-file localfile))
 
 ;; Require emacs to prompt when exiting
 (setq confirm-kill-emacs 'yes-or-no-p)

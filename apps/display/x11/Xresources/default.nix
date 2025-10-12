@@ -3,7 +3,7 @@ let
   theme = config.nix-config.theme;
 in {
   nix-config.apps.Xresources = {
-    tags = [ "display" ];
+    tags = [ "x11" ];
     home = { config, pkgs, ... }: let
       dest = "${config.home.homeDirectory}/.Xresources";
       imports = [

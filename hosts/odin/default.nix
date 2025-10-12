@@ -14,6 +14,9 @@ let
       gaming = true;
       virt = true;
       bluetooth = true;
+      nvidia = true;
+      x11 = true;
+      wayland = false;
     };
 
     nix-config = {

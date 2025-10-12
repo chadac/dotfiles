@@ -13,6 +13,7 @@
       gaming = true;
       nvidia = true;
       bluetooth = true;
+      x11 = true;
     };
 
     nixpkgs.packages.unfree = [ "nvidia-x11" "nvidia-settings" ];

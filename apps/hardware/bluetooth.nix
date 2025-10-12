@@ -8,7 +8,7 @@
         enable = true;
         settings = {
           General = {
-            ControllerMode = "bredr";
+            ControllerMode = "dual";
           };
         };
         powerOnBoot = true;

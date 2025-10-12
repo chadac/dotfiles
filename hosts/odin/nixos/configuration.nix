@@ -13,7 +13,13 @@
 
   time.timeZone = "America/New_York";
 
-  hardware.nvidia.open = true;
+  hardware.nvidia.open = host.tags.nvidia or false;
 
   services.openssh.enable = true;
+
+  boot = {
+    supportedFilesystems = [ "nfs" ];
+    kernelModules = [ "nfs" ];
+    # kernelParams = [ "nouveau.config=NvGspRm=0" ];
+  };
 }

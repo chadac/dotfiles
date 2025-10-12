@@ -8,7 +8,7 @@ XTerm*fading:                40
 
 !! set font size
 XTerm*faceName:              Monospace
-XTerm*faceSize:              12
+XTerm*faceSize:              16
 
 !! override keybindings
 XTerm*translations: #override \

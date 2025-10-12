@@ -43,6 +43,12 @@ let
   );
 in
 {
+  imports = [
+    ./i3
+    ./Xresources
+    ./xsession.nix
+  ];
+
   options = {
     nix-config.hosts = mkOption {
       type = types.attrsOf hostType;
@@ -50,8 +56,8 @@ in
   };
 
   config = {
-    nix-config.apps.xserver = {
-      tags = [ "display" ];
+    nix-config.apps.x11 = {
+      tags = [ "x11" ];
       nixos = { host, pkgs, ... }: {
         services.xserver = {
           enable = true;
