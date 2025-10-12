@@ -93,6 +93,9 @@
       ++ (map (import ./iso.nix) ["x86_64-linux" "aarch64-linux"]);
 
       systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
+      perSystem = { pkgs, ... }: {
+        devShells.default = pkgs.mkShell { packages = with pkgs; [ just ]; };
+      };
     };
   in
     (flake-parts.lib.mkFlake { inherit inputs; } flakeModule) //
