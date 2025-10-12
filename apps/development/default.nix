@@ -185,7 +185,7 @@ in {
     python = {
       inherit tags;
       home = { pkgs, ... }: let
-        python-env = pkgs.python311.withPackages (p: with p; [
+        python-env = pkgs.python313.withPackages (p: with p; [
           rope
           flake8
           isort
