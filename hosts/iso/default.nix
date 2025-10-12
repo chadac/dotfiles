@@ -9,19 +9,21 @@ let
       homeDirectory = "/home/nixos";
 
       tags = {
-        minimal = true;
-        chat = false;
-        display = false;
-        entertainment = false;
+        nvidia = true;
+        bluetooth = true;
       };
       nixos = { pkgs, ... }: {
         imports = [
           "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
         ];
-        environment.systemPackages = with pkgs; [
-          util-linux
-          parted
-        ];
+        environment = {
+          etc.nixos-config.source = ../../.;
+
+          systemPackages = with pkgs; [
+            util-linux
+            parted
+          ];
+        };
       };
     };
   };

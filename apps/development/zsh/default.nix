@@ -3,7 +3,7 @@
   nix-config.apps.zsh = {
     tags = [ "development" ];
 
-    home = { pkgs, ... }: {
+    home = { pkgs, config, ... }: {
       programs.bash = {
         enable = true;
       };
@@ -11,7 +11,7 @@
       programs.zsh = {
         enable = true;
         autocd = true;
-        dotDir = ".config/zsh";
+        dotDir = "${config.xdg.configHome}/zsh";
         autosuggestion.enable = true;
         enableCompletion = true;
 

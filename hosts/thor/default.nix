@@ -22,8 +22,8 @@
       imports = [ ./nixos/hardware-configuration.nix ];
       networking.networkmanager.enable = true;
       services.logind = {
-        powerKey = "hibernate";
-        powerKeyLongPress = "poweroff";
+        settings.Login.HandlePowerKey = "hibernate";
+        settings.Login.HandlePowerKeyLongPress = "poweroff";
       };
       programs.nm-applet.enable = true;
     };

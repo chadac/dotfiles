@@ -7,14 +7,21 @@ in
     homeApps = [
       {
         inherit tags;
-        systems = [ "x86_64-linux" "aarch64-linux" ];
+        systems = [ "x86_64-linux" ];
         packages = [
           "tidal-hifi"
+        ];
+      }
+      {
+        inherit tags;
+        systems = [ "x86_64-linux" "aarch64-linux" ];
+        packages = [
           "vlc"
         ];
       }
       {
         inherit tags;
+        systems = [ "x86_64-linux" "x86_64-darwin" "aarch64-darwin" ];
         disableTags = [ "minimal" ];
         packages = [
           "spotify"
