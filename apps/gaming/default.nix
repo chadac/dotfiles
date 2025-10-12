@@ -14,6 +14,9 @@ in {
         "steam-original"
         "steam-run"
       ];
+      nixpkgs.packages.insecure = [
+        "mbedtls"
+      ];
       nixos = {
         programs.steam = {
           enable = true;
