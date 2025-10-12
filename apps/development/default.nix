@@ -137,11 +137,11 @@ in {
           courier-unicode
         ];
       };
-      home = { pkgs, ... }: {
+      home = { pkgs, lib, ... }: {
         programs.kitty = {
           enable = true;
           themeFile = "Nord";
-          font = {
+          font = lib.mkIf pkgs.stdenv.isLinux {
             package = pkgs.courier-unicode;
             name = "Courier";
           };
