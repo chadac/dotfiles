@@ -13,7 +13,6 @@
 
   # Update libvirtd config to include passthrough for my host's devices.
   virtualisation.libvirtd = {
-    qemu.ovmf.enable = true;
     qemu.verbatimConfig =
       ''
       user = "1000"
