@@ -26,10 +26,6 @@
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    mac-app-util = {
-      url = "github:hraban/mac-app-util";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
 
     # Determinate Nix
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";

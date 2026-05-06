@@ -6,10 +6,9 @@
       programs.git = {
         enable = true;
 
-        userName = "Chad Crawford";
-        userEmail = host.email;
-
         lfs.enable = true;
+
+        signing.format = "openpgp";
 
         ignores = [
           # nix
@@ -19,7 +18,9 @@
           "shell.nix"
         ];
 
-        extraConfig = {
+        settings = {
+          user.name = "Chad Crawford";
+          user.email = host.email;
           init.defaultBranch = "main";
           # Sign all commits by default
           commit.gpgsign = true;
