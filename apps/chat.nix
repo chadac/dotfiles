@@ -20,7 +20,7 @@ in {
     {
       inherit tags;
       systems = [ "x86_64-linux" "aarch64-linux" ];
-      packages = [ "signal-desktop-bin" ];
+      packages = [ "signal-desktop" ];
     }
   ];
 

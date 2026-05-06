@@ -7,6 +7,7 @@ in {
 
   nix-config.homeApps = [{
     inherit tags;
+    systems = [ "x86_64-linux" "aarch64-linux" ];
     packages = [ "virt-manager" ];
   }];
 
