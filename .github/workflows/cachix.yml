@@ -18,6 +18,15 @@ jobs:
           - homeConfigurations.odin.activationPackage
           - homeConfigurations.thor.activationPackage
     steps:
+      - name: Free disk space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: true
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          swap-storage: false
       - name: Checkout repository
         uses: actions/checkout@v6
       - name: Install Nix
