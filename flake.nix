@@ -3,11 +3,11 @@
 
   nixConfig = {
     extra-trusted-substituters = [
-      "https://cache.garnix.io"
+      "https://chadac-dotfiles.cachix.org"
       "https://install.determinate.systems"
     ];
     extra-trusted-public-keys = [
-      "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
+      "chadac-dotfiles.cachix.org-1:X6SN8xFOL7yHXvmFHDfYLAQy0U4E6qgq+2wlOLwTc1c="
       "cache.flakehub.com-3:hJuILl5sVK4iKm86JzgdXW12Y2Hwd5G07qKtHTOcDCM="
     ];
   };
