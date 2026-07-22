@@ -37,4 +37,8 @@ jobs:
           name: chadac-dotfiles
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
       - name: Build ${{ matrix.target }}
-        run: nix build --print-build-logs ".#${{ matrix.target }}"
+        # --keep-going: on a failed derivation, keep building everything that
+        # doesn't depend on it. cachix-action's daemon pushes each path as it's
+        # built, so even a partial/failed build still populates the cache and
+        # saves rebuild time on the next run.
+        run: nix build --print-build-logs --keep-going ".#${{ matrix.target }}"
