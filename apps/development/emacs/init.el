@@ -1,7 +1,6 @@
 ;; Add LPA
 (require 'package) ;; You might already have this line
 
-(package-initialize)
 (unless package-archive-contents   (package-refresh-contents))
 (unless (package-installed-p 'use-package)
   (package-install 'use-package))
@@ -69,10 +68,20 @@
 (use-package projectile-ripgrep
   :ensure t)
 
-;; IVY
-(use-package ivy
+;; Completion framework
+(use-package vertico
   :ensure t
-  :config (ivy-mode))
+  :config (vertico-mode))
+
+(use-package orderless
+  :ensure t
+  :custom
+  (completion-styles '(orderless basic))
+  (completion-category-overrides '((file (styles basic partial-completion)))))
+
+(use-package marginalia
+  :ensure t
+  :config (marginalia-mode))
 
 ;; MAGIT
 (use-package magit
