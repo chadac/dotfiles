@@ -15,6 +15,7 @@ in {
       "${config.home.homeDirectory}/.emacs.d/early-init.el" = { source = ./early-init.el; };
       "${config.home.homeDirectory}/.emacs.d/init.el" = { source = ./init.el; };
       "${config.home.homeDirectory}/.emacs.d/lisp" = { source = ./lisp; recursive = true; };
+      "${config.home.homeDirectory}/.emacs.d/themes" = { source = ./themes; recursive = true; };
     };
     packages = with pkgs; [
       ispell
