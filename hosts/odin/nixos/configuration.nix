@@ -5,6 +5,7 @@
     ./virt.nix
     ./display.nix
     ./docker.nix
+    ./k3s.nix
     ./printing.nix
 
     # KVM Virtual Machine Configurations
