@@ -37,7 +37,7 @@ in
       inherit systems;
       tags = x11Tags;
       home = { pkgs, ... }: {
-        home.packages = [ pkgs.xfce.ristretto ];
+        home.packages = [ pkgs.ristretto ];
       };
     };
 
@@ -83,12 +83,12 @@ in
     apps.thunar = {
       inherit systems tags;
       home = { pkgs, ... }: {
-        home.packages = [ pkgs.xfce.thunar ];
+        home.packages = [ pkgs.thunar ];
       };
       nixos = { pkgs, ... }: {
         programs.thunar = {
           enable = true;
-          plugins = with pkgs.xfce; [
+          plugins = with pkgs; [
             thunar-archive-plugin
             thunar-volman
             thunar-media-tags-plugin
@@ -100,7 +100,7 @@ in
     apps.tumbler = {
       inherit systems tags;
       home = { pkgs, ... }: {
-        home.packages = [ pkgs.xfce.tumbler ];
+        home.packages = [ pkgs.tumbler ];
       };
       nixos = {
         services.tumbler.enable = true;

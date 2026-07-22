@@ -16,7 +16,7 @@ in {
         "${dest}" = { text = Xresources; };
       };
       xsession.profileExtra = ''
-        ${pkgs.xorg.xrdb}/bin/xrdb -merge ${dest}
+        ${pkgs.xrdb}/bin/xrdb -merge ${dest}
       '';
     };
   };
