@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 let
   tags = [ "display" ];
   x11Tags = [ "x11" ];
@@ -45,6 +45,27 @@ in
       inherit systems tags;
       home = {
         services.easyeffects.enable = true;
+      };
+    };
+
+    # Redshift: shifts screen color temperature warmer at night.
+    # Default-disabled; enable per-host with `apps.redshift.enable = true`
+    # and override the placeholder latitude/longitude below.
+    apps.redshift = {
+      inherit systems;
+      tags = x11Tags;
+      enable = lib.mkDefault false;
+      home = { lib, ... }: {
+        services.redshift = {
+          enable = true;
+          # Default coordinates — override per host if needed.
+          latitude = lib.mkDefault 26.1418617;
+          longitude = lib.mkDefault (-80.1228234);
+          temperature = {
+            day = lib.mkDefault 6500;
+            night = lib.mkDefault 3700;
+          };
+        };
       };
     };
 

@@ -22,6 +22,8 @@ let
     nix-config = {
       # disable podman in favor of dumb docker... for now
       apps.podman.enable = false;
+      # warm screen at night
+      apps.redshift.enable = true;
     };
 
     nixpkgs.packages.unfree = [
