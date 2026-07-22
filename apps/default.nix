@@ -58,10 +58,10 @@
 
       nix.settings = {
         substituters = [
-          "https://cache.garnix.io"
+          "https://chadac-dotfiles.cachix.org"
         ];
         trusted-public-keys = [
-          "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
+          "chadac-dotfiles.cachix.org-1:X6SN8xFOL7yHXvmFHDfYLAQy0U4E6qgq+2wlOLwTc1c="
         ];
       };
 
