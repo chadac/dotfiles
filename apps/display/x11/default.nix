@@ -67,7 +67,7 @@ in
           # to xrandr right after starting the xserver.
           displayManager.setupCommands =
             lib.mkIf (hasAttr "displays" host)
-              (mkXrandrCmd pkgs.xorg.xrandr host.displays);
+              (mkXrandrCmd pkgs.xrandr host.displays);
         };
       };
       home = { host, pkgs, ...}: {
@@ -75,7 +75,7 @@ in
         xsession.initExtra =
           lib.mkIf (host.kind == "home-manager")
           (lib.mkBefore # Make this the highest priority item
-            (mkXrandrCmd pkgs.xorg.xrandr host.displays));
+            (mkXrandrCmd pkgs.xrandr host.displays));
       };
     };
   };

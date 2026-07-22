@@ -23,7 +23,7 @@
               systemd
               ripgrep
               sd
-              xorg.xrandr
+              xrandr
             ];
           };
           in
