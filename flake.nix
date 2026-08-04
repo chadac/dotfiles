@@ -49,6 +49,12 @@
       url = "github:nix-community/emacs-overlay";
     };
 
+    # nixcord - declarative Vencord-patched Discord
+    nixcord = {
+      url = "github:4evy/nixcord";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # for building poetry packages
     poetry2nix = {
       url = "github:nix-community/poetry2nix";
