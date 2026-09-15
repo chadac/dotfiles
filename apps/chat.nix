@@ -37,7 +37,9 @@ in {
     # hosts under this framework; a distinct name works correctly.
     nixcord = {
       inherit tags;
-      nixpkgs.packages.unfree = [ "discord" ];
+      # Both names: the unfree predicate matches on package name, and nixcord
+      # pulls the unwrapped derivation directly. Why: PR #93.
+      nixpkgs.packages.unfree = [ "discord" "discord-unwrapped" ];
 
       # Vencord-patched Discord, configured declaratively. NOTE: because config
       # is declarative, Vencord's in-app plugin menu will NOT persist changes —
