@@ -6,8 +6,50 @@ on:
   pull_request:
   workflow_dispatch:
 
+env:
+  # The flake's nixConfig declares these, but Nix ignores extra-substituters
+  # from a flake unless the invoking user is trusted ("ignoring untrusted flake
+  # configuration setting"), which the runner is not. Without them CI builds
+  # Determinate Nix from source and runs its functional test suite — hours of
+  # runner time for a path that is already cached. Set them in nix.conf instead.
+  NIX_EXTRA_CONF: |
+    extra-substituters = https://chadac-dotfiles.cachix.org https://install.determinate.systems
+    extra-trusted-public-keys = chadac-dotfiles.cachix.org-1:X6SN8xFOL7yHXvmFHDfYLAQy0U4E6qgq+2wlOLwTc1c= cache.flakehub.com-3:hJuILl5sVK4iKm86JzgdXW12Y2Hwd5G07qKtHTOcDCM=
+
 jobs:
+  # Evaluation gate. Most breakage from a flake.lock bump is an *eval* error (a
+  # removed package, an unfree predicate that no longer matches), which costs
+  # ~2min to find here instead of surfacing mid-build an hour in.
+  eval:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+        with:
+          extra-conf: ${{ env.NIX_EXTRA_CONF }}
+      - name: Evaluate all build targets
+        run: |
+          set -uo pipefail
+          status=0
+          for target in \
+            nixosConfigurations.odin.config.system.build.toplevel \
+            nixosConfigurations.thor.config.system.build.toplevel \
+            homeConfigurations.odin.activationPackage \
+            homeConfigurations.thor.activationPackage
+          do
+            echo "::group::eval $target"
+            # Evaluate every target even if an earlier one fails, so one run
+            # reports all eval errors rather than just the first.
+            nix eval --raw ".#${target}.drvPath" || status=1
+            echo
+            echo "::endgroup::"
+          done
+          exit $status
+
   build:
+    needs: eval
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -31,6 +73,8 @@ jobs:
         uses: actions/checkout@v6
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@main
+        with:
+          extra-conf: ${{ env.NIX_EXTRA_CONF }}
       - name: Setup Cachix
         uses: cachix/cachix-action@v15
         with:
