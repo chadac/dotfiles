@@ -7,19 +7,14 @@ on:
   workflow_dispatch:
 
 env:
-  # The flake's nixConfig declares these, but Nix ignores extra-substituters
-  # from a flake unless the invoking user is trusted ("ignoring untrusted flake
-  # configuration setting"), which the runner is not. Without them CI builds
-  # Determinate Nix from source and runs its functional test suite — hours of
-  # runner time for a path that is already cached. Set them in nix.conf instead.
+  # Must be set here, not in the flake: Nix discards a flake's
+  # extra-substituters for an untrusted user. Why: PR #94.
   NIX_EXTRA_CONF: |
     extra-substituters = https://chadac-dotfiles.cachix.org https://install.determinate.systems
     extra-trusted-public-keys = chadac-dotfiles.cachix.org-1:X6SN8xFOL7yHXvmFHDfYLAQy0U4E6qgq+2wlOLwTc1c= cache.flakehub.com-3:hJuILl5sVK4iKm86JzgdXW12Y2Hwd5G07qKtHTOcDCM=
 
 jobs:
-  # Evaluation gate. Most breakage from a flake.lock bump is an *eval* error (a
-  # removed package, an unfree predicate that no longer matches), which costs
-  # ~2min to find here instead of surfacing mid-build an hour in.
+  # Fail-fast gate: most flake.lock breakage is an eval error. Why: PR #94.
   eval:
     runs-on: ubuntu-latest
     steps:
