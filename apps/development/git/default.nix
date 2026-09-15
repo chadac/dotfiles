@@ -47,7 +47,9 @@
 
       services.gpg-agent = {
         enable = true;
-        pinentry.package = pkgs.pinentry-gtk2;
+        # gnome3 pinentry needs the gcr prompter on the session bus; the
+        # gnome-keyring app (apps/development/default.nix) provides it.
+        pinentry.package = pkgs.pinentry-gnome3;
       };
     };
   };

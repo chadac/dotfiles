@@ -14,6 +14,9 @@ let
     patches = (prev.patches or []) ++ [
       ./i3-wintype-fix.patch
     ];
+    # A patched i3 is never in a binary cache, so every CI runner compiles it —
+    # and i3's Xvfb/X11 test suite is flaky under a loaded runner. Why: PR #93.
+    doCheck = false;
   });
 
   mod = "Mod4";
@@ -21,7 +24,8 @@ let
   down = "k";
   left = "j";
   right = "semicolon";
-  i3-nagbar = "${pkgs.i3}/bin/i3-nagbar";
+  # Patched i3, not pkgs.i3: the unpatched one is a second full i3 build.
+  i3-nagbar = "${i3}/bin/i3-nagbar";
 in {
   _file = __curPos.file;
 

@@ -6,8 +6,45 @@ on:
   pull_request:
   workflow_dispatch:
 
+env:
+  # Must be set here, not in the flake: Nix discards a flake's
+  # extra-substituters for an untrusted user. Why: PR #93.
+  NIX_EXTRA_CONF: |
+    extra-substituters = https://chadac-dotfiles.cachix.org https://install.determinate.systems
+    extra-trusted-public-keys = chadac-dotfiles.cachix.org-1:X6SN8xFOL7yHXvmFHDfYLAQy0U4E6qgq+2wlOLwTc1c= cache.flakehub.com-3:hJuILl5sVK4iKm86JzgdXW12Y2Hwd5G07qKtHTOcDCM=
+
 jobs:
+  # Fail-fast gate: most flake.lock breakage is an eval error. Why: PR #93.
+  eval:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@main
+        with:
+          extra-conf: ${{ env.NIX_EXTRA_CONF }}
+      - name: Evaluate all build targets
+        run: |
+          set -uo pipefail
+          status=0
+          for target in \
+            nixosConfigurations.odin.config.system.build.toplevel \
+            nixosConfigurations.thor.config.system.build.toplevel \
+            homeConfigurations.odin.activationPackage \
+            homeConfigurations.thor.activationPackage
+          do
+            echo "::group::eval $target"
+            # Evaluate every target even if an earlier one fails, so one run
+            # reports all eval errors rather than just the first.
+            nix eval --raw ".#${target}.drvPath" || status=1
+            echo
+            echo "::endgroup::"
+          done
+          exit $status
+
   build:
+    needs: eval
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -31,6 +68,8 @@ jobs:
         uses: actions/checkout@v6
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@main
+        with:
+          extra-conf: ${{ env.NIX_EXTRA_CONF }}
       - name: Setup Cachix
         uses: cachix/cachix-action@v15
         with:
