@@ -54,8 +54,13 @@ let
             # ONLINE peers only. A replaced node leaves a stale entry behind
             # that keeps the original DNS name (the new one registers as
             # "<name>-1"), so matching on name alone can resolve to a dead IP.
-            # Observed exactly that: an offline "valhalla" held 100.91.79.106
-            # while the live node was "valhalla-1" at 100.105.38.105.
+            # Seen on 2026-08-23: the instance replacement during the VPC
+            # rebuild left an offline "valhalla" holding 100.91.79.106 while
+            # the live node registered as "valhalla-1". The stale peer was
+            # removed and the live node renamed back to "valhalla" on
+            # 2026-08-25, but the Online filter and the "-" suffix match below
+            # are what kept the agent pointed at the right node throughout --
+            # keep both; any future replacement repeats this.
             server=$(printf '%s' "$state" | jq -r \
               --arg h "${serverHost}" \
               '.Peer[]? | select(.Online == true)
@@ -121,6 +126,28 @@ in
     # edited config.toml; the template must live at
     # /var/lib/rancher/k3s/agent/etc/containerd/config-v3.toml.tmpl. BinaryName
     # is an absolute store path — k3s's containerd does not inherit our PATH.
+    #
+    # SystemdCgroup is FALSE deliberately. crun 1.27.1's systemd driver builds a
+    # BPF pin path from the systemd scope name and flattens "." to "_" but NOT
+    # "/" (cgroup-systemd.c:1389 bpfprog_path_from_scope). Under Kubernetes the
+    # scope is nested — kubepods/pod<uuid>/<id>.scope — so the pin lands at
+    # /sys/fs/bpf/crun/kubepods/pod<uuid>/<id>_scope, while the only mkdir on
+    # that path (cgroup-systemd.c:1441) is a NON-recursive mkdir of
+    # /sys/fs/bpf/crun. The per-pod parents never exist, BPF_OBJ_PIN fails
+    # ENOENT, and EVERY sandbox create fails. Unfixed upstream as of 1.27.1
+    # (introduced in 227bd0f1); their tests only use flat scope names.
+    #
+    # Device filtering is NOT lost: the cgroupfs driver reaches the same eBPF
+    # program through cgroup-resources.c:688, which attaches it via dirfd with a
+    # NULL pin path. Only the (systemd-bookkeeping) pin is skipped. This also
+    # matches the kubelet, which already runs CgroupDriver=cgroupfs here.
+    #
+    # WHY THIS BIT ON 2026-09-15 AND NOT THE THREE WEEKS BEFORE: crun caches
+    # "systemd rejected this property" markers under <state-root>/.cache/
+    # systemd-missing-properties and skips the whole BPF path when BPFProgram is
+    # listed (cgroup-systemd.c:1420). That cache lives in /run — tmpfs. A reboot
+    # cleared it, crun re-attempted BPFProgram=device, and hit the bug on every
+    # container. Same NixOS generation, same kernel; only the tmpfs cache moved.
     containerdConfigTemplate = ''
       {{ template "base" . }}
 
@@ -128,14 +155,21 @@ in
         runtime_type = "io.containerd.runc.v2"
       [plugins.'io.containerd.cri.v1.runtime'.containerd.runtimes.crun.options]
         BinaryName = "${pkgs.crun}/bin/crun"
-        SystemdCgroup = true
+        SystemdCgroup = false
     '';
   };
 
   # Gate k3s on a genuinely-ready tunnel (see the script's comment).
   systemd.services.k3s = {
-    after = [ "tailscaled.service" "network-online.target" ];
+    # var-lib-rancher.mount is the bind mount declared in
+    # hardware-configuration.nix, which puts k3s state on the non-mirrored SATA
+    # SSD. REQUIRED, not just ordering: without it k3s starts against an empty
+    # /var/lib/rancher, re-registers with fresh certs, and loses every
+    # local-path PV backing the Scooter conversations.
+    after = [ "tailscaled.service" "network-online.target" "mnt-data.mount" "var-lib-rancher.mount" ];
     wants = [ "tailscaled.service" "network-online.target" ];
+    requires = [ "var-lib-rancher.mount" ];
+    unitConfig.RequiresMountsFor = [ "/var/lib/rancher" "/mnt/data" ];
     serviceConfig = {
       ExecStartPre = [ "${lib.getExe waitForTailnetIP}" ];
       RestartSec = lib.mkDefault "10s";
@@ -143,6 +177,93 @@ in
   };
 
   systemd.tmpfiles.rules = [ "d /etc/rancher/k3s/config.yaml.d 0755 root root -" ];
+
+  # ##########################################################################
+  # AUTH WATCHDOG
+  #
+  # Failure mode this exists for: the agent's client credentials stop being
+  # accepted by the API server MID-FLIGHT. The kubelet logs a flood of
+  #   "Unable to authenticate the request" / x509: certificate signed by
+  #   unknown authority
+  # and the node goes NotReady, but k3s NEVER EXITS -- so Restart=always never
+  # fires, NRestarts stays 0, and the local /healthz keeps returning 200. It is
+  # silent: nothing in systemd's view of the unit looks wrong. Observed three
+  # times on 2026-08-25 (intervals ~24h, 3h20m, then 15m after a tailnet
+  # machine rename). A restart re-fetches the CA and re-issues every cert under
+  # /var/lib/rancher/k3s/agent/, which fixes it every time.
+  #
+  # Detection is deliberately LOCAL AND CREDENTIAL-FREE: it reads this node's
+  # own journal for the exact signature. Asking the API server whether we are
+  # Ready would need a kubeconfig whose credentials are precisely what has
+  # broken -- the check would fail for the same reason as the thing it watches.
+  #
+  # Root cause is NOT yet established. This is a mitigation, not a fix: it logs
+  # loudly at error level so recurrences stay visible in Loki rather than being
+  # silently papered over. If this fires regularly, investigate -- do not just
+  # let it restart forever.
+  # ##########################################################################
+  systemd.services.k3s-auth-watchdog = {
+    description = "Restart k3s when its API credentials are silently rejected";
+    # No wantedBy: this is timer-driven only.
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = lib.getExe (pkgs.writeShellApplication {
+        name = "k3s-auth-watchdog";
+        runtimeInputs = with pkgs; [ systemd coreutils gnugrep ];
+        text = ''
+          window="''${WINDOW:-5min}"
+          # Empirically ~470 errors accumulate in the first minutes of a real
+          # failure; a healthy agent logs none. 20 is far above the noise floor
+          # and far below a genuine flood, so a transient blip cannot trip it.
+          threshold="''${THRESHOLD:-20}"
+
+          # Scope strictly to the RUNNING pid. Without this, errors from the
+          # previous (already-restarted) process stay in the journal window and
+          # would retrigger a restart loop against a healthy agent.
+          pid=$(systemctl show k3s -p MainPID --value)
+          if [ -z "$pid" ] || [ "$pid" = "0" ]; then
+            echo "k3s is not running; nothing to watch (systemd will handle it)"
+            exit 0
+          fi
+
+          # Only count since the current process started, so the window can
+          # never reach back past a restart.
+          started=$(systemctl show k3s -p ActiveEnterTimestamp --value)
+          since="$window ago"
+          if [ -n "$started" ]; then
+            start_epoch=$(date -d "$started" +%s 2>/dev/null || echo 0)
+            window_epoch=$(date -d "$window ago" +%s)
+            if [ "$start_epoch" -gt "$window_epoch" ]; then since="$started"; fi
+          fi
+
+          count=$(journalctl -u k3s --since "$since" --no-pager 2>/dev/null \
+            | grep -F "k3s[$pid]" \
+            | grep -c -E "Unable to authenticate the request|Unauthorized" \
+            || true)
+
+          if [ "$count" -ge "$threshold" ]; then
+            echo "k3s auth failure: $count rejections since $since (pid $pid," \
+                 "threshold $threshold) -- restarting k3s" >&2
+            systemctl restart k3s
+            echo "k3s restarted by auth watchdog" >&2
+          fi
+        '';
+      });
+    };
+  };
+
+  systemd.timers.k3s-auth-watchdog = {
+    description = "Periodic k3s credential-rejection check";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      # First check well after boot so a cold start (tailnet gate, CA fetch,
+      # cert issuance) is never mistaken for the failure.
+      OnBootSec = "10min";
+      OnUnitActiveSec = "5min";
+      AccuracySec = "30s";
+      Unit = "k3s-auth-watchdog.service";
+    };
+  };
 
   # Tailnet membership. odin dials OUT to valhalla; nothing inbound is needed.
   services.tailscale = {
