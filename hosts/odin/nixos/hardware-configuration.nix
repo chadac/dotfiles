@@ -61,10 +61,41 @@
       fsType = "vfat";
     };
 
-  # fileSystems."/media/workspace" =
-  #   { device = "/dev/disk/by-uuid/b5bf3248-07b7-4cf2-95b9-c02f5ec78eac";
-  #     fsType = "ext4";
-  #   };
+  # Samsung 860 EVO (SATA). Formerly /media/workspace, which held the Amazon
+  # work VM image; that qcow2 was extracted and deleted 2026-08-25 and the
+  # salvaged files now live under /mnt/data/archive.
+  #
+  # This drive is DELIBERATELY NOT part of the root btrfs RAID1 mirror
+  # (nvme0n1 + nvme1n1). k3s state lives here so that container I/O does not
+  # queue behind desktop applications on the mirror -- odin is a workstation
+  # AND a k3s node, and sustained desktop writes (Firefox alone had written
+  # 284GB) were stalling the kubelet long enough for the API server to tear
+  # down its connections, taking the node NotReady. See the k3s-auth-watchdog
+  # comment in k3s.nix for that failure mode.
+  #
+  # NOTE: NO REDUNDANCY on this disk. It holds k3s/storage -- the local-path
+  # PVs backing every Scooter conversation (workspace-conv-* and
+  # scooter-rw-conv-*, ~29G). Those are pinned to this node and exist nowhere
+  # else, so a failure here loses them. Back them up separately.
+  fileSystems."/mnt/data" =
+    { device = "/dev/disk/by-uuid/b5bf3248-07b7-4cf2-95b9-c02f5ec78eac";
+      fsType = "ext4";
+    };
+
+  # k3s state off the mirror.
+  #
+  # A bind mount rather than `--data-dir` because the NixOS k3s module
+  # HARDCODES /var/lib/rancher for the containerd config template, manifests,
+  # charts, and images (see nixos/modules/services/cluster/k3s/default.nix).
+  # With --data-dir, k3s would read from the new path while the module kept
+  # writing containerdConfigTemplate to the old one -- silently dropping the
+  # crun runtime that Scooter's sandboxes require.
+  fileSystems."/var/lib/rancher" =
+    { device = "/mnt/data/k3s/rancher";
+      fsType = "none";
+      options = [ "bind" ];
+      depends = [ "/mnt/data" ];
+    };
 
   swapDevices =
     [ { device = "/dev/disk/by-uuid/97140d54-fd19-47ef-b180-3b01e1815e90"; }

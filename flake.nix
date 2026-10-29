@@ -17,11 +17,17 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     # flakehub cli
-    fh.url = "https://api.flakehub.com/f/DeterminateSystems/fh/0.1.*.tar.gz";
+    fh = {
+      url = "https://api.flakehub.com/f/DeterminateSystems/fh/0.1.*.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     flake-utils.url = "https://api.flakehub.com/f/numtide/flake-utils/0.1.*.tar.gz";
     flake-parts.url = "github:hercules-ci/flake-parts";
-    nix-config-modules.url = "github:chadac/nix-config-modules";
+    nix-config-modules = {
+      url = "github:chadac/nix-config-modules";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -45,8 +51,13 @@
     };
 
     # emacs - latest versions
+    # Follow our nixpkgs so the overlay doesn't drag in a second nixpkgs/stdenv
+    # (which causes cache misses on shared deps like openldap/cyrus-sasl). We
+    # already build Emacs from source via emacsWithPackagesFromUsePackage, so we
+    # don't lose much from not using emacs-overlay's own cached Emacs.
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # nixcord - declarative Vencord-patched Discord
