@@ -22,6 +22,7 @@
           user.name = "Chad Crawford";
           user.email = host.email;
           init.defaultBranch = "main";
+          github.user = "chadac";
           # Sign all commits by default
           commit.gpgsign = true;
           # Not sure why this isn't automatically set...
