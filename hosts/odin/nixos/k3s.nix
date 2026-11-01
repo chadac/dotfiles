@@ -21,8 +21,11 @@
 # Drift check: ~/code/github.com/chadac/scripts/check-k3s-sync.sh
 # (untracked scratch dir — it spans three repos, so it belongs to none of them)
 # ############################################################################
-{ pkgs, lib, config, ... }:
+{ pkgs, lib, config, options, ... }:
 let
+  # sops-nix is imported only by nix-config-private; see PR #103.
+  sopsPath = name: lib.mkIf (options ? sops) config.sops.secrets.${name}.path;
+
   # Control plane, reached over the tailnet. MagicDNS is not relied on here (see
   # the accept-dns note below) — this is resolved by the readiness gate instead.
   serverHost = "valhalla";
@@ -102,7 +105,7 @@ in
     # Cluster join secret, provisioned by sops-nix (see
     # nix-config-private/hosts/odin/nixos/secrets.nix). MUST be byte-identical
     # to server-config's k3s/token — valhalla rejects a mismatched join.
-    tokenFile = config.sops.secrets."k3s/token".path;
+    tokenFile = sopsPath "k3s/token";
 
     extraFlags = toString [
       "--flannel-iface=tailscale0"
@@ -269,7 +272,7 @@ in
   services.tailscale = {
     enable = true;
     # Provisioned by sops-nix (nix-config-private/hosts/odin/nixos/secrets.nix).
-    authKeyFile = config.sops.secrets."tailscale/auth-key".path;
+    authKeyFile = sopsPath "tailscale/auth-key";
     openFirewall = true;
     useRoutingFeatures = "none";
     extraSetFlags = [

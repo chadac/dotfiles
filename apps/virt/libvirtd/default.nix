@@ -1,7 +1,7 @@
 {
   nix-config.apps.libvirtd = {
     tags = [ "virt" ];
-    nixos = { host, pkgs, ... }: {
+    nixos = { host, pkgs, lib, ... }: {
       users.users.${host.username} = {
         extraGroups = [ "libvirtd" "input" ];
       };
@@ -30,10 +30,9 @@
             [ env ];
       };
 
-      environment.systemPackages = with pkgs; [
-        dconf
-        libguestfs
-      ];
+      environment.systemPackages = [ pkgs.dconf ]
+        # Upstream marks it broken (fuse2 removed); returns once fixed. PR #103.
+        ++ lib.optional (!pkgs.libguestfs.meta.broken) pkgs.libguestfs;
 
       # Add hooks for qemu images.
       system.activationScripts.libvirt-hooks.text = ''
