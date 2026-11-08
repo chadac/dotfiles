@@ -112,6 +112,10 @@ in
       # Site label consumed by the workload split (compute here, ingress on
       # valhalla). See the split table in the design doc.
       "--node-label=node.chadac.dev/site=home"
+      # GC images well before the 85% imagefs eviction point.
+      "--kubelet-arg=image-gc-high-threshold=75"
+      "--kubelet-arg=image-gc-low-threshold=65"
+      "--kubelet-arg=image-maximum-gc-age=48h"
     ];
 
     # crun RuntimeClass — REQUIRED, not optional, and carried over verbatim from
