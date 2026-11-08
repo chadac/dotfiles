@@ -20,6 +20,7 @@
     ./hardware/desktop.nix
     ./hardware/laptop.nix
     ./hardware/bluetooth.nix
+    ./hardware/microcontrollers.nix
 
     # virtualization for kvms
     ./virt
