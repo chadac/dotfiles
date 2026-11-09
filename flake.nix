@@ -36,6 +36,9 @@
     # Determinate Nix
     determinate.url = "https://flakehub.com/f/DeterminateSystems/determinate/*";
 
+    # Scooter pods realized from Nix releases on odin
+    imageless.url = "github:dmadisetti/imageless";
+
     # Home Manager
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -104,6 +107,9 @@
       ]
       # map iso images to packages for simplicity
       ++ (map (import ./iso.nix) ["x86_64-linux" "aarch64-linux"]);
+
+      # Our own inputs, which a consuming flake's `inputs` would not carry.
+      _module.args.dotfilesInputs = inputs;
 
       systems = [ "x86_64-linux" "aarch64-linux" "x86_64-darwin" "aarch64-darwin" ];
       perSystem = { pkgs, ... }: {
