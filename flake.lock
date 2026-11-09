@@ -344,6 +344,25 @@
         "type": "github"
       }
     },
+    "imageless": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_3",
+        "nixpkgs-containerd1": "nixpkgs-containerd1"
+      },
+      "locked": {
+        "lastModified": 1785597403,
+        "narHash": "sha256-QzfBHyeb6CvJaGjuqiHZF2hPkWrVmcUytZ0Y90Vdu6c=",
+        "owner": "dmadisetti",
+        "repo": "imageless",
+        "rev": "e5de96ba5f98aaa3f942d46dbf156da4cfe5a09e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "dmadisetti",
+        "repo": "imageless",
+        "type": "github"
+      }
+    },
     "mise": {
       "inputs": {
         "flake-utils": [
@@ -542,6 +561,22 @@
         "url": "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.zst"
       }
     },
+    "nixpkgs-containerd1": {
+      "locked": {
+        "lastModified": 1751274312,
+        "narHash": "sha256-/bVBlRpECLVzjV19t5KMdMFWSwKLtb5RyXdjz3LJT+g=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "50ab793786d9de88ee30ec4e4c24fb4236fc2674",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "50ab793786d9de88ee30ec4e4c24fb4236fc2674",
+        "type": "github"
+      }
+    },
     "nixpkgs-lib": {
       "locked": {
         "lastModified": 1793504054,
@@ -636,6 +671,22 @@
     },
     "nixpkgs_3": {
       "locked": {
+        "lastModified": 1780930886,
+        "narHash": "sha256-rppURzHviaQN131F+nLiLdGfcb0uCd9gGP0E5+iw9MI=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "8c3cede7ddc26bd659d2d383b5610efbd2c7a16e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "8c3cede7ddc26bd659d2d383b5610efbd2c7a16e",
+        "type": "github"
+      }
+    },
+    "nixpkgs_4": {
+      "locked": {
         "lastModified": 1793977579,
         "narHash": "sha256-WrSODdZFVIs/Hh2NzC0bY+ROByi0bATg8WfePX8dPj8=",
         "owner": "nixos",
@@ -685,11 +736,12 @@
         "flake-parts": "flake-parts_2",
         "flake-utils": "flake-utils_2",
         "home-manager": "home-manager",
+        "imageless": "imageless",
         "mise": "mise",
         "nix-config-modules": "nix-config-modules",
         "nix-darwin": "nix-darwin",
         "nixcord": "nixcord",
-        "nixpkgs": "nixpkgs_3",
+        "nixpkgs": "nixpkgs_4",
         "poetry2nix": "poetry2nix",
         "zsh-256color": "zsh-256color"
       }
