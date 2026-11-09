@@ -1,5 +1,5 @@
 # My primary desktop.
-{ config, ... }:
+{ config, dotfilesInputs, ... }:
 let
   odin = {
     kind = "nixos";
@@ -32,7 +32,10 @@ let
       "nvidia-settings"
       "hplip"
     ];
-    nixos = ./nixos/configuration.nix;
+    nixos.imports = [
+      ./nixos/configuration.nix
+      (import ./nixos/imageless.nix dotfilesInputs.imageless)
+    ];
 
     displays = {
       HDMI-0 = {
