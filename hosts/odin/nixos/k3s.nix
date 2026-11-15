@@ -112,6 +112,8 @@ in
       # Site label consumed by the workload split (compute here, ingress on
       # valhalla). See the split table in the design doc.
       "--node-label=node.chadac.dev/site=home"
+      # The imageless RuntimeClasses schedule only onto nodes with the runtime.
+      "--node-label=imageless.run/runtime=v2"
       # GC images well before the 85% imagefs eviction point.
       "--kubelet-arg=image-gc-high-threshold=75"
       "--kubelet-arg=image-gc-low-threshold=65"
@@ -163,6 +165,7 @@ in
       [plugins.'io.containerd.cri.v1.runtime'.containerd.runtimes.crun.options]
         BinaryName = "${pkgs.crun}/bin/crun"
         SystemdCgroup = false
+      ${config.odin.imageless.containerdHandlers}
     '';
   };
 
